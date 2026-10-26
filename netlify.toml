@@ -1,0 +1,14 @@
+# Netlify build settings. Netlify detects Next.js and applies its Next.js runtime
+# automatically (no plugin pin needed).
+[build]
+  command = "npm run build"   # prebuild hashes media/images → public/images first
+  publish = ".next"
+
+[build.environment]
+  NODE_VERSION = "22"
+  NEXT_TELEMETRY_DISABLED = "1"
+
+# Required environment variable (set in Netlify → Site configuration → Environment variables):
+#   GROQ_API_KEY   — server-only key for the portfolio chatbot (/api/chat)
+# Optional:
+#   GROQ_MODEL     — defaults to openai/gpt-oss-120b

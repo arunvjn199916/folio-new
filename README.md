@@ -1,36 +1,39 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Arun Vijayan — Portfolio
 
-## Getting Started
+Next.js 16 (App Router) · React 19 · Tailwind 4 · GSAP · Lenis · OGL · Matter.js
+English / Tamil / Hindi · light & dark · first-party accessibility panel · Groq-powered portfolio assistant.
 
-First, run the development server:
+## Run locally
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+npm ci
+cp .env.example .env.local   # then add your GROQ_API_KEY
+npm run dev                  # http://localhost:3000 → redirects to /en, /ta or /hi
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Node 20.9+ (22 recommended, see `.nvmrc`).
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Scripts
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+| Script | What it does |
+|---|---|
+| `npm run dev` | Dev server (runs `images` first) |
+| `npm run build` | Production build (runs `images` first) |
+| `npm run start` | Serve the production build |
+| `npm run lint` | ESLint |
+| `npm run images` | Content-hashes `media/images/**` into `public/images/` and regenerates `src/content/images.generated.ts` |
 
-## Learn More
+## Content
 
-To learn more about Next.js, take a look at the following resources:
+- Copy lives in `src/content/*` (English) and `src/i18n/dictionaries/{ta,hi}.ts` (translations, type-checked against English).
+- Images: drop files into `media/images/` using the names referenced in `src/content/*` (e.g. `projects/magnil.webp`), then `npm run images`. Never put images in `public/images/` — it's generated.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Deploy on Netlify
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+1. Import the GitHub repo in Netlify — `netlify.toml` already sets the build command, publish dir and Node 22; the Next.js runtime is detected automatically.
+2. Site configuration → Environment variables → add **`GROQ_API_KEY`** (server-only; never commit it). Optional: `GROQ_MODEL`.
+3. Deploy. The site works without the key; only the chatbot replies "isn't configured yet".
 
-## Deploy on Vercel
+## Security notes
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+Security headers + CSP in `next.config.ts`, SRI on bundles, chat endpoint guarded (origin check, validation, rate limit, timeout, grounded prompt). Details in `PLAN.md` §10–14 of the project notes.

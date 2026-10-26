@@ -1,7 +1,7 @@
 import { getDictionary, getLocale } from "@/i18n/server";
 import { localePath } from "@/i18n/config";
 import { RichText, ExternalLink } from "@/components/ui/Text";
-import { hasImage } from "@/components/ui/Placeholder";
+import { img } from "@/content/images";
 import { AboutSlides, Sticker, CopyEmail } from "./AboutClient";
 import { Reveal } from "@/components/ui/Motion";
 import { Mail } from "lucide-react";
@@ -13,8 +13,8 @@ import { ToolIcon } from "@/components/ui/ToolIcon";
 export async function About() {
   const { about, profile, projects, ui } = await getDictionary();
   const locale = await getLocale();
-  const slides = projects.map((p) => ({ src: hasImage(p.media) ? p.media : null, tint: p.tint, label: p.title }));
-  const portrait = hasImage("/images/about-portrait.webp") ? "/images/about-portrait.webp" : null;
+  const slides = projects.map((p) => ({ src: img(p.media), tint: p.tint, label: p.title }));
+  const portrait = img("about-portrait.webp");
 
   return (
     <section id="about" className="relative px-4 py-28 md:px-6">

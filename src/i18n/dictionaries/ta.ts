@@ -3,12 +3,12 @@ import { withText, withSegments } from "./merge";
 
 // Tamil. Draft translation — have a native speaker review before launch.
 // Non-text fields (links, colours, images, ids) always come from English.
-const name = en.profile.name;
+const name = "அருண் விஜயன்";
 
 export const ta: Dictionary = {
   profile: {
     ...en.profile,
-    name: "அருண் விஜயன்",
+    name,
     firstName: "அருண்",
     role: "சீனியர் ப்ராடக்ட் டிசைனர்",
     location: "சென்னை, இந்தியா",
@@ -37,7 +37,7 @@ export const ta: Dictionary = {
     ],
   },
   greetings: en.greetings,
-  contact: { verbs: ["உருவாக்குவோம்", "வடிவமைப்போம்", "வெளியிடுவோம்"], line: "சிறந்த படைப்புகளை ஒன்றாக." },
+  contact: { lead: "வாருங்கள்", verbs: ["உருவாக்குவோம்", "வடிவமைப்போம்", "வெளியிடுவோம்"], line: "சிறந்த படைப்புகளை ஒன்றாக." },
   projects: withText(en.projects, [
     { descriptor: "எண்டர்பிரைஸ் AI தேடல்", title: "US ஓய்வூதிய பங்கேற்பாளர் போர்ட்டல் MVP வடிவமைப்பு", summary: "ஆவணத் தேடல் மற்றும் நிதி வினவல்களுக்கான புத்திசாலித்தனமான தேடல் UX — வினவல் திறன் 35% உயர்வு." },
     { descriptor: "Claude + Cursor மூலம் உருவாக்கப்பட்டது", title: "6 வாரங்களில் ஓய்வூதிய மொபைல் MVP வெளியீடு", summary: "Android & iOS — வயர்ஃப்ரேம் முதல் உற்பத்தி வரை; 500+ பீட்டா பயனர்கள், 4.2/5 திருப்தி." },

@@ -10,6 +10,7 @@ import { CountUp, Marquee } from "@/components/ui/Motion";
 import { RichText } from "@/components/ui/Text";
 import { ToolIcon, toolSlug } from "@/components/ui/ToolIcon";
 import { motionDisabled } from "@/lib/a11y/store";
+import { splitTypeFor } from "@/lib/text";
 
 const PenHeadline = dynamic(
   () => import("@/components/ui/PenHeadline").then((m) => m.PenHeadline),
@@ -39,10 +40,10 @@ export function Hero({ portrait }: { portrait: React.ReactNode }) {
       const q = gsap.utils.selector(root);
       gsap.set(q("[data-hide]"), { visibility: "visible" });
       if (reduce) return;
-      const lead = SplitText.create(q(".hero-lead"), {
-        type: "chars,words",
-        aria: "auto",
-      });
+      // chars for Latin, words for Indic scripts (keeps letters shaped correctly)
+      const leadType = splitTypeFor(hero.lead, "chars");
+      const lead = SplitText.create(q(".hero-lead"), { type: leadType, aria: "auto" });
+      const leadUnits = leadType === "words" ? lead.words : lead.chars;
       const tl = gsap.timeline({ defaults: { ease: "power3.out" } });
       tl.from(
         q(".hero-chip"),
@@ -50,7 +51,7 @@ export function Hero({ portrait }: { portrait: React.ReactNode }) {
         0,
       )
         .from(
-          lead.chars,
+          leadUnits,
           {
             opacity: 0,
             filter: "blur(12px)",

@@ -185,6 +185,33 @@ body {
   outline-offset: 3px;
 }
 
+/* ── Script-aware typography (Tamil, Hindi) ────────────────────────────────
+   The display styles were tuned for Latin capitals: tight leading, negative tracking,
+   short clamps. Brahmic scripts stack vowel signs above and below the letter and join
+   letters along a headline bar, so they need taller lines, no tracking and more room.
+   :where() keeps specificity at zero so explicit accessibility settings still win. */
+:where(:root:lang(ta), :root:lang(hi)) :is(h1, h2, h3, h4, blockquote, .leading-none, .leading-tight, [class*="leading-[0."], [class*="leading-[1.0"], [class*="leading-[1.1"]) {
+  line-height: 1.38 !important;
+}
+:where(:root:lang(ta), :root:lang(hi)) :is(body, body *) {
+  letter-spacing: normal !important;
+}
+:where(:root:lang(ta), :root:lang(hi)) .line-clamp-2 {
+  -webkit-line-clamp: 3;
+  line-clamp: 3;
+}
+@media (max-width: 767px) {
+  /* single-column cards have room: show the whole translated text */
+  :where(:root:lang(ta), :root:lang(hi)) .line-clamp-2 {
+    -webkit-line-clamp: unset;
+    line-clamp: none;
+  }
+}
+/* Long agglutinative words can be wider than a phone column — let them wrap. */
+:where(:root:lang(ta), :root:lang(hi)) :is(h1, h2, h3) {
+  overflow-wrap: anywhere;
+}
+
 /* ── Shared bits ── */
 .dot-grid {
   background-image: radial-gradient(var(--c-dot) 1px, transparent 1px);

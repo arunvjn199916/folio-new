@@ -16,7 +16,7 @@ export default async function Home() {
       <Hero
         portrait={
           <Media
-            src="/images/portrait.webp"
+            src="portrait.webp"
             alt={ui.hero.portraitAlt}
             label="Portrait 4:5"
             className="absolute inset-0"

@@ -276,11 +276,11 @@ export function A11yPanel() {
                     <Tile icon={Sun} label={t.controls.lightContrast} active={s.contrast === "light"} onClick={() => set({ contrast: s.contrast === "light" ? "none" : "light" })} />
                     <Tile icon={Contrast} label={t.controls.highContrast} active={s.contrast === "high"} onClick={() => set({ contrast: s.contrast === "high" ? "none" : "high" })} />
                     <Tile icon={Droplet} label={t.controls.highSaturation} active={s.saturation === "high"} onClick={() => set({ saturation: s.saturation === "high" ? "none" : "high" })} />
-                    <Swatches label={t.controls.textColor} value={s.textColor} onPick={(c) => set({ textColor: c })} cancel={t.cancel} />
+                    <Swatches label={t.controls.textColor} value={s.textColor} onPick={(c) => set({ textColor: c, inkAuto: false })} cancel={t.cancel} />
                     <Tile icon={Droplets} label={t.controls.monochrome} active={s.saturation === "mono"} onClick={() => set({ saturation: s.saturation === "mono" ? "none" : "mono" })} />
-                    <Swatches label={t.controls.titleColor} value={s.titleColor} onPick={(c) => set({ titleColor: c })} cancel={t.cancel} />
+                    <Swatches label={t.controls.titleColor} value={s.titleColor} onPick={(c) => set({ titleColor: c, inkAuto: false })} cancel={t.cancel} />
                     <Tile icon={Palette} label={t.controls.lowSaturation} active={s.saturation === "low"} onClick={() => set({ saturation: s.saturation === "low" ? "none" : "low" })} />
-                    <Swatches label={t.controls.bgColor} value={s.bgColor} onPick={(c) => set({ bgColor: c })} cancel={t.cancel} />
+                    <Swatches label={t.controls.bgColor} value={s.bgColor} onPick={(c) => a11y.setBackground(c)} cancel={t.cancel} />
                   </div>
                 </Card>
 

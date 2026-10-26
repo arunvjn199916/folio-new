@@ -96,6 +96,7 @@ export const greetings = ["Hello", "வணக்கம்", "नमस्ते"
 export const loaderLine = ["Where", "ideas", "ship"];
 
 export const contact = {
+  lead: "let's",
   verbs: ["build", "design", "ship"],
   line: "incredible work together.",
 };

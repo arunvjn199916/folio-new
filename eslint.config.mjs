@@ -12,6 +12,9 @@ const eslintConfig = defineConfig([
     "out/**",
     "build/**",
     "next-env.d.ts",
+    // Playwright audit snippets: bare `async (page) => {}` expressions run by the MCP runner.
+    "scripts/audit-*.js",
+    "scripts/scroll-profile.js",
   ]),
 ]);
 

@@ -33,12 +33,16 @@ export function Skills() {
         const M = await import("matter-js");
         const W = el.offsetWidth;
         const H = el.offsetHeight;
-        const engine = M.Engine.create({ gravity: { x: 0, y: 1 }, enableSleeping: true });
+        // Extra solver iterations keep the resting pile from sinking into the floor.
+        const engine = M.Engine.create({ gravity: { x: 0, y: 1 }, enableSleeping: true, positionIterations: 12, velocityIterations: 8 });
         const wall = { isStatic: true, render: { visible: false } };
+        // Walls sit a few px inside the visible box (Matter allows a little overlap between
+        // resting bodies), so pills never end up clipped by its edges.
+        const INSET = 6;
         M.Composite.add(engine.world, [
-          M.Bodies.rectangle(W / 2, H + 30, W * 2, 60, wall),
-          M.Bodies.rectangle(-30, H / 2, 60, H * 3, wall),
-          M.Bodies.rectangle(W + 30, H / 2, 60, H * 3, wall),
+          M.Bodies.rectangle(W / 2, H - INSET + 50, W * 2, 100, wall),
+          M.Bodies.rectangle(INSET - 50, H / 2, 100, H * 3, wall),
+          M.Bodies.rectangle(W - INSET + 50, H / 2, 100, H * 3, wall),
         ]);
         const bodies = pills.map((p, i) => {
           const w = p.offsetWidth;
@@ -52,6 +56,8 @@ export function Skills() {
           return { b, p, w, h };
         });
         M.Composite.add(engine.world, bodies.map((x) => x.b));
+        // Once everything has dropped in, close the top so a hard throw can't fling a pill out.
+        const ceiling = setTimeout(() => M.Composite.add(engine.world, M.Bodies.rectangle(W / 2, -50 + INSET, W * 2, 100, wall)), 2500);
 
         const mouse = M.Mouse.create(el);
         // Let the page keep scrolling over the box.
@@ -69,9 +75,23 @@ export function Skills() {
         });
         let raf = 0;
         let last = performance.now();
+        let acc = 0;
+        const DT = 1000 / 60; // fixed 60 Hz sub-steps: stable at any frame rate
         const step = (t: number) => {
-          M.Engine.update(engine, Math.min(32, t - last));
+          acc = Math.min(acc + (t - last), DT * 4);
           last = t;
+          while (acc >= DT) {
+            M.Engine.update(engine, DT);
+            acc -= DT;
+          }
+          // Safety net: anything thrown out of the box drops back in from the top.
+          for (const { b } of bodies) {
+            const { x, y } = b.position;
+            if (y > H + 200 || y < -H || x < -200 || x > W + 200) {
+              M.Body.setPosition(b, { x: W / 2, y: 40 });
+              M.Body.setVelocity(b, { x: 0, y: 0 });
+            }
+          }
           for (const { b, p, w, h } of bodies) {
             if (b.isSleeping) continue; // resting pills keep their last transform
             p.style.transform = `translate(${b.position.x - w / 2}px, ${b.position.y - h / 2}px) rotate(${b.angle}rad)`;
@@ -92,6 +112,7 @@ export function Skills() {
         visible.observe(el);
         run();
         cleanup = () => {
+          clearTimeout(ceiling);
           visible.disconnect();
           stop();
           M.Mouse.clearSourceEvents(mouse);

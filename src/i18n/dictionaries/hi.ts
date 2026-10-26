@@ -37,7 +37,7 @@ export const hi: Dictionary = {
     ],
   },
   greetings: en.greetings,
-  contact: { verbs: ["बनाएँ", "डिज़ाइन करें", "शिप करें"], line: "साथ मिलकर बेहतरीन काम।" },
+  contact: { lead: "आइए", verbs: ["बनाएँ", "डिज़ाइन करें", "शिप करें"], line: "साथ मिलकर बेहतरीन काम।" },
   projects: withText(en.projects, [
     { descriptor: "एंटरप्राइज़ AI सर्च", title: "US रिटायरमेंट पार्टिसिपेंट पोर्टल MVP का डिज़ाइन", summary: "दस्तावेज़ खोज और वित्तीय प्रश्नों के लिए इंटेलिजेंट सर्च UX — क्वेरी दक्षता 35% बढ़ी।" },
     { descriptor: "Claude + Cursor से बनाया", title: "6 हफ़्तों में रिटायरमेंट मोबाइल MVP लॉन्च", summary: "Android और iOS के लिए वायरफ़्रेम से प्रोडक्शन तक — 500+ बीटा यूज़र्स, 4.2/5 संतुष्टि।" },

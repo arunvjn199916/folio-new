@@ -3,7 +3,8 @@ import { ArrowRight } from "lucide-react";
 import { archive } from "@/content/projects";
 import { getDictionary, getLocale } from "@/i18n/server";
 import { localePath } from "@/i18n/config";
-import { Media, hasImage } from "@/components/ui/Placeholder";
+import { Media } from "@/components/ui/Placeholder";
+import { img } from "@/content/images";
 import { BlurHeading } from "@/components/ui/Motion";
 import { WorkGrid } from "./WorkGrid";
 import { PrismFolderMount } from "./PrismFolderMount";
@@ -54,7 +55,7 @@ export async function Work() {
     ),
   }));
 
-  const windows = archive.map((a) => ({ ...a, src: hasImage(a.src) ? a.src : null }));
+  const windows = archive.map((a) => ({ ...a, src: img(a.src) }));
 
   return (
     <section id="work" className="relative px-6 py-28">

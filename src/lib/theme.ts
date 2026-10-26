@@ -60,6 +60,25 @@ export const theme = {
   },
 };
 
+let colorCtx: CanvasRenderingContext2D | null = null;
+/**
+ * Any CSS colour ("#fff", "#ffffff", "rgb(…)", "oklch(…)", named) → [r, g, b] in 0–1, using
+ * the browser's own parser (minified CSS may shorten hex, so never hand-parse it).
+ */
+export function cssColorToRgb(value: string, fallback: [number, number, number] = [1, 1, 1]): [number, number, number] {
+  colorCtx ??= document.createElement("canvas").getContext("2d");
+  if (!colorCtx || !value) return fallback;
+  colorCtx.fillStyle = "#000";
+  colorCtx.fillStyle = value; // invalid values are ignored, leaving #000
+  const v = String(colorCtx.fillStyle);
+  if (v.startsWith("#")) {
+    const n = parseInt(v.slice(1, 7), 16);
+    return [((n >> 16) & 255) / 255, ((n >> 8) & 255) / 255, (n & 255) / 255];
+  }
+  const m = v.match(/[\d.]+/g);
+  return m && m.length >= 3 ? [Number(m[0]) / 255, Number(m[1]) / 255, Number(m[2]) / 255] : fallback;
+}
+
 /** Read a CSS custom property from <html>. */
 export const cssVar = (name: string) => getComputedStyle(document.documentElement).getPropertyValue(name).trim();
 

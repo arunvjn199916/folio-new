@@ -4,6 +4,7 @@ import { useRef, useEffect, useState } from "react";
 import { gsap, SplitText, useGSAP } from "@/lib/gsap";
 import { cn } from "@/lib/utils";
 import { motionDisabled } from "@/lib/a11y/store";
+import { splitTypeFor } from "@/lib/text";
 
 // Heading whose words blur in on scroll (Sanjay / Anjali section titles).
 export function BlurHeading({
@@ -21,9 +22,10 @@ export function BlurHeading({
   useGSAP(
     () => {
       if (!ref.current || motionDisabled()) return;
-      // chars are always nested in words so a line never breaks mid-word
-      const split = SplitText.create(ref.current, { type: by === "chars" ? "words,chars" : "words", aria: "auto" });
-      const items = by === "chars" ? split.chars : split.words;
+      // chars nest inside words (no mid-word line breaks); Indic text is split by word only
+      const type = splitTypeFor(ref.current.textContent ?? "", by);
+      const split = SplitText.create(ref.current, { type, aria: "auto" });
+      const items = type === "words" ? split.words : split.chars;
       gsap.from(items, {
         opacity: 0,
         filter: "blur(10px)",
@@ -110,10 +112,22 @@ export function CountUp({ to, suffix = "", play }: { to: number; suffix?: string
       tw.kill();
     };
   }, [play, to]);
+  // The final value sits invisibly in the same grid cell, so the box is always as wide as
+  // the end result and nothing around it shifts while the digits count up.
   return (
-    <span className="tabular-nums">
-      {v}
-      <span className="text-pink">{suffix}</span>
+    <span className="inline-grid tabular-nums">
+      <span aria-hidden className="invisible col-start-1 row-start-1">
+        {to}
+        {suffix}
+      </span>
+      <span aria-hidden className="col-start-1 row-start-1 text-right">
+        {v}
+        <span className="text-pink">{suffix}</span>
+      </span>
+      <span className="sr-only">
+        {to}
+        {suffix}
+      </span>
     </span>
   );
 }

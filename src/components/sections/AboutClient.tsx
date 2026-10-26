@@ -7,6 +7,7 @@ import { Check } from "lucide-react";
 import { PlaceholderLabel } from "@/components/ui/PlaceholderLabel";
 import { blip } from "@/lib/intro";
 import { cn } from "@/lib/utils";
+import { img } from "@/content/images";
 import { motionDisabled } from "@/lib/a11y/store";
 
 type Slide = { src: string | null; tint: string; label: string };
@@ -100,7 +101,7 @@ export function Sticker({
       style={{
         background:
           kind === "photo"
-            ? `linear-gradient(160deg, ${color}99, #1f7a52dd), center / cover no-repeat url(/images/reachout.webp)`
+            ? `linear-gradient(160deg, ${color}99, #1f7a52dd), center / cover no-repeat url(${img("reachout.webp")})`
             : color,
         ...(kind === "scallop"
           ? { clipPath: "polygon(50% 0%,61% 8%,75% 5%,80% 18%,95% 25%,91% 39%,100% 50%,91% 61%,95% 75%,80% 82%,75% 95%,61% 92%,50% 100%,39% 92%,25% 95%,20% 82%,5% 75%,9% 61%,0% 50%,9% 39%,5% 25%,20% 18%,25% 5%,39% 8%)" }

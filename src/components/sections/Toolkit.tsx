@@ -45,17 +45,17 @@ export async function Toolkit() {
       </section>
 
       <section id="process" className="px-6 py-28">
-        <div className="mx-auto grid max-w-[1100px] gap-6 md:grid-cols-[1.35fr_1fr]">
+        <div className="mx-auto grid max-w-[1100px] grid-cols-[minmax(0,1fr)] gap-6 md:grid-cols-[minmax(0,1.35fr)_minmax(0,1fr)]">
           <Reveal className="rounded-[22px] border border-surface/70 bg-surface/80 p-8">
             <p data-reveal className="eyebrow">{ui.processCard.title}</p>
-            <div data-reveal className="relative mt-10 flex justify-between">
-              <span aria-hidden className="absolute top-[9px] right-4 left-4 h-[2px] bg-green/70" />
+            <div data-reveal className="relative mt-10 grid grid-cols-5 gap-1">
+              <span aria-hidden className="absolute top-[9px] right-[10%] left-[10%] h-[2px] bg-green/70" />
               {process.map((s) => (
-                <div key={s} className="relative flex flex-col items-center gap-3">
+                <div key={s} className="relative flex min-w-0 flex-col items-center gap-3">
                   <span className="grid size-5 place-items-center rounded-full bg-green shadow-[0_0_0_4px_rgba(24,169,87,0.15)]">
                     <span className="size-1.5 rounded-full bg-white" />
                   </span>
-                  <span className="text-[12px] font-medium text-ink-2">{s}</span>
+                  <span className="text-center text-[12px] leading-snug font-medium text-ink-2 [overflow-wrap:anywhere]">{s}</span>
                 </div>
               ))}
             </div>

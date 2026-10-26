@@ -4,6 +4,7 @@ import { useCallback, useEffect, useRef, useState } from "react";
 import { gsap } from "@/lib/gsap";
 import { blip, intro } from "@/lib/intro";
 import { useI18n } from "@/i18n/client";
+import { img } from "@/content/images";
 import { isBool, safeStore } from "@/lib/utils";
 import { motionDisabled } from "@/lib/a11y/store";
 
@@ -370,7 +371,7 @@ export function Loader() {
               key={i}
               className="absolute top-0 left-0 aspect-[4/5] overflow-hidden rounded-[14px] opacity-0 shadow-[0_20px_40px_-20px_rgba(0,0,0,0.5)]"
               style={{
-                background: portrait ? "center / cover no-repeat url(/images/portrait.webp), linear-gradient(160deg,#cdb8ff,#ffb6d9)" : TILE_TINTS[side ? STEPS - 1 - k : k],
+                background: portrait ? `center / cover no-repeat url(${img("portrait.webp")}), linear-gradient(160deg,#cdb8ff,#ffb6d9)` : TILE_TINTS[side ? STEPS - 1 - k : k],
                 backgroundImage: portrait ? undefined : "radial-gradient(rgba(255,255,255,0.08) 1px, transparent 1px)",
                 backgroundSize: portrait ? undefined : "12px 12px",
               }}

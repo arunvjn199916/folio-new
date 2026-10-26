@@ -23,6 +23,7 @@ export type A11ySettings = {
   textColor: string | null;
   titleColor: string | null;
   bgColor: string | null;
+  inkAuto: boolean; // text/title colours were picked automatically for the background
   muteSounds: boolean;
   hideImages: boolean;
   readMode: boolean;
@@ -52,6 +53,7 @@ export const DEFAULTS: A11ySettings = {
   textColor: null,
   titleColor: null,
   bgColor: null,
+  inkAuto: false,
   muteSounds: false,
   hideImages: false,
   readMode: false,
@@ -114,6 +116,28 @@ export function sanitize(raw: unknown): A11ySettings {
   }
   out.profiles = Array.isArray(r.profiles) ? (r.profiles.filter((p) => PROFILE_IDS.includes(p as ProfileId)) as ProfileId[]) : [];
   return out;
+}
+
+// WCAG 2.x relative luminance / contrast ratio.
+const luminance = (hex: string) => {
+  const n = parseInt(hex.slice(1), 16);
+  const ch = [(n >> 16) & 255, (n >> 8) & 255, n & 255].map((c) => {
+    const v = c / 255;
+    return v <= 0.03928 ? v / 12.92 : ((v + 0.055) / 1.055) ** 2.4;
+  });
+  return 0.2126 * ch[0] + 0.7152 * ch[1] + 0.0722 * ch[2];
+};
+const contrast = (a: string, b: string) => {
+  const [x, y] = [luminance(a), luminance(b)].sort((p, q) => q - p);
+  return (x + 0.05) / (y + 0.05);
+};
+
+/** Pick a background; text/title follow with the higher-contrast ink unless set by hand. */
+export function withBackground(s: A11ySettings, bg: string | null): A11ySettings {
+  if (!bg) return s.inkAuto ? { ...s, bgColor: null, textColor: null, titleColor: null, inkAuto: false } : { ...s, bgColor: null };
+  if (s.textColor && !s.inkAuto) return { ...s, bgColor: bg };
+  const ink = contrast(bg, "#000000") >= contrast(bg, "#ffffff") ? "#000000" : "#ffffff";
+  return { ...s, bgColor: bg, textColor: ink, titleColor: s.titleColor && !s.inkAuto ? s.titleColor : ink, inkAuto: true };
 }
 
 /** Turn a profile on/off: on merges its preset, off restores those keys to defaults. */

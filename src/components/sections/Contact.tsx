@@ -4,6 +4,8 @@ import { useEffect, useRef, useState } from "react";
 import { AnimatePresence, motion } from "motion/react";
 import { useI18n } from "@/i18n/client";
 import { ExternalLink } from "@/components/ui/Text";
+import { FitText } from "@/components/ui/FitText";
+import { img } from "@/content/images";
 import { ToolIcon } from "@/components/ui/ToolIcon";
 import Image from "next/image";
 import { gsap, ScrollTrigger, useGSAP } from "@/lib/gsap";
@@ -16,6 +18,7 @@ import { motionDisabled } from "@/lib/a11y/store";
 */
 export function Contact() {
   const { contact, profile, ui } = useI18n().dict;
+  const clip = img("contact-clip.webp");
   const [i, setI] = useState(0);
   const root = useRef<HTMLElement>(null);
 
@@ -54,7 +57,7 @@ export function Contact() {
     <footer ref={root} id="contact" className="relative overflow-hidden bg-gradient-to-b from-transparent via-sky-1/70 to-sky-2 pt-28">
       <div className="mx-auto grid max-w-[1200px] items-center gap-10 px-6 md:grid-cols-[1fr_auto]">
         <h2 className="font-display text-[clamp(40px,5.2vw,76px)] leading-[1.02] font-semibold tracking-[-0.02em] text-ink">
-          let&apos;s{" "}
+          {contact.lead}{" "}
           <span className="relative inline-block min-w-[3.4em] align-baseline">
             <AnimatePresence mode="wait">
               <motion.span
@@ -79,7 +82,7 @@ export function Contact() {
           className="relative aspect-[16/10] w-[260px] overflow-hidden rounded-[14px] border-[5px] border-photo shadow-[0_24px_50px_-20px_rgba(26,24,34,0.5)]"
           style={{ background: "linear-gradient(135deg,#ffb6d9,#cdb8ff)" }}
         >
-          <Image src="/images/contact-clip.webp" alt={ui.contactUi.clipAlt} fill sizes="260px" className="object-cover" />
+          {clip && <Image src={clip} alt={ui.contactUi.clipAlt} fill sizes="260px" className="object-cover" />}
         </motion.div>
       </div>
 
@@ -115,13 +118,11 @@ export function Contact() {
       </div>
 
       {/* giant wordmark in the clouds */}
-      <div className="relative mt-6 h-[clamp(90px,13vw,200px)]">
-        <p
-          aria-hidden
-          className="ct-word absolute inset-x-0 bottom-[-0.12em] text-center font-display text-[15.5vw] leading-none font-bold tracking-[-0.04em] whitespace-nowrap text-cloud/80"
-        >
-          {profile.name.toUpperCase()}
-        </p>
+      <div className="relative mt-6 overflow-hidden px-4">
+        {/* sized by FitText to span the full width in any language; sinks slightly into the clouds */}
+        <div aria-hidden className="ct-word font-display leading-[1.1] font-bold text-cloud/80">
+          <FitText className="-mb-[0.14em] tracking-[-0.03em]">{profile.name.toUpperCase()}</FitText>
+        </div>
         {[
           ["-6%", "34%", 420],
           ["70%", "50%", 480],

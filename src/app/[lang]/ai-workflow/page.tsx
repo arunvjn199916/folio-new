@@ -19,7 +19,7 @@ export default async function AiWorkflowPage() {
     <article>
       <header className="flex flex-col items-center px-6 pt-36 pb-16 text-center">
         <Media
-          src="/images/ai-workflow-hero.webp"
+          src="ai-workflow-hero.webp"
           alt={ui.aiPage.heroAlt}
           label={ui.aiPage.heroLabel}
           className="aspect-[3/2] w-[260px] rounded-[16px]"

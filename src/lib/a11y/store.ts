@@ -1,7 +1,7 @@
 "use client";
 
 import { useSyncExternalStore } from "react";
-import { applyA11y, DEFAULTS, sanitize, toggleProfile, type A11ySettings, type ProfileId } from "./model";
+import { applyA11y, DEFAULTS, sanitize, toggleProfile, withBackground, type A11ySettings, type ProfileId } from "./model";
 import { A11Y_KEY_SERVER } from "@/lib/preferences/keys";
 
 export const A11Y_KEY = A11Y_KEY_SERVER;
@@ -36,6 +36,9 @@ export const a11y = {
   },
   toggleProfile(id: ProfileId, on: boolean) {
     commit(toggleProfile(a11y.get(), id, on));
+  },
+  setBackground(bg: string | null) {
+    commit(withBackground(a11y.get(), bg));
   },
   reset() {
     commit({ ...DEFAULTS, hidden: a11y.get().hidden });

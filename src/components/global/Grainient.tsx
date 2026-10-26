@@ -2,7 +2,7 @@
 
 import { useEffect, useRef } from "react";
 import { Renderer, Program, Mesh, Triangle } from "ogl";
-import { cssVar, onThemeChange } from "@/lib/theme";
+import { cssVar, cssColorToRgb, onThemeChange } from "@/lib/theme";
 import { motionDisabled } from "@/lib/a11y/store";
 
 // Fixed full-screen grain gradient (same technique as the Shalmali reference:
@@ -55,12 +55,8 @@ void main(){
 }
 `;
 
-const hex = (h: string) => {
-  const n = parseInt(h.replace("#", ""), 16);
-  return Number.isFinite(n) ? [((n >> 16) & 255) / 255, ((n >> 8) & 255) / 255, (n & 255) / 255] : [1, 1, 1];
-};
 // Colours come from the theme tokens (--c-grain-1..4), so dark mode re-tints the field.
-const grainColors = () => ["--c-grain-1", "--c-grain-2", "--c-grain-3", "--c-grain-4"].map((v) => hex(cssVar(v)));
+const grainColors = () => ["--c-grain-1", "--c-grain-2", "--c-grain-3", "--c-grain-4"].map((v) => cssColorToRgb(cssVar(v)));
 
 export function Grainient() {
   const host = useRef<HTMLDivElement>(null);

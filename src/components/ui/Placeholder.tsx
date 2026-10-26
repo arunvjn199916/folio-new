@@ -1,13 +1,11 @@
-import "server-only";
 import Image from "next/image";
-import { existsSync } from "node:fs";
-import path from "node:path";
 import { cn } from "@/lib/utils";
+import { img } from "@/content/images";
 import { PlaceholderLabel } from "./PlaceholderLabel";
 
-// Shows the real image when it exists in /public, otherwise a labelled gradient block
-// at the same aspect ratio — so swapping in final images never shifts the layout.
-// Server-only: checks the file system at build time.
+// Shows the image when it exists in media/images (resolved to its hashed URL), otherwise a
+// labelled gradient block at the same aspect ratio — so adding final images never shifts
+// the layout.
 export function Media({
   src,
   alt,
@@ -25,16 +23,10 @@ export function Media({
   sizes?: string;
   priority?: boolean;
 }) {
-  const exists = src ? existsSync(path.join(process.cwd(), "public", src)) : false;
+  const url = img(src);
   return (
     <div className={cn("relative overflow-hidden", className)} style={{ background: tint }}>
-      {exists && src ? (
-        <Image src={src} alt={alt} fill sizes={sizes} priority={priority} className="object-cover" />
-      ) : (
-        <PlaceholderLabel label={label} />
-      )}
+      {url ? <Image src={url} alt={alt} fill sizes={sizes} priority={priority} className="object-cover" /> : <PlaceholderLabel label={label} />}
     </div>
   );
 }
-
-export const hasImage = (src: string) => existsSync(path.join(process.cwd(), "public", src));

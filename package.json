@@ -6,7 +6,10 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "eslint"
+    "lint": "eslint",
+    "images": "node scripts/build-images.mjs",
+    "predev": "node scripts/build-images.mjs",
+    "prebuild": "node scripts/build-images.mjs"
   },
   "dependencies": {
     "@gsap/react": "2.1.2",
@@ -39,5 +42,8 @@
     "prettier": "3.9.10",
     "tailwindcss": "^4",
     "typescript": "^5"
+  },
+  "engines": {
+    "node": ">=20.9.0"
   }
 }

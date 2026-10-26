@@ -21,7 +21,7 @@ export async function Testimonials() {
       </div>
       <Reveal
         stagger={0.12}
-        className="mx-auto mt-16 grid max-w-[1150px] gap-10 md:grid-cols-3"
+        className="mx-auto mt-16 grid max-w-[1150px] grid-cols-[minmax(0,1fr)] gap-10 md:grid-cols-3"
       >
         {testimonials.map((t, i) => (
           <div key={i} data-reveal>
@@ -57,7 +57,7 @@ export async function Testimonials() {
                     {t.name.split(" ")[0]}
                   </p>
                 </div>
-                <blockquote className="font-script text-[21px] leading-[1.25] text-ink">
+                <blockquote className="min-w-0 font-script text-[21px] leading-[1.25] text-ink [overflow-wrap:anywhere]">
                   &ldquo;{t.quote}&rdquo;
                 </blockquote>
               </div>
