@@ -7,6 +7,9 @@ export type Shot = { src: string; label: string; note?: string };
 
 export type Tone = "up" | "down";
 
+/** Task outcome in a walkthrough: completed, completed with difficulty, or failed. */
+export type Outcome = "pass" | "hard" | "fail";
+
 export type Block =
   /** Plain prose in the reading column (Tushar "BACKGROUND", Sai body copy). */
   | { kind: "text"; eyebrow?: string; title?: string; body: string[]; bullets?: string[] }
@@ -37,8 +40,21 @@ export type Block =
   | { kind: "band"; title?: string; sub?: string; caption: string; crumbs?: string[]; items: ({ shot: Shot } | { node: string; sub?: string })[] }
   /** Dark band of low-fi concept variants (Tushar's "Initial ideas using generative AI tools"). */
   | { kind: "explore"; title: string; body: string[]; variants: Shot[]; credit?: string }
-  /** What they liked / didn't like. `planned` shows it as validation still to run. */
-  | { kind: "feedback"; title: string; intro?: string; planned?: boolean; liked: string[]; disliked: string[] }
+  /** What worked / what didn't. `source` says where it came from: a test still to run, or a simulated walkthrough. */
+  | { kind: "feedback"; title: string; intro?: string; source?: "planned" | "simulated"; liked: string[]; disliked: string[] }
+  /**
+   * Simulated persona walkthrough: five fictional characters attempt the test tasks on the real
+   * prototype screens. `results[p][t]` is participant p on task t. Always labelled as simulated.
+   */
+  | {
+      kind: "walkthrough";
+      title: string;
+      intro: string;
+      participants: { name: string; age: number; city: string; role: string; comfort: "High" | "Medium" | "Low"; context: string }[];
+      tasks: string[];
+      results: Outcome[][];
+      quotes: { by: string; text: string }[];
+    }
   /** Case 1/2/3 — one phone on a tinted square, with red-bar constraint notes (Tushar). */
   | { kind: "edges"; title: string; intro?: string; cases: { title: string; conclusion: string; shot: Shot; notes?: { title: string; body: string }[] }[] }
   /** Larger-screen views in a browser frame. */

@@ -1,6 +1,6 @@
 import { Fragment } from "react";
 import { ArrowDown, ArrowUp } from "lucide-react";
-import type { Block, CaseStudy } from "@/content/case-studies/types";
+import type { Block, CaseStudy, Outcome } from "@/content/case-studies/types";
 import { Reveal } from "@/components/ui/Motion";
 import { Browser, Phone } from "./Devices";
 import { cn } from "@/lib/utils";
@@ -16,6 +16,19 @@ export type CaseLabels = {
   measures: string;
   conclusion: string;
   case: string;
+  simulated: string;
+  likedSimulated: string;
+  dislikedSimulated: string;
+  participants: string;
+  comfort: string;
+  taskSuccess: string;
+  outcomes: Record<Outcome, string>;
+};
+
+const OUTCOME_STYLE: Record<Outcome, string> = {
+  pass: "bg-[#1f8a3a]",
+  hard: "bg-[#e0a100]",
+  fail: "bg-[#d64545]",
 };
 
 type Brand = CaseStudy["brand"];
@@ -297,14 +310,16 @@ export function BlockView({ block, brand, labels }: { block: Block; brand: Brand
         <Reveal className={COL}>
           <h2 data-reveal className={H2}>{block.title}</h2>
           {block.intro && <p data-reveal className={cn(BODY, "mt-4")}>{block.intro}</p>}
-          {block.planned && (
+          {block.source && (
             <p data-reveal className="mt-4 inline-block rounded-full border border-dashed border-ink/25 px-3 py-1 font-mono text-[11px] text-ink-2">
-              {labels.planned}
+              {block.source === "planned" ? labels.planned : labels.simulated}
             </p>
           )}
           <div className="mt-6 space-y-3">
             <div data-reveal className="rounded-[14px] bg-[#e9f9e6] p-5 dark:bg-[#183322]">
-              <p className="text-[13px] font-medium text-ink-2">{block.planned ? labels.likedPlanned : labels.liked}</p>
+              <p className="text-[13px] font-medium text-ink-2">
+                {block.source === "planned" ? labels.likedPlanned : block.source === "simulated" ? labels.likedSimulated : labels.liked}
+              </p>
               <ul className="mt-2 space-y-1.5 pl-5 text-[14px] leading-relaxed text-ink [list-style:disc]">
                 {block.liked.map((l) => (
                   <li key={l}>{l}</li>
@@ -312,7 +327,9 @@ export function BlockView({ block, brand, labels }: { block: Block; brand: Brand
               </ul>
             </div>
             <div data-reveal className="rounded-[14px] bg-[#fdecea] p-5 dark:bg-[#3a1d1d]">
-              <p className="text-[13px] font-medium text-ink-2">{block.planned ? labels.dislikedPlanned : labels.disliked}</p>
+              <p className="text-[13px] font-medium text-ink-2">
+                {block.source === "planned" ? labels.dislikedPlanned : block.source === "simulated" ? labels.dislikedSimulated : labels.disliked}
+              </p>
               <ul className="mt-2 space-y-1.5 pl-5 text-[14px] leading-relaxed text-ink [list-style:disc]">
                 {block.disliked.map((l) => (
                   <li key={l}>{l}</li>
@@ -415,6 +432,97 @@ export function BlockView({ block, brand, labels }: { block: Block; brand: Brand
           </ol>
         </Reveal>
       );
+
+    case "walkthrough": {
+      const rate = (t: number) => {
+        const done = block.results.filter((r) => r[t] !== "fail").length;
+        return Math.round((done / block.results.length) * 100);
+      };
+      return (
+        <section className={WIDE}>
+          <Reveal className="mx-auto max-w-[640px]">
+            <h2 data-reveal className={H2}>{block.title}</h2>
+            <p data-reveal className="mt-4 inline-block rounded-full border border-dashed border-ink/25 px-3 py-1 font-mono text-[11px] text-ink-2">
+              {labels.simulated}
+            </p>
+            <p data-reveal className={cn(BODY, "mt-4")}>{block.intro}</p>
+          </Reveal>
+
+          {/* the five characters */}
+          <Reveal className="mx-auto mt-10 grid max-w-[1000px] gap-3 sm:grid-cols-2 lg:grid-cols-5" stagger={0.06}>
+            {block.participants.map((p, i) => (
+              <div data-reveal key={p.name} className="rounded-[16px] border border-line bg-surface/70 p-4">
+                <div className="flex items-center gap-2.5">
+                  <span className="grid size-9 shrink-0 place-items-center rounded-full font-mono text-[11px] font-semibold text-white" style={{ background: "var(--case-accent)" }}>
+                    P{i + 1}
+                  </span>
+                  <div className="min-w-0">
+                    <p className="truncate text-[14px] font-semibold text-ink">{p.name}</p>
+                    <p className="text-[12px] text-ink-3">
+                      {p.age} · {p.city}
+                    </p>
+                  </div>
+                </div>
+                <p className="mt-3 text-[12.5px] font-medium text-ink-2">{p.role}</p>
+                <p className="mt-1 text-[12px] leading-snug text-ink-3">{p.context}</p>
+                <p className="mt-3 font-mono text-[10.5px] text-ink-3">
+                  {labels.comfort}: {p.comfort}
+                </p>
+              </div>
+            ))}
+          </Reveal>
+
+          {/* task × participant grid */}
+          <Reveal className="mx-auto mt-6 max-w-[1000px] overflow-x-auto rounded-[16px] border border-line bg-surface/70">
+            <table data-reveal className="w-full min-w-[560px] text-left text-[13px]">
+              <thead>
+                <tr className="border-b border-line text-ink-3">
+                  <th className="px-4 py-3 font-medium">{labels.tasks}</th>
+                  {block.participants.map((_, i) => (
+                    <th key={i} className="px-2 py-3 text-center font-mono text-[11px] font-medium">
+                      P{i + 1}
+                    </th>
+                  ))}
+                  <th className="px-4 py-3 text-right font-medium">{labels.taskSuccess}</th>
+                </tr>
+              </thead>
+              <tbody>
+                {block.tasks.map((task, t) => (
+                  <tr key={task} className="border-b border-line last:border-0">
+                    <td className="px-4 py-3 text-ink">{task}</td>
+                    {block.results.map((r, p) => (
+                      <td key={p} className="px-2 py-3 text-center">
+                        <span role="img" aria-label={labels.outcomes[r[t]]} title={labels.outcomes[r[t]]} className={cn("inline-block size-3 rounded-full", OUTCOME_STYLE[r[t]])} />
+                      </td>
+                    ))}
+                    <td className="px-4 py-3 text-right font-mono text-ink">{rate(t)}%</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+            <p className="flex flex-wrap gap-4 border-t border-line px-4 py-3 text-[11.5px] text-ink-3">
+              {(Object.keys(OUTCOME_STYLE) as Outcome[]).map((o) => (
+                <span key={o} className="flex items-center gap-1.5">
+                  <span className={cn("size-2.5 rounded-full", OUTCOME_STYLE[o])} /> {labels.outcomes[o]}
+                </span>
+              ))}
+            </p>
+          </Reveal>
+
+          {/* in-character reactions */}
+          <Reveal className="mx-auto mt-10 grid max-w-[1000px] gap-6 md:grid-cols-3" stagger={0.08}>
+            {block.quotes.map((q) => (
+              <figure data-reveal key={q.text}>
+                <blockquote className="font-script text-[22px] leading-tight" style={{ color: "var(--case-accent)" }}>
+                  “{q.text}”
+                </blockquote>
+                <figcaption className="mt-2 text-[12px] text-ink-3">— {q.by}</figcaption>
+              </figure>
+            ))}
+          </Reveal>
+        </section>
+      );
+    }
 
     case "test":
       return (
