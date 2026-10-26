@@ -7,6 +7,7 @@ export const imageManifest: Record<string, string> = {
   "archive/secondly-badge-system.webp": "/images/archive/secondly-badge-system.8fd28eb00b.webp",
   "archive/tandem-itinerary-print.webp": "/images/archive/tandem-itinerary-print.85e9897803.webp",
   "archive/tandem-landing-hero.webp": "/images/archive/tandem-landing-hero.f8542b68c7.webp",
+  "cases/covers/aura.webp": "/images/cases/covers/aura.56e189fb03.webp",
   "cases/covers/kairo.webp": "/images/cases/covers/kairo.74afc78c3a.webp",
   "cases/covers/kosh.webp": "/images/cases/covers/kosh.2a14ced6b6.webp",
   "cases/covers/secondly.webp": "/images/cases/covers/secondly.c68038b1b7.webp",

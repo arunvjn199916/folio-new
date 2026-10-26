@@ -1,0 +1,246 @@
+/* ── Aura design system tokens ────────────────────────────────────────────────
+   Aura is a design system for AI products, built on shadcn/ui. Every token lives
+   under `.ds`, so the system never leaks into the portfolio around it; utilities are
+   namespaced `ds-*` (bg-ds-primary, text-ds-muted-foreground…) for the same reason.
+
+   Theme: light by default; dark when the site is dark, or when a `.ds` root sets
+   data-ds-theme="dark". data-ds-theme="light" forces light inside a dark site. */
+
+.ds {
+  /* neutral */
+  --ds-background: #ffffff;
+  --ds-foreground: #0e0e13;
+  --ds-card: #ffffff;
+  --ds-card-foreground: #0e0e13;
+  --ds-popover: #ffffff;
+  --ds-popover-foreground: #0e0e13;
+  --ds-muted: #f4f4f7;
+  --ds-muted-foreground: #5f5f6b;
+  --ds-border: #e5e5ec;
+  --ds-input: #d9d9e2;
+  /* brand */
+  --ds-primary: #4f46e5;
+  --ds-primary-foreground: #ffffff;
+  --ds-secondary: #eef0ff;
+  --ds-secondary-foreground: #262486;
+  --ds-accent: #f1f1f6;
+  --ds-accent-foreground: #0e0e13;
+  --ds-ring: #6366f1;
+  /* status */
+  --ds-destructive: #b91c1c;
+  --ds-destructive-foreground: #ffffff;
+  --ds-success: #166534;
+  --ds-warning: #92400e;
+  --ds-info: #0369a1;
+  /* AI roles — what makes Aura an AI system rather than a generic kit */
+  --ds-ai: #f6f5ff; /* assistant message / AI surface */
+  --ds-ai-foreground: #1c1a4d;
+  --ds-ai-accent: #7c3aed; /* agent activity, streaming cursor, reasoning */
+  --ds-ai-gradient: linear-gradient(120deg, #4f46e5 0%, #7c3aed 45%, #0ea5e9 100%);
+  --ds-confidence-high: #166534;
+  --ds-confidence-medium: #92400e;
+  --ds-confidence-low: #b91c1c;
+  --ds-citation: #0369a1;
+  --ds-citation-surface: #e8f4fb;
+  --ds-human: #9333ea; /* needs a human decision */
+  --ds-human-surface: #f6efff;
+
+  /* shape, depth, motion */
+  --ds-radius: 0.625rem;
+  --ds-shadow-1: 0 1px 2px rgb(14 14 19 / 0.06);
+  --ds-shadow-2: 0 2px 4px rgb(14 14 19 / 0.05), 0 4px 12px -2px rgb(14 14 19 / 0.08);
+  --ds-shadow-3: 0 4px 8px rgb(14 14 19 / 0.05), 0 12px 28px -6px rgb(14 14 19 / 0.14);
+  --ds-shadow-4: 0 8px 16px rgb(14 14 19 / 0.06), 0 24px 48px -12px rgb(14 14 19 / 0.2);
+  --ds-duration-fast: 120ms;
+  --ds-duration-base: 200ms;
+  --ds-duration-slow: 320ms;
+  --ds-ease-standard: cubic-bezier(0.2, 0, 0, 1);
+  --ds-ease-emphasized: cubic-bezier(0.3, 0, 0, 1.2);
+  --ds-stream-tick: 900ms; /* caret blink while a model streams */
+
+  color-scheme: light;
+  background: var(--ds-background);
+  color: var(--ds-foreground);
+  font-family: var(--font-geist), ui-sans-serif, system-ui, sans-serif;
+  /* the portfolio's pixel cursors stop at the system boundary */
+  cursor: auto;
+}
+
+[data-theme="dark"] .ds,
+.ds[data-ds-theme="dark"] {
+  --ds-background: #0b0b10;
+  --ds-foreground: #f2f2f6;
+  --ds-card: #121219;
+  --ds-card-foreground: #f2f2f6;
+  --ds-popover: #16161e;
+  --ds-popover-foreground: #f2f2f6;
+  --ds-muted: #1b1b24;
+  --ds-muted-foreground: #a1a1b0;
+  --ds-border: #2a2a35;
+  --ds-input: #33333f;
+  --ds-primary: #8b8bff;
+  --ds-primary-foreground: #0b0b10;
+  --ds-secondary: #1f1f3a;
+  --ds-secondary-foreground: #d4d4ff;
+  --ds-accent: #1e1e28;
+  --ds-accent-foreground: #f2f2f6;
+  --ds-ring: #8b8bff;
+  --ds-destructive: #f87171;
+  --ds-destructive-foreground: #0b0b10;
+  --ds-success: #4ade80;
+  --ds-warning: #fbbf24;
+  --ds-info: #38bdf8;
+  --ds-ai: #15142a;
+  --ds-ai-foreground: #e4e2ff;
+  --ds-ai-accent: #a78bfa;
+  --ds-ai-gradient: linear-gradient(120deg, #8b8bff 0%, #a78bfa 45%, #38bdf8 100%);
+  --ds-confidence-high: #4ade80;
+  --ds-confidence-medium: #fbbf24;
+  --ds-confidence-low: #f87171;
+  --ds-citation: #7dd3fc;
+  --ds-citation-surface: #0f2533;
+  --ds-human: #c084fc;
+  --ds-human-surface: #24163a;
+  --ds-shadow-1: 0 1px 2px rgb(0 0 0 / 0.4);
+  --ds-shadow-2: 0 2px 4px rgb(0 0 0 / 0.35), 0 4px 12px -2px rgb(0 0 0 / 0.5);
+  --ds-shadow-3: 0 4px 8px rgb(0 0 0 / 0.35), 0 12px 28px -6px rgb(0 0 0 / 0.6);
+  --ds-shadow-4: 0 8px 16px rgb(0 0 0 / 0.4), 0 24px 48px -12px rgb(0 0 0 / 0.7);
+  color-scheme: dark;
+}
+
+/* forced light must come after the dark rules (same specificity) */
+.ds[data-ds-theme="light"] {
+  --ds-background: #ffffff;
+  --ds-foreground: #0e0e13;
+  --ds-card: #ffffff;
+  --ds-card-foreground: #0e0e13;
+  --ds-popover: #ffffff;
+  --ds-popover-foreground: #0e0e13;
+  --ds-muted: #f4f4f7;
+  --ds-muted-foreground: #5f5f6b;
+  --ds-border: #e5e5ec;
+  --ds-input: #d9d9e2;
+  --ds-primary: #4f46e5;
+  --ds-primary-foreground: #ffffff;
+  --ds-secondary: #eef0ff;
+  --ds-secondary-foreground: #262486;
+  --ds-accent: #f1f1f6;
+  --ds-accent-foreground: #0e0e13;
+  --ds-ring: #6366f1;
+  --ds-destructive: #b91c1c;
+  --ds-destructive-foreground: #ffffff;
+  --ds-success: #166534;
+  --ds-warning: #92400e;
+  --ds-info: #0369a1;
+  --ds-ai: #f6f5ff;
+  --ds-ai-foreground: #1c1a4d;
+  --ds-ai-accent: #7c3aed;
+  --ds-ai-gradient: linear-gradient(120deg, #4f46e5 0%, #7c3aed 45%, #0ea5e9 100%);
+  --ds-confidence-high: #166534;
+  --ds-confidence-medium: #92400e;
+  --ds-confidence-low: #b91c1c;
+  --ds-citation: #0369a1;
+  --ds-citation-surface: #e8f4fb;
+  --ds-human: #9333ea;
+  --ds-human-surface: #f6efff;
+  --ds-shadow-1: 0 1px 2px rgb(14 14 19 / 0.06);
+  --ds-shadow-2: 0 2px 4px rgb(14 14 19 / 0.05), 0 4px 12px -2px rgb(14 14 19 / 0.08);
+  --ds-shadow-3: 0 4px 8px rgb(14 14 19 / 0.05), 0 12px 28px -6px rgb(14 14 19 / 0.14);
+  --ds-shadow-4: 0 8px 16px rgb(14 14 19 / 0.06), 0 24px 48px -12px rgb(14 14 19 / 0.2);
+  color-scheme: light;
+}
+
+.ds *,
+.ds *::before,
+.ds *::after {
+  border-color: var(--ds-border);
+}
+.ds :where(a, button, [role="button"], label, summary) {
+  cursor: pointer;
+}
+.ds :where(button:disabled, [aria-disabled="true"]) {
+  cursor: not-allowed;
+}
+.ds :focus-visible {
+  outline: 2px solid var(--ds-ring);
+  outline-offset: 2px;
+}
+
+/* Portalled layers (dialogs, menus, toasts) render outside the .ds subtree; the
+   DsPortal wrapper gives them their own `.ds` root that mirrors the current theme. */
+
+@keyframes ds-caret {
+  0%, 49% { opacity: 1; }
+  50%, 100% { opacity: 0; }
+}
+@keyframes ds-shimmer {
+  from { background-position: 200% 0; }
+  to { background-position: -200% 0; }
+}
+@keyframes ds-pulse-dot {
+  0%, 100% { transform: scale(0.6); opacity: 0.5; }
+  50% { transform: scale(1); opacity: 1; }
+}
+@keyframes ds-wave {
+  0%, 100% { transform: scaleY(0.3); }
+  50% { transform: scaleY(1); }
+}
+@keyframes ds-in {
+  from { opacity: 0; transform: translateY(4px) scale(0.98); }
+  to { opacity: 1; transform: none; }
+}
+.ds-animate-in {
+  animation: ds-in var(--ds-duration-base) var(--ds-ease-standard);
+}
+@media (prefers-reduced-motion: reduce) {
+  .ds *,
+  .ds *::before,
+  .ds *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+  }
+}
+
+@theme inline {
+  --color-ds-background: var(--ds-background);
+  --color-ds-foreground: var(--ds-foreground);
+  --color-ds-card: var(--ds-card);
+  --color-ds-card-foreground: var(--ds-card-foreground);
+  --color-ds-popover: var(--ds-popover);
+  --color-ds-popover-foreground: var(--ds-popover-foreground);
+  --color-ds-muted: var(--ds-muted);
+  --color-ds-muted-foreground: var(--ds-muted-foreground);
+  --color-ds-border: var(--ds-border);
+  --color-ds-input: var(--ds-input);
+  --color-ds-primary: var(--ds-primary);
+  --color-ds-primary-foreground: var(--ds-primary-foreground);
+  --color-ds-secondary: var(--ds-secondary);
+  --color-ds-secondary-foreground: var(--ds-secondary-foreground);
+  --color-ds-accent: var(--ds-accent);
+  --color-ds-accent-foreground: var(--ds-accent-foreground);
+  --color-ds-ring: var(--ds-ring);
+  --color-ds-destructive: var(--ds-destructive);
+  --color-ds-destructive-foreground: var(--ds-destructive-foreground);
+  --color-ds-success: var(--ds-success);
+  --color-ds-warning: var(--ds-warning);
+  --color-ds-info: var(--ds-info);
+  --color-ds-ai: var(--ds-ai);
+  --color-ds-ai-foreground: var(--ds-ai-foreground);
+  --color-ds-ai-accent: var(--ds-ai-accent);
+  --color-ds-confidence-high: var(--ds-confidence-high);
+  --color-ds-confidence-medium: var(--ds-confidence-medium);
+  --color-ds-confidence-low: var(--ds-confidence-low);
+  --color-ds-citation: var(--ds-citation);
+  --color-ds-citation-surface: var(--ds-citation-surface);
+  --color-ds-human: var(--ds-human);
+  --color-ds-human-surface: var(--ds-human-surface);
+  --radius-ds-sm: calc(var(--ds-radius) - 4px);
+  --radius-ds-md: calc(var(--ds-radius) - 2px);
+  --radius-ds: var(--ds-radius);
+  --radius-ds-lg: calc(var(--ds-radius) + 4px);
+  --radius-ds-xl: calc(var(--ds-radius) + 8px);
+  --shadow-ds-1: var(--ds-shadow-1);
+  --shadow-ds-2: var(--ds-shadow-2);
+  --shadow-ds-3: var(--ds-shadow-3);
+  --shadow-ds-4: var(--ds-shadow-4);
+}

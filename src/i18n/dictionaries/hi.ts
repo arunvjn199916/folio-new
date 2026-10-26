@@ -41,6 +41,7 @@ export const hi: Dictionary = {
   greetings: en.greetings,
   contact: { lead: "आइए", verbs: ["बनाएँ", "डिज़ाइन करें", "शिप करें"], line: "साथ मिलकर बेहतरीन काम।" },
   projects: withText(en.projects, [
+    { descriptor: "AI प्रोडक्ट्स · shadcn/ui पर आधारित", title: "Aura — AI प्रोडक्ट्स के लिए डिज़ाइन सिस्टम", summary: "43 shadcn कंपोनेंट्स, 20 नए AI कंपोनेंट्स (प्रॉम्प्ट, स्ट्रीमिंग, साइटेशन, अप्रूवल, अनडू) और 4 पूरे पैटर्न — सब लाइव और डॉक्यूमेंटेड।" },
     { descriptor: "AI असिस्टेंट · मोबाइल और वेब", title: "Kairo — एक AI असिस्टेंट जिसे आप भरोसे से काम सौंप सकें", summary: "अनुमति की सीढ़ी, हर कदम की रसीद और एक टैप में अनडू — AI को काम सौंपना किसी भरोसेमंद सहकर्मी को सौंपने जैसा।" },
     { descriptor: "पर्सनल फ़ाइनेंस · मोबाइल", title: "Kosh — UPI पीढ़ी के लिए आसान पर्सनल फ़ाइनेंस", summary: "एक संख्या — आज सुरक्षित रूप से कितना खर्च करें; Account Aggregator सहमति से UPI खर्च अपने-आप श्रेणीबद्ध।" },
     { descriptor: "साझा यात्रा · मोबाइल और वेब", title: "Tandem — ग्रुप ट्रिप, जिसमें एक ही व्यक्ति सब न करे", summary: "निजी बजट सहमति, आइडिया पर वोट, ज़िम्मेदारों के साथ दिन की योजना और UPI से हिसाब — पूरा ग्रुप मिलकर योजना बनाए।" },
@@ -146,6 +147,7 @@ export const hi: Dictionary = {
       blocks: { targets: "लक्ष्य — सफलता कैसी दिखेगी; मापे गए परिणाम नहीं।", planned: "नियोजित सत्यापन · 5 लोगों का टेस्ट", liked: "उन्हें क्या पसंद आया", disliked: "उन्हें क्या पसंद नहीं आया", likedPlanned: "जो हमें लगता है काम करेगा", dislikedPlanned: "जिन जोखिमों की हम जाँच कर रहे हैं", tasks: "कार्य", measures: "हम क्या मापते हैं", conclusion: "निष्कर्ष:", case: "केस", simulated: "सिम्युलेटेड पर्सोना वॉकथ्रू · काल्पनिक पात्र, असली प्रतिभागी नहीं", likedSimulated: "वॉकथ्रू में क्या काम किया", dislikedSimulated: "पात्रों को कहाँ मुश्किल हुई", participants: "प्रतिभागी", comfort: "टेक सहजता", taskSuccess: "पूरा हुआ", outcomes: { pass: "पूरा किया", hard: "मुश्किल से पूरा किया", fail: "पूरा नहीं किया" } },
     },
     aiPage: { introTitle: "मैं अस्पष्टता को डिज़ाइन निर्णयों में कैसे बदलता हूँ", back: "← काम पर लौटें", heroAlt: "इंसानी और AI हाथ मिलते हुए", heroLabel: "हीरो चित्र 3:2" },
+    dsDocs: { title: "Aura डिज़ाइन सिस्टम", sub: "shadcn/ui पर बना, AI इंटरफ़ेस के लिए ज़रूरी कंपोनेंट्स के साथ विस्तारित, AI प्रोडक्ट्स के लिए डिज़ाइन सिस्टम।", overview: "अवलोकन", foundations: "आधार", components: "कंपोनेंट्स", ai: "AI कंपोनेंट्स", patterns: "पैटर्न", preview: "पूर्वावलोकन", usage: "उपयोग", props: "Props", prop: "Prop", type: "टाइप", default: "डिफ़ॉल्ट", description: "विवरण", accessibility: "एक्सेसिबिलिटी", do: "करें", dont: "न करें", basedOn: "आधार", newInAura: "Aura में नया", theme: "थीम", light: "लाइट", dark: "डार्क", system: "साइट", previous: "पिछला", next: "अगला", navLabel: "डिज़ाइन सिस्टम", caseStudy: "केस स्टडी पढ़ें", colors: "रंग", type_: "टाइपोग्राफ़ी", spacing: "स्पेसिंग और रेडियस", elevation: "एलिवेशन", motion: "मोशन", principles: "सिद्धांत", count: "कंपोनेंट्स" },
     notFound: { title: "यह पेज कहीं भटक गया।", home: "होम पर लौटें" },
     player: { nowPlaying: "अभी चल रहा है", minimize: "प्लेयर छोटा करें", expand: "प्लेयर बड़ा करें", title: "Spotify प्लेयर" },
     loader: {

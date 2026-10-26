@@ -10,11 +10,24 @@ export type Project = {
   media: string; // logical name under media/images (see content/images.ts)
   tint: string; // placeholder gradient while media is missing
   wip?: boolean;
+  /** Link somewhere other than /work/<slug> (e.g. the live design-system docs). */
+  href?: string;
 };
 
 export const projectFilters: ("All" | ProjectFilter)[] = ["All", "AI", "Enterprise", "Mobile", "Web"];
 
 export const projects: Project[] = [
+  {
+    slug: "aura-design-system",
+    audience: "Design system",
+    descriptor: "AI products · built on shadcn/ui",
+    title: "Aura — a design system for AI products",
+    summary: "43 shadcn-based components re-tokened, 20 new AI components (prompt input, streaming, citations, approvals, undo) and 4 full patterns, all live and documented.",
+    filters: ["AI", "Web"],
+    media: "cases/covers/aura.webp",
+    tint: "linear-gradient(135deg,#eef0ff,#cfc6ff)",
+    href: "/design-system",
+  },
   // Self-initiated concept studies (full case studies in content/case-studies).
   {
     slug: "kairo-ai-personal-assistant",

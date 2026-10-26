@@ -11,6 +11,10 @@ import { getDictionary, getLocale } from "@/i18n/server";
 import { localePath } from "@/i18n/config";
 
 // Slugs are language-neutral; [lang] comes from the parent layout's static params.
+// Every slug is prerendered from generateStaticParams, so navigations are already
+// served from the static shell; opt out of the dev-time instant-navigation check.
+export const instant = false;
+
 export function generateStaticParams() {
   return baseProjects.map((p) => ({ slug: p.slug }));
 }
@@ -93,7 +97,7 @@ export default async function CaseStudyPage({ params }: PageProps<"/[lang]/work/
           </span>
           {t.backHome}
         </Link>
-        <Link href={`${home}/work/${next.slug}`} className="group flex min-w-0 items-center gap-3 text-right">
+        <Link href={localePath(locale, next.href ?? `/work/${next.slug}`)} className="group flex min-w-0 items-center gap-3 text-right">
           <span className="min-w-0">
             <span className="block text-[12px] text-ink-3">{t.next}</span>
             <span className="block max-w-[260px] truncate font-display text-[16px] font-semibold text-ink sm:text-[18px]">{next.title}</span>

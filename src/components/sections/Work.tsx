@@ -20,7 +20,7 @@ export async function Work() {
     filters: p.filters,
     node: (
       <Link
-        href={localePath(locale, `/work/${p.slug}`)}
+        href={localePath(locale, p.href ?? `/work/${p.slug}`)}
         className="group flex h-full flex-col rounded-[var(--radius)] bg-card p-5 shadow-[var(--card-shadow)] transition-[transform,box-shadow] duration-[400ms] ease-[var(--ease-out)] hover:-translate-y-1 hover:shadow-[var(--card-shadow-hover)] md:p-6"
       >
         <Media
