@@ -83,7 +83,7 @@ export function PrismFolderMount({ windows, labels }: { windows: Win[]; labels: 
             style={{ width: w.w, height: w.h, zIndex: 10 + order.indexOf(i), background: w.tint }}
           >
             {w.src ? (
-              <Image src={w.src} alt="" fill sizes="240px" className="pointer-events-none object-cover" draggable={false} />
+              <Image src={w.src} alt="" fill sizes="240px" className="pointer-events-none object-cover object-top" draggable={false} />
             ) : (
               <PlaceholderLabel label={`${labels.screen} ${i + 1}`} />
             )}

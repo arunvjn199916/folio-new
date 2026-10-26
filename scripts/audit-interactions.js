@@ -80,7 +80,7 @@ async (page) => {
     const ghost = await page.evaluate(() => [...document.querySelectorAll("[data-flip-id]")].filter((e) => !e.hidden && getComputedStyle(e).opacity < 0.5).length);
     if (ghost) note(`work: filter ${name} leaves faded cards`, false, ghost);
   }
-  note("work: filter counts", counts.AI === 4 && counts.All === 7, JSON.stringify(counts));
+  note("work: filter counts", counts.AI === 5 && counts.All === 11, JSON.stringify(counts));
 
   // 6. Prism folder
   const folder = page.getByRole("button", { name: "Open the UI archive" });

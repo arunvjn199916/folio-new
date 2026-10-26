@@ -15,6 +15,47 @@ export type Project = {
 export const projectFilters: ("All" | ProjectFilter)[] = ["All", "AI", "Enterprise", "Mobile", "Web"];
 
 export const projects: Project[] = [
+  // Self-initiated concept studies (full case studies in content/case-studies).
+  {
+    slug: "kairo-ai-personal-assistant",
+    audience: "Concept",
+    descriptor: "AI assistant · Mobile & Web",
+    title: "Kairo — an AI assistant you can safely hand things to",
+    summary: "A permission ladder, receipts for every action and one-tap undo, so delegating to AI feels like delegating to a trusted colleague.",
+    filters: ["AI", "Mobile", "Web"],
+    media: "cases/covers/kairo.webp",
+    tint: "linear-gradient(135deg,#ece8ff,#cdb8ff)",
+  },
+  {
+    slug: "kosh-personal-finance",
+    audience: "Concept",
+    descriptor: "Personal finance · Mobile",
+    title: "Kosh — personal finance made simple for the UPI generation",
+    summary: "One number — safe to spend today — with UPI spends auto-sorted through Account Aggregator consent and months you can see at a glance.",
+    filters: ["Mobile"],
+    media: "cases/covers/kosh.webp",
+    tint: "linear-gradient(135deg,#e8f5d0,#c6f36b)",
+  },
+  {
+    slug: "tandem-group-trip-planner",
+    audience: "Concept",
+    descriptor: "Collaborative travel · Mobile & Web",
+    title: "Tandem — group trips without one person doing everything",
+    summary: "A private budget handshake, voting on ideas, a day planner with owners and UPI settle-up, so the whole group plans the trip.",
+    filters: ["Mobile", "Web"],
+    media: "cases/covers/tandem.webp",
+    tint: "linear-gradient(135deg,#fff0e0,#ffb59f)",
+  },
+  {
+    slug: "secondly-trusted-marketplace",
+    audience: "Concept",
+    descriptor: "Marketplace · Mobile & Web",
+    title: "Secondly — a second-hand marketplace strangers can trust",
+    summary: "Verified listings, payment held until inspection, safe meet-ups and a trust score you can read, for used phones and electronics.",
+    filters: ["Mobile", "Web"],
+    media: "cases/covers/secondly.webp",
+    tint: "linear-gradient(135deg,#e3ecff,#a9c2ff)",
+  },
   {
     slug: "agentic-ai-participant-portal",
     audience: "B2B",
@@ -89,11 +130,15 @@ export const projects: Project[] = [
 ];
 
 // Screens that fly out of the "UI archive" folder.
+// UI archive windows: extra UX Magic explorations plus a few shots from the concept studies.
+// w/h follow each image's ratio (web 1440×844, phone 390×844) so nothing is cropped oddly.
 export const archive = [
-  { src: "archive/archive-1.webp", tint: "#cdb8ff", w: 220, h: 150 },
-  { src: "archive/archive-2.webp", tint: "#a8d8ff", w: 120, h: 240 },
-  { src: "archive/archive-3.webp", tint: "#ffb6d9", w: 200, h: 200 },
-  { src: "archive/archive-4.webp", tint: "#bff0e0", w: 120, h: 240 },
-  { src: "archive/archive-5.webp", tint: "#ffe3a8", w: 240, h: 140 },
-  { src: "archive/archive-6.webp", tint: "#ffc2a8", w: 160, h: 220 },
+  { src: "archive/kosh-insights-web.webp", tint: "#e9f3d6", w: 240, h: 141 },
+  { src: "cases/kairo/morning-brief.webp", tint: "#ece8ff", w: 118, h: 255 },
+  { src: "archive/secondly-badge-system.webp", tint: "#e3ebff", w: 220, h: 129 },
+  { src: "cases/tandem/vote-result.webp", tint: "#ffeadb", w: 118, h: 255 },
+  { src: "archive/tandem-landing-hero.webp", tint: "#ffeadb", w: 250, h: 147 },
+  { src: "cases/secondly/listing-detail.webp", tint: "#e3ebff", w: 118, h: 255 },
+  { src: "archive/kairo-notifications.webp", tint: "#ece8ff", w: 220, h: 129 },
+  { src: "archive/kosh-widgets.webp", tint: "#e9f3d6", w: 200, h: 117 },
 ];
