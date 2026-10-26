@@ -1,0 +1,206 @@
+/*
+  Accessibility adjustments. Every rule is keyed off a data-a11y-* attribute or --a11y-*
+  variable that lib/a11y/model.ts → applyA11y() sets on <html> (also before first paint,
+  via the head script). The panel itself (.a11y-ui) is excluded from content changes so
+  it always stays usable.
+*/
+
+/* ── Always-on basics ───────────────────────────────────────────────────── */
+.skip-link {
+  position: fixed;
+  left: 16px;
+  top: 12px;
+  z-index: 200;
+  transform: translateY(-160%);
+  border-radius: 999px;
+  background: var(--c-ink);
+  color: var(--c-on-ink);
+  padding: 10px 18px;
+  font-size: 14px;
+  font-weight: 600;
+  transition: transform 0.2s ease;
+}
+.skip-link:focus-visible {
+  transform: translateY(0);
+}
+main:focus {
+  outline: none;
+}
+
+/* ── Content ───────────────────────────────────────────────────────────── */
+html[data-a11y-content-scale] main {
+  zoom: var(--a11y-content-scale);
+}
+
+/* Font size scales text blocks only (zoom on the outermost text element, so nested
+   elements never compound). */
+html[data-a11y-font-scale] main :is(p, li, h1, h2, h3, h4, blockquote, figcaption, label, dt, dd):not(:is(p, li, h1, h2, h3, h4, blockquote, figcaption, label, dt, dd) *) {
+  zoom: var(--a11y-font-scale);
+}
+html[data-a11y-line-height] main :is(p, li, blockquote, figcaption, dd, span) {
+  line-height: var(--a11y-line-height) !important;
+}
+html[data-a11y-letter-spacing] main * {
+  letter-spacing: var(--a11y-letter-spacing) !important;
+}
+html[data-a11y-readable-font] body :not(.a11y-ui, .a11y-ui *, svg, svg *, [aria-hidden="true"]) {
+  font-family: var(--font-readable), Verdana, Tahoma, var(--font-noto-tamil), var(--font-noto-deva), sans-serif !important;
+}
+html[data-a11y-highlight-titles] main :is(h1, h2, h3, h4) {
+  outline: 3px solid var(--c-violet);
+  outline-offset: 6px;
+  border-radius: 6px;
+}
+html[data-a11y-highlight-links] :is(main, header, footer) a:not(.a11y-ui *) {
+  text-decoration: underline !important;
+  text-decoration-thickness: 2px !important;
+  text-underline-offset: 4px;
+  outline: 2px dashed var(--c-pink);
+  outline-offset: 3px;
+}
+html[data-a11y-align="left"] main :is(p, h1, h2, h3, h4, li, blockquote, figcaption) {
+  text-align: left !important;
+}
+html[data-a11y-align="center"] main :is(p, h1, h2, h3, h4, li, blockquote, figcaption) {
+  text-align: center !important;
+}
+html[data-a11y-align="right"] main :is(p, h1, h2, h3, h4, li, blockquote, figcaption) {
+  text-align: right !important;
+}
+
+/* ── Colour ────────────────────────────────────────────────────────────── */
+/* Contrast modes override the theme tokens themselves, so every component follows. */
+html[data-a11y-contrast="dark"] {
+  color-scheme: dark;
+  --c-paper: #000000;
+  --c-ink: #ffffff;
+  --c-ink-2: #f0f0f0;
+  --c-ink-3: #d0d0d0;
+  --c-line: rgba(255, 255, 255, 0.4);
+  --c-card: #0d0d0d;
+  --c-surface: #0d0d0d;
+  --c-surface-3: #1f1f1f;
+  --c-on-ink: #000000;
+  --c-night: #000000;
+  --c-on-night: #ffffff;
+  --c-note: #111111;
+  --c-violet: #c7b8ff;
+  --c-pink: #ff9cc7;
+  --c-blue: #9cc6ff;
+  --c-green: #7fe0a9;
+  --c-grain-1: #000000;
+  --c-grain-2: #000000;
+  --c-grain-3: #000000;
+  --c-grain-4: #000000;
+  --c-sky-1: #000000;
+  --c-sky-2: #000000;
+  --c-cloud: #333333;
+}
+html[data-a11y-contrast="light"] {
+  color-scheme: light;
+  --c-paper: #ffffff;
+  --c-ink: #000000;
+  --c-ink-2: #111111;
+  --c-ink-3: #2a2a2a;
+  --c-line: rgba(0, 0, 0, 0.45);
+  --c-card: #ffffff;
+  --c-surface: #ffffff;
+  --c-surface-3: #eeeeee;
+  --c-on-ink: #ffffff;
+  --c-night: #ffffff;
+  --c-on-night: #000000;
+  --c-note: #ffffff;
+  --c-violet: #3d1fb8;
+  --c-pink: #b0004a;
+  --c-blue: #0040a8;
+  --c-green: #00632c;
+  --c-grain-1: #ffffff;
+  --c-grain-2: #ffffff;
+  --c-grain-3: #ffffff;
+  --c-grain-4: #ffffff;
+  --c-sky-1: #ffffff;
+  --c-sky-2: #ffffff;
+}
+html[data-a11y-contrast="high"] main {
+  filter: contrast(1.35);
+}
+/* Saturation filters go on content containers, not <html>, so fixed UI keeps working. */
+html[data-a11y-saturation="high"] :is(main, footer, [data-a11y-filterable]) {
+  filter: saturate(1.8);
+}
+html[data-a11y-saturation="low"] :is(main, footer, [data-a11y-filterable]) {
+  filter: saturate(0.45);
+}
+html[data-a11y-saturation="mono"] :is(main, footer, [data-a11y-filterable]) {
+  filter: grayscale(1);
+}
+html[data-a11y-text-color] main :is(p, li, span, a, blockquote, figcaption, label, dd) {
+  color: var(--a11y-text-color) !important;
+}
+html[data-a11y-title-color] main :is(h1, h2, h3, h4) {
+  color: var(--a11y-title-color) !important;
+}
+html[data-a11y-bg-color] {
+  --c-paper: var(--a11y-bg-color);
+}
+html[data-a11y-bg-color] [data-decor] {
+  display: none !important;
+}
+
+/* ── Orientation ───────────────────────────────────────────────────────── */
+html[data-a11y-hide-images] main :is(img, video, picture),
+html[data-a11y-hide-images] [data-photo] {
+  visibility: hidden !important;
+}
+html[data-a11y-mute-sounds] [data-music-player] {
+  display: none !important;
+}
+/* Read mode: drop decorative layers and give text a calm, single column. */
+html[data-a11y-read-mode] [data-decor] {
+  display: none !important;
+}
+html[data-a11y-read-mode] main {
+  max-width: 900px;
+  margin-inline: auto;
+}
+html[data-a11y-read-mode] body {
+  background: var(--c-paper);
+}
+html[data-a11y-stop-animations] *,
+html[data-a11y-stop-animations] *::before,
+html[data-a11y-stop-animations] *::after {
+  animation-duration: 0.001ms !important;
+  animation-iteration-count: 1 !important;
+  transition-duration: 0.001ms !important;
+  scroll-behavior: auto !important;
+}
+html[data-a11y-highlight-hover] :is(a, button, p, li, h1, h2, h3, img, [role="button"]):not(.a11y-ui *):hover {
+  outline: 3px solid var(--c-blue) !important;
+  outline-offset: 3px;
+}
+html[data-a11y-highlight-focus] :focus,
+html[data-a11y-highlight-focus] :focus-visible {
+  outline: 4px solid var(--c-violet) !important;
+  outline-offset: 4px !important;
+  box-shadow: 0 0 0 8px color-mix(in srgb, var(--c-violet) 25%, transparent) !important;
+}
+html[data-a11y-keyboard-nav] .skip-link {
+  transform: translateY(0);
+}
+@media (hover: hover) and (pointer: fine) {
+  html[data-a11y-cursor="black"],
+  html[data-a11y-cursor="black"] * {
+    cursor: url("/cursors/big-black.svg") 2 2, auto !important;
+  }
+  html[data-a11y-cursor="white"],
+  html[data-a11y-cursor="white"] * {
+    cursor: url("/cursors/big-white.svg") 2 2, auto !important;
+  }
+}
+
+/* The panel never changes under the user (except colour scheme). */
+.a11y-ui,
+.a11y-ui * {
+  zoom: normal !important;
+  letter-spacing: normal !important;
+}

@@ -1,26 +1,260 @@
 @import "tailwindcss";
 
+@custom-variant dark (&:where([data-theme="dark"], [data-theme="dark"] *));
+
+/* ── Tokens ──────────────────────────────────────────────────────────────────
+   Every theme-dependent colour lives here. Components only use these tokens;
+   [data-theme="dark"] redefines them. Fixed brand/illustration colours (tool logos,
+   stickers, the orb, the always-dark music player) are intentionally not tokens. */
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  color-scheme: light;
+  --c-paper: #f7f4fb; /* page background */
+  --c-ink: #1a1822;
+  --c-ink-2: #4b4858;
+  --c-ink-3: #8a8798;
+  --c-line: rgba(26, 24, 34, 0.1);
+  --c-card: #ffffff; /* solid cards */
+  --c-surface: #ffffff; /* translucent panels use surface/NN */
+  --c-surface-3: #efedf3; /* chips, subtle fills */
+  --c-on-ink: #ffffff; /* text on ink-filled buttons */
+  --c-night: #16141d; /* the dark bands (skills, tools, essay) */
+  --c-on-night: #ffffff;
+  --c-note: #fffdf7; /* handwritten note paper */
+  --c-photo: #ffffff; /* polaroid / window frames */
+  --c-on-photo: #4b4858;
+  --c-loader: #f4f3f1;
+  --c-dot: rgba(26, 24, 34, 0.14);
+  --c-glow: 123 92 255; /* rgb triplet for the cursor dot glow */
+  --c-grain-1: #bfe0ff;
+  --c-grain-2: #ffd0e8;
+  --c-grain-3: #e2d8ff;
+  --c-grain-4: #f7f4fb;
+  --c-sky-1: #cfe6ff; /* footer sky */
+  --c-sky-2: #a8d0ff;
+  --c-cloud: #ffffff;
+  --c-highlight: #fff07a;
+
+  --c-sky: #a8d8ff;
+  --c-pink: #ff5c9d;
+  --c-blush: #ffb6d9;
+  --c-lav: #cdb8ff;
+  --c-mint: #bff0e0;
+  --c-butter: #ffe3a8;
+
+  --c-violet: #7b5cff;
+  --c-blue: #2f80ff;
+  --c-green: #18a957;
+  --c-red: #ff3b5c;
+
+  --radius: 20px;
+  --card-shadow: 0 1px 2px rgba(26, 24, 34, 0.06), 0 8px 24px -12px rgba(26, 24, 34, 0.18);
+  --card-shadow-hover: 0 2px 4px rgba(26, 24, 34, 0.06), 0 16px 40px -12px rgba(26, 24, 34, 0.28);
+  --ease-out: cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+:root[data-theme="dark"] {
+  color-scheme: dark;
+  --c-paper: #0f0d15;
+  --c-ink: #f2eff9;
+  --c-ink-2: #c4bed4;
+  --c-ink-3: #8d869f;
+  --c-line: rgba(242, 239, 249, 0.12);
+  --c-card: #1b1824;
+  --c-surface: #1b1824;
+  --c-surface-3: #2a2636;
+  --c-on-ink: #0f0d15;
+  --c-night: #07060b;
+  --c-on-night: #f2eff9;
+  --c-note: #24202e;
+  --c-photo: #ece8f3;
+  --c-on-photo: #4b4858;
+  --c-loader: #0f0d15;
+  --c-dot: rgba(242, 239, 249, 0.12);
+  --c-glow: 170 150 255;
+  --c-grain-1: #1a1a4a;
+  --c-grain-2: #3a1636;
+  --c-grain-3: #241a46;
+  --c-grain-4: #0f0d15;
+  --c-sky-1: #121a33;
+  --c-sky-2: #1b2b57;
+  --c-cloud: #4b5590;
+  --c-highlight: #8a7a1c;
+
+  --c-sky: #5a8fc4;
+  --c-pink: #ff74ad;
+  --c-blush: #a8577d;
+  --c-lav: #7c66c9;
+  --c-mint: #3f8d78;
+  --c-butter: #a08648;
+
+  --c-violet: #a28dff;
+  --c-blue: #6aa5ff;
+  --c-green: #3bc985;
+  --c-red: #ff6b85;
+
+  --card-shadow: 0 1px 2px rgba(0, 0, 0, 0.4), 0 8px 24px -12px rgba(0, 0, 0, 0.6);
+  --card-shadow-hover: 0 2px 4px rgba(0, 0, 0, 0.4), 0 16px 40px -12px rgba(0, 0, 0, 0.75);
 }
 
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --color-paper: var(--c-paper);
+  --color-ink: var(--c-ink);
+  --color-ink-2: var(--c-ink-2);
+  --color-ink-3: var(--c-ink-3);
+  --color-line: var(--c-line);
+  --color-card: var(--c-card);
+  --color-surface: var(--c-surface);
+  --color-surface-3: var(--c-surface-3);
+  --color-on-ink: var(--c-on-ink);
+  --color-night: var(--c-night);
+  --color-on-night: var(--c-on-night);
+  --color-note: var(--c-note);
+  --color-photo: var(--c-photo);
+  --color-on-photo: var(--c-on-photo);
+  --color-loader: var(--c-loader);
+  --color-sky-1: var(--c-sky-1);
+  --color-sky-2: var(--c-sky-2);
+  --color-cloud: var(--c-cloud);
+  --color-sky: var(--c-sky);
+  --color-pink: var(--c-pink);
+  --color-blush: var(--c-blush);
+  --color-lav: var(--c-lav);
+  --color-mint: var(--c-mint);
+  --color-butter: var(--c-butter);
+  --color-violet: var(--c-violet);
+  --color-blue: var(--c-blue);
+  --color-green: var(--c-green);
+  --color-red: var(--c-red);
+
+  --font-display: var(--font-clash), var(--font-noto-tamil), var(--font-noto-deva), ui-sans-serif, system-ui, sans-serif;
+  --font-sans: var(--font-geist), var(--font-noto-tamil), var(--font-noto-deva), ui-sans-serif, system-ui, sans-serif;
+  --font-serif: var(--font-instrument), var(--font-noto-tamil), var(--font-noto-deva), Georgia, serif;
+  --font-script: var(--font-caveat), var(--font-noto-tamil), var(--font-noto-deva), cursive;
+  --font-mono: var(--font-dm-mono), var(--font-noto-tamil), var(--font-noto-deva), ui-monospace, monospace;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+/* ── Base ── */
+html {
+  background: var(--c-paper);
+  color: var(--c-ink);
+  transition: background-color 0.3s ease;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+html.lenis,
+html.lenis body {
+  height: auto;
+}
+.lenis.lenis-smooth {
+  scroll-behavior: auto !important;
+}
+.lenis.lenis-stopped {
+  overflow: hidden;
+}
+body {
+  font-family: var(--font-sans);
+  overflow-x: clip;
+}
+
+/* Pixel cursors (our own art, same idea as the Shalmali reference) */
+@media (hover: hover) and (pointer: fine) {
+  html,
+  body {
+    cursor: url("/cursors/arrow.svg") 1 1, auto;
+  }
+  a,
+  button,
+  [role="button"],
+  label,
+  summary,
+  .cursor-hand {
+    cursor: url("/cursors/hand.svg") 11 1, pointer;
+  }
+  .cursor-grab {
+    cursor: url("/cursors/grab.svg") 16 16, grab;
   }
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+::selection {
+  background: var(--c-blush);
+  color: var(--c-ink);
+}
+
+:focus-visible {
+  outline: 2px solid var(--c-violet);
+  outline-offset: 3px;
+}
+
+/* ── Shared bits ── */
+.dot-grid {
+  background-image: radial-gradient(var(--c-dot) 1px, transparent 1px);
+  background-size: 18px 18px;
+}
+
+.eyebrow {
+  font-family: var(--font-sans);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--c-ink-3);
+}
+
+.highlighter {
+  background: linear-gradient(transparent 12%, var(--c-highlight) 12%, var(--c-highlight) 88%, transparent 88%);
+  padding: 0 2px;
+}
+
+.caution-tape {
+  background: repeating-linear-gradient(-45deg, #ffd23a 0 8px, #1a1822 8px 16px);
+}
+
+/* Experience card hover: three screenshots fan out above the card */
+.fan-shot {
+  opacity: 0;
+  transform: translateX(-50%) translateY(30px) scale(0.6);
+  transition:
+    transform 0.5s cubic-bezier(0.34, 1.56, 0.64, 1),
+    opacity 0.3s ease;
+}
+.group:hover .fan-shot {
+  opacity: 1;
+  transform: translateX(calc(-50% + var(--fan-x))) translateY(0) rotate(var(--fan-r)) scale(1);
+}
+
+@keyframes marquee {
+  from {
+    transform: translate3d(0, 0, 0);
+  }
+  to {
+    transform: translate3d(-50%, 0, 0);
+  }
+}
+
+@keyframes eq-1 {
+  0%, 100% { height: 30%; }
+  50% { height: 95%; }
+}
+@keyframes eq-2 {
+  0%, 100% { height: 70%; }
+  50% { height: 20%; }
+}
+@keyframes eq-3 {
+  0%, 100% { height: 45%; }
+  50% { height: 100%; }
+}
+
+@keyframes caret {
+  0%, 49% { opacity: 1; }
+  50%, 100% { opacity: 0; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+  }
 }
