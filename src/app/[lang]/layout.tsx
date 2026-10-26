@@ -43,7 +43,7 @@ export async function generateMetadata(): Promise<Metadata> {
   const locale = await getLocale();
   const dict = await getDictionary();
   return {
-    metadataBase: new URL("https://arunvijayan.design"),
+    metadataBase: new URL("https://arunfolioproductdesigner.netlify.app"),
     title: dict.ui.meta.title,
     description: dict.ui.meta.description,
     openGraph: { title: dict.ui.meta.title, description: dict.ui.meta.description, type: "website", locale: localeMeta[locale].og },

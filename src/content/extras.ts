@@ -38,16 +38,16 @@ export const aiWorkflow = {
     },
     {
       title: "Exploring Before Committing",
-      tools: "Figma · Figma Make",
+      tools: "Figma",
       body: [
         "Once the problem is clear I explore widely. Generating early flows and wireframes is cheap now, which makes me more willing to try three directions before committing to one.",
       ],
     },
     {
       title: "Prototyping in Real Code",
-      tools: "Cursor · Claude · GitHub · Netlify",
+      tools: "Claude · Claude Code · Cursor",
       body: [
-        "For AI search, voice and multi-agent workflows a static mockup can't show the real behaviour. I build production-grade prototypes with Cursor and Claude, version them on GitHub and deploy on Netlify.",
+        "For AI search, voice and multi-agent workflows a static mockup can't show the real behaviour. I build working prototypes with Claude, Claude Code and Cursor and put them in front of users, product and engineering in days rather than weeks.",
         "That's how the retirement mobile MVP went from wireframes to 500+ beta users in six weeks.",
       ],
     },

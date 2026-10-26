@@ -22,6 +22,7 @@ const icons: Record<string, SimpleIcon> = {
   figma: siFigma,
   cursor: siCursor,
   claude: siClaude,
+  claudecode: siClaude,
   googlegemini: siGooglegemini,
   gemini: siGooglegemini,
   perplexity: siPerplexity,
@@ -72,6 +73,6 @@ export function ToolIcon({ slug, size = 20, mono, className }: { slug: string; s
 }
 
 export const toolSlug = (name: string) =>
-  ({ Figma: "figma", Cursor: "cursor", Claude: "claude", ChatGPT: "chatgpt", Gemini: "googlegemini", GitHub: "github", Netlify: "netlify", Framer: "framer", Miro: "miro" })[
+  ({ Figma: "figma", Cursor: "cursor", Claude: "claude", "Claude Code": "claudecode", "Adobe XD": "adobexd", ChatGPT: "chatgpt", Gemini: "googlegemini", GitHub: "github", Netlify: "netlify", Framer: "framer", Miro: "miro" })[
     name
   ] ?? name.toLowerCase();

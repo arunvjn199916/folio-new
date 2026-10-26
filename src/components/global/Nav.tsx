@@ -7,6 +7,7 @@ import { blip } from "@/lib/intro";
 import { useI18n } from "@/i18n/client";
 import { ThemeToggle } from "./ThemeToggle";
 import { LanguageSwitcher } from "./LanguageSwitcher";
+import { A11yTrigger } from "@/components/a11y/A11yTrigger";
 
 const sectionIds = ["about", "work", "experience", "contact"] as const;
 
@@ -135,6 +136,7 @@ export function Nav() {
 
           <motion.div layout className="flex items-center">
             <ThemeToggle />
+            <A11yTrigger />
             <LanguageSwitcher />
           </motion.div>
           <motion.a

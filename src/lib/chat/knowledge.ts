@@ -34,7 +34,8 @@ function knowledge() {
     `HOW HE USES AI: ${aiWorkflow.phases.map((p) => `${p.title}${p.tools ? ` (${p.tools})` : ""}: ${p.body.join(" ")}`).join(" ")}`,
     "",
     "SITE SECTIONS: Hero, About, Work (projects), Journey (experience timeline), Skills, Tools, Process & Education, Testimonials, Contact, and an AI Workflow page at /ai-workflow.",
-    "LANGUAGES: English (fluent), Tamil (native). AVAILABILITY: open to full-time roles.",
+    `FOCUS: ${profile.tagline}`,
+    `LANGUAGES: English (fluent), Tamil (native). AVAILABILITY: ${profile.availability}; open to full-time roles.`,
   ].join("\n");
 }
 

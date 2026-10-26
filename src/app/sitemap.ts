@@ -2,7 +2,7 @@ import type { MetadataRoute } from "next";
 import { projects } from "@/content/projects";
 import { locales, localeMeta } from "@/i18n/config";
 
-const base = "https://arunvijayan.design";
+const base = "https://arunfolioproductdesigner.netlify.app";
 const paths = ["", "/ai-workflow", ...projects.map((p) => `/work/${p.slug}`)];
 
 // Every page in every language, each listing its translations (hreflang).

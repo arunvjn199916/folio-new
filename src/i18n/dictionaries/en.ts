@@ -27,7 +27,7 @@ export const en = {
     meta: {
       title: `${profile.name} — ${profile.role}`,
       description:
-        "Senior Product Designer designing enterprise SaaS, AI-powered workflows and intelligent product experiences. Based in Chennai, India.",
+        "AI-first product designer for enterprise SaaS and FinTech — AI search, voice and agentic experiences for US retirement (401(k)) platforms. Based in Chennai, open to relocation.",
       aiTitle: `How I Design in the Age of AI — ${profile.name}`,
       aiDescription: `How ${profile.name} uses Claude, Cursor, Figma and AI research tools across the product design workflow.`,
     },

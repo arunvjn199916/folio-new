@@ -12,13 +12,16 @@ const BODY = 152;
 const GAP = 16;
 // The chat button lives bottom-left, so a player parked there sits above it.
 const CHAT_CLEARANCE = 84;
+// Netlify injects its "Powered by Netlify" badge bottom-right; the player parks above it.
+const BADGE_CLEARANCE = 56;
+const BOTTOM: Record<"bl" | "br", number> = { bl: GAP + CHAT_CLEARANCE, br: GAP + BADGE_CLEARANCE };
 
 type Corner = "tl" | "tr" | "bl" | "br";
 const isCorner = (v: unknown): v is Corner => v === "tl" || v === "tr" || v === "bl" || v === "br";
 
 const anchor = (c: Corner): React.CSSProperties => ({
   [c[1] === "r" ? "right" : "left"]: GAP,
-  [c[0] === "b" ? "bottom" : "top"]: c === "bl" ? GAP + CHAT_CLEARANCE : c[0] === "b" ? GAP : 84,
+  [c[0] === "b" ? "bottom" : "top"]: c === "bl" || c === "br" ? BOTTOM[c] : 84,
 });
 
 /*

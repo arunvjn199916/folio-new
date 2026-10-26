@@ -102,14 +102,12 @@ export function Contact() {
             <ExternalLink href={profile.links.behance} aria-label="Behance" className="grid size-8 place-items-center rounded-full bg-ink text-on-ink transition hover:-translate-y-0.5">
               <ToolIcon slug="behance" size={14} mono />
             </ExternalLink>
-            <ExternalLink href={profile.links.github} aria-label="GitHub" className="grid size-8 place-items-center rounded-full bg-ink text-on-ink transition hover:-translate-y-0.5">
-              <ToolIcon slug="github" size={14} mono />
-            </ExternalLink>
           </div>
         </div>
         <div>
           <p className="mb-1.5 text-ink-3">{ui.contactUi.location}</p>
           <p className="font-medium text-ink">{profile.location}</p>
+          <p className="mt-0.5 max-w-[320px] text-[12px] text-ink-3">{profile.availability}</p>
         </div>
       </div>
 

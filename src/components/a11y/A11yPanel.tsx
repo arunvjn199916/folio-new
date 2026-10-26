@@ -3,7 +3,6 @@
 import { useCallback, useEffect, useRef, useState, useSyncExternalStore, type ComponentType } from "react";
 import { AnimatePresence, motion } from "motion/react";
 import {
-  Accessibility,
   AlignCenter,
   AlignLeft,
   AlignRight,
@@ -56,6 +55,7 @@ import { PROFILE_IDS, STEPS, SWATCHES, type A11ySettings, type ProfileId } from 
 import { theme, type ThemePref } from "@/lib/theme";
 import { LanguageSwitcher } from "@/components/global/LanguageSwitcher";
 import { OPEN_CHAT_EVENT } from "@/components/chat/ChatWidget";
+import { OPEN_A11Y_EVENT } from "./A11yTrigger";
 import { cn } from "@/lib/utils";
 
 type Icon = ComponentType<LucideProps>;
@@ -74,7 +74,8 @@ const SECTION_IDS = ["top", "about", "work", "experience", "skills", "tools", "c
   accessiBe reference: header (close · language · title · Reset / Statement / Hide), an
   AI Assistant card, one-tap profiles (OFF/ON), then Content, Colour and Orientation
   tiles. Every control maps to the typed settings model; nothing here touches the DOM
-  directly — applyA11y + a11y.css do. Alt+A opens it from anywhere (and un-hides it).
+  directly — applyA11y + a11y.css do. Opened from the nav button (OPEN_A11Y_EVENT) or
+  Alt+A from anywhere (which also un-hides the nav button).
 */
 export function A11yPanel() {
   const { dict } = useI18n();
@@ -83,23 +84,35 @@ export function A11yPanel() {
   const [open, setOpen] = useState(false);
   const [statement, setStatement] = useState(false);
   const panel = useRef<HTMLDivElement>(null);
-  const trigger = useRef<HTMLButtonElement>(null);
+  // whatever had focus when the panel opened (the nav button, usually) gets it back on close
+  const returnFocus = useRef<HTMLElement | null>(null);
 
   // Apply saved settings once on load (the head script already did, this syncs the store).
   useEffect(() => a11y.set({}), []);
 
+  const openPanel = useCallback(() => {
+    if (document.activeElement instanceof HTMLElement) returnFocus.current = document.activeElement;
+    setOpen(true);
+  }, []);
+
   const close = useCallback(() => {
     setOpen(false);
     setStatement(false);
-    requestAnimationFrame(() => trigger.current?.focus());
+    requestAnimationFrame(() => returnFocus.current?.focus());
   }, []);
+
+  useEffect(() => {
+    window.addEventListener(OPEN_A11Y_EVENT, openPanel);
+    return () => window.removeEventListener(OPEN_A11Y_EVENT, openPanel);
+  }, [openPanel]);
 
   useEffect(() => {
     const onKey = (e: KeyboardEvent) => {
       if (e.altKey && (e.key === "a" || e.key === "A" || e.code === "KeyA")) {
         e.preventDefault();
         if (a11y.get().hidden) a11y.set({ hidden: false });
-        setOpen((o) => !o);
+        if (open) close();
+        else openPanel();
       } else if (e.key === "Escape" && open) {
         if (statement) setStatement(false);
         else close();
@@ -120,7 +133,7 @@ export function A11yPanel() {
     };
     window.addEventListener("keydown", onKey);
     return () => window.removeEventListener("keydown", onKey);
-  }, [open, statement, close]);
+  }, [open, statement, close, openPanel]);
 
   useEffect(() => {
     if (open) requestAnimationFrame(() => panel.current?.querySelector<HTMLElement>("[data-autofocus]")?.focus());
@@ -148,25 +161,6 @@ export function A11yPanel() {
 
   return (
     <div className="a11y-ui">
-      {/* trigger */}
-      <AnimatePresence>
-        {!s.hidden && !open && (
-          <motion.button
-            ref={trigger}
-            key="trigger"
-            initial={{ x: 60 }}
-            animate={{ x: 0 }}
-            exit={{ x: 60 }}
-            onClick={() => setOpen(true)}
-            aria-label={`${t.open} (Alt + A)`}
-            title={`${t.open} (Alt + A)`}
-            className="fixed top-1/2 right-3 z-[70] grid size-12 -translate-y-1/2 place-items-center rounded-full bg-violet text-white shadow-[0_10px_30px_-8px_rgba(123,92,255,0.7)] transition-transform hover:scale-105"
-          >
-            <Accessibility size={24} />
-          </motion.button>
-        )}
-      </AnimatePresence>
-
       <AnimatePresence>
         {open && (
           <motion.div

@@ -80,7 +80,7 @@ async (page) => {
     const ghost = await page.evaluate(() => [...document.querySelectorAll("[data-flip-id]")].filter((e) => !e.hidden && getComputedStyle(e).opacity < 0.5).length);
     if (ghost) note(`work: filter ${name} leaves faded cards`, false, ghost);
   }
-  note("work: filter counts", counts.AI === 3 && counts.All === 7, JSON.stringify(counts));
+  note("work: filter counts", counts.AI === 4 && counts.All === 7, JSON.stringify(counts));
 
   // 6. Prism folder
   const folder = page.getByRole("button", { name: "Open the UI archive" });
@@ -148,7 +148,8 @@ async (page) => {
   const pb = await page.locator("[data-music-player]").boundingBox();
   note("player: snaps to top-left", pb.x < 30 && pb.y < 110, `${Math.round(pb.x)},${Math.round(pb.y)}`);
   const chatFab = await page.getByRole("button", { name: "Ask about Arun" }).boundingBox();
-  const a11yBtn = await page.getByRole("button", { name: /Accessibility adjustments/ }).boundingBox();
+  const a11yBtn = await page.getByRole("navigation").getByRole("button", { name: /Accessibility adjustments/ }).boundingBox();
+  note("a11y: trigger lives in the nav", !!a11yBtn, a11yBtn ? Math.round(a11yBtn.y) : "missing");
   const overlap = (a, b) => a && b && a.x < b.x + b.width && a.x + a.width > b.x && a.y < b.y + b.height && a.y + a.height > b.y;
   note("fixed widgets don't overlap (player/chat/a11y)", !overlap(pb, chatFab) && !overlap(pb, a11yBtn) && !overlap(chatFab, a11yBtn), "");
   await page.evaluate(() => localStorage.removeItem("player-corner"));
