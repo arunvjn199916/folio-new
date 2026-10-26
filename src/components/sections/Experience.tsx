@@ -19,23 +19,55 @@ export function Experience() {
   const { roles, experienceIntro } = useI18n().dict;
   const root = useRef<HTMLElement>(null);
   const viewport = useRef<HTMLDivElement>(null);
+  const stage = useRef<HTMLDivElement>(null);
+  const scaler = useRef<HTMLDivElement>(null);
   const track = useRef<HTMLDivElement>(null);
 
   useGSAP(
     () => {
       const mm = gsap.matchMedia();
-      mm.add("(min-width: 768px) and (prefers-reduced-motion: no-preference)", () => {
-        if (motionDisabled()) return;
+      mm.add({ desktop: "(min-width: 768px)", reduce: "(prefers-reduced-motion: reduce)" }, (ctx) => {
+        if (!ctx.conditions?.desktop) return;
         const t = track.current!;
         const sec = root.current!;
-        const distance = () => Math.max(0, t.scrollWidth - window.innerWidth + 80);
+        const box = stage.current!;
+        const zoom = scaler.current!;
+        const still = !!ctx.conditions.reduce || motionDisabled();
+        let scale = 1;
+
+        // Cards sit above and below the centre line, so the track must be twice the tallest
+        // card (plus the connector). If that doesn't fit under the heading on this screen,
+        // the whole timeline scales down instead of cards spilling over the heading.
+        const fit = () => {
+          const tallest = Math.max(...gsap.utils.toArray<HTMLElement>(".xp-card", t).map((c) => c.offsetHeight));
+          const need = 2 * (tallest + 48);
+          t.style.height = `${need}px`;
+          scale = still ? 1 : Math.min(1, box.clientHeight / need);
+          zoom.style.transform = scale < 1 ? `scale(${scale})` : "";
+        };
+        fit();
+
+        if (still) {
+          // No scroll-driven motion: let people scroll the timeline sideways themselves.
+          box.style.overflow = "auto";
+          return () => {
+            box.style.overflow = "";
+            t.style.height = "";
+          };
+        }
+
+        // Track travel in its own (unscaled) units, so the last card ends inside the screen.
+        const distance = () => Math.max(0, t.scrollWidth - (window.innerWidth - 80) / scale);
         // The section is as tall as the horizontal travel; its inner viewport is CSS-sticky,
         // so the browser keeps it in place (no JS pin to fall out of sync with Lenis).
         const setHeight = () => {
-          sec.style.height = `${window.innerHeight + distance()}px`;
+          fit();
+          sec.style.height = `${window.innerHeight + distance() * scale}px`;
         };
         setHeight();
         ScrollTrigger.addEventListener("refreshInit", setHeight);
+        // Web fonts change card heights after first paint.
+        document.fonts?.ready.then(() => ScrollTrigger.refresh());
 
         const scroll = { trigger: sec, start: "top top", end: "bottom bottom", invalidateOnRefresh: true };
         const tween = gsap.to(t, { x: () => -distance(), ease: "none", scrollTrigger: { ...scroll, scrub: 0.6 } });
@@ -55,6 +87,8 @@ export function Experience() {
         return () => {
           ScrollTrigger.removeEventListener("refreshInit", setHeight);
           sec.style.height = "";
+          t.style.height = "";
+          zoom.style.transform = "";
         };
       });
       return () => mm.revert();
@@ -64,18 +98,23 @@ export function Experience() {
 
   return (
     <section ref={root} id="experience" className="relative">
-      <div ref={viewport} className="relative flex min-h-svh flex-col justify-center overflow-hidden py-24 md:sticky md:top-0 md:h-screen md:min-h-0 md:py-0">
-        <div className="px-6 text-center">
+      <div ref={viewport} className="relative flex min-h-svh flex-col justify-center overflow-hidden py-24 md:sticky md:top-0 md:h-screen md:min-h-0 md:justify-start md:pt-24 md:pb-6">
+        <div className="shrink-0 px-6 text-center">
           <p className="eyebrow flex items-center justify-center gap-2 text-blue">
             <span className="size-1.5 rounded-full bg-blue" /> {experienceIntro.eyebrow}
           </p>
           <BlurHeading className="mt-3 font-display text-[clamp(34px,4vw,52px)] leading-none font-semibold tracking-[-0.02em]">
             {experienceIntro.title}
           </BlurHeading>
-          <p className="mx-auto mt-3 max-w-[460px] text-[14px] text-ink-2">{experienceIntro.sub}</p>
+          <p className="mx-auto mt-3 max-w-[460px] text-[14px] text-ink-2 md:[@media(max-height:780px)]:hidden">{experienceIntro.sub}</p>
         </div>
 
-        <div className="relative mt-10 md:mt-2 md:[mask-image:linear-gradient(90deg,transparent,#000_7%,#000_93%,transparent)]">
+        {/* stage = the space left under the heading; the scaler shrinks the timeline to fit it */}
+        <div
+          ref={stage}
+          className="relative mt-10 md:mt-4 md:flex md:min-h-0 md:flex-1 md:items-center md:[mask-image:linear-gradient(90deg,transparent,#000_7%,#000_93%,transparent)]"
+        >
+          <div ref={scaler} className="md:shrink-0 md:origin-left">
           <div ref={track} className="relative flex flex-col gap-8 px-6 md:h-[640px] md:w-max md:flex-row md:items-center md:gap-0 md:px-[12vw]">
             <span aria-hidden className="xp-line absolute top-1/2 right-0 left-0 hidden h-px origin-left bg-ink/15 md:block" />
             {roles.map((r, i) => {
@@ -105,7 +144,7 @@ export function Experience() {
                   />
                   <article
                     className={cn(
-                      "xp-card group relative w-full rounded-[18px] border border-surface/80 bg-card p-5 shadow-[var(--card-shadow)] md:absolute md:left-0 md:w-[360px]",
+                      "xp-card group relative w-full rounded-[18px] border border-surface/80 bg-card p-5 shadow-[var(--card-shadow)] md:absolute md:left-0 md:w-[520px]",
                       up ? "md:bottom-[calc(50%+32px)]" : "md:top-[calc(50%+32px)]",
                     )}
                   >
@@ -150,6 +189,7 @@ export function Experience() {
                 </div>
               );
             })}
+          </div>
           </div>
         </div>
       </div>
