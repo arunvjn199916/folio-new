@@ -154,3 +154,17 @@ Each phase is its own commit on a `v2-redesign` branch so we can review/merge in
 5. Phase 2 — intro re-theme
 6. Verify — lint, build, Playwright screenshots at 1440 / 1024 / 768 / 375, dark + light, EN/TA/HI, then commit + push
 7. Later — phases 4, 6, 7 (before/after section, page-progress rail, restyle the remaining sections)
+
+## 8. Status
+
+| Phase | State | Commit |
+|---|---|---|
+| 0 · Foundations | ✅ done | `v2 phase 0` |
+| 1 · Navigation | ✅ done (full bar ≥1280, pill + menu below) | `v2 phase 1` |
+| 3 · Hero + globe | ✅ done | `v2 phase 3` |
+| 5 · Journey timeline | ✅ done (horizontal ≥1024, vertical below) | `v2 phase 5` |
+| 2 · Intro re-theme | ✅ done (+ fixed "undefined." greeting) | `v2 phase 2` |
+| Verify | ✅ lint (no new warnings), production build, no console/CSP errors; checked 1440 / 1280 / 1024 / 768 / 390, dark + light, EN / TA / HI | |
+| 4 · Before/after line section | ⏳ next | |
+| 6 · Page-progress rail, section transitions | ⏳ next | |
+| 7 · Restyle remaining sections (About, Work, Skills, Toolkit, Testimonials, Contact) | ⏳ next | |

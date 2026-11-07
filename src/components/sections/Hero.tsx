@@ -136,7 +136,7 @@ export function Hero() {
         </div>
 
         {/* Text */}
-        <div className="hero-text pointer-events-none absolute inset-0 flex flex-col px-4 pt-[124px] pb-[118px] md:px-12 md:pt-[22vh] md:pb-12">
+        <div className="hero-text pointer-events-none absolute inset-0 flex flex-col px-4 pt-[124px] pb-[118px] md:px-12 md:pt-[22vh] md:pb-[88px] xl:pb-12">
           <p data-hide className="hero-eyebrow eyebrow invisible">
             {hero.eyebrow}
           </p>

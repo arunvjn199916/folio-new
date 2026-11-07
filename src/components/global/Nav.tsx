@@ -17,9 +17,9 @@ const EASE = [0.22, 1, 0.36, 1] as const;
 
 /*
   v2 navigation.
-  · Top of the page (≥1024px): full-width bar — wordmark · uppercase links (Work opens a
+  · Top of the page (≥1280px): full-width bar — wordmark · uppercase links (Work opens a
     two-column mega panel) · segmented language pill · accent CTA.
-  · After scrolling (and always below 1024px): the bar folds into a centred pill —
+  · After scrolling (and always below 1280px): the bar folds into a centred pill —
     logo mark · CTA · burger. The burger drops a full menu panel with staggered links.
   Links glow in the accent colour on hover and while their section is on screen.
 */
@@ -41,7 +41,7 @@ export function Nav() {
   useEffect(() => {
     // The bar folding away closes its dropdown; unfolding it closes the burger menu.
     const onScroll = () => {
-      const c = window.innerWidth < 1024 || window.scrollY > 120;
+      const c = window.innerWidth < 1280 || window.scrollY > 120;
       setCompact(c);
       if (c) setMega(false);
       else setMenu(false);

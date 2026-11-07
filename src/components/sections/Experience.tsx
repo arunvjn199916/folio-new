@@ -17,7 +17,7 @@ const serverStill = () => false;
   converge on the horizon, a horizontal track holds one stop per role (oldest first) plus
   "what's next", with an AI marker where the career turned to product design. Scrolling
   slides a glowing dot along the track; passed stops light up and the active role's
-  details swap in underneath. Phones and reduced motion get a vertical timeline with a
+  details swap in underneath. Phones, tablets and reduced motion get a vertical timeline with a
   scroll-filled line and every role written out.
 */
 export function Experience() {
@@ -45,7 +45,7 @@ export function Experience() {
   useGSAP(
     () => {
       const mm = gsap.matchMedia();
-      mm.add("(min-width: 768px)", () => {
+      mm.add("(min-width: 1024px)", () => {
         if (still) return;
         const sec = root.current!;
         const q = gsap.utils.selector(sec);
@@ -77,7 +77,7 @@ export function Experience() {
         return () => st.kill();
       });
       // vertical (phones / still): the line fills as you scroll past it
-      mm.add("(max-width: 767px)", () => {
+      mm.add("(max-width: 1023px)", () => {
         if (still) return;
         const line = root.current!.querySelector<HTMLElement>(".xp-vfill");
         if (!line) return;
@@ -95,7 +95,7 @@ export function Experience() {
   const role = activeIdx < chrono.length ? chrono[activeIdx] : null;
 
   const vertical = (
-    <div className={cn("relative px-4 pt-6 pb-24", !still && "md:hidden")}>
+    <div className={cn("relative px-4 pt-6 pb-24 md:px-12", !still && "lg:hidden")}>
       <div className="relative pl-8">
         <span aria-hidden className="absolute top-2 bottom-2 left-[7px] w-px bg-on-night/15" />
         <span aria-hidden className={cn("xp-vfill absolute top-2 bottom-2 left-[7px] w-px origin-top bg-champagne", still && "scale-y-100")} />
@@ -135,10 +135,10 @@ export function Experience() {
   );
 
   return (
-    <section ref={root} id="experience" className={cn("dark-stage relative bg-night text-on-night", !still && "md:h-[280vh]")}>
+    <section ref={root} id="experience" className={cn("dark-stage relative bg-night text-on-night", !still && "lg:h-[280vh]")}>
       {/* Desktop sticky stage */}
       {!still && (
-        <div className="sticky top-0 hidden h-svh overflow-hidden md:block">
+        <div className="sticky top-0 hidden h-svh overflow-hidden lg:block">
           {/* glow + perspective road */}
           <div aria-hidden className="absolute inset-0 bg-[radial-gradient(60%_50%_at_85%_0%,rgba(220,2,8,0.28),transparent_70%)]" />
           <svg aria-hidden viewBox="0 0 1440 900" preserveAspectRatio="none" className="absolute inset-0 h-full w-full">
@@ -235,8 +235,8 @@ export function Experience() {
       )}
 
       {/* Vertical timeline: phones, and everyone when motion is off */}
-      <div className={cn(!still && "md:hidden")}>
-        <div className="px-4 pt-24">
+      <div className={cn(!still && "lg:hidden")}>
+        <div className="px-4 pt-24 md:px-12">
           <p className="eyebrow flex items-center gap-2 !text-on-night/60">
             <span className="size-1.5 rounded-full bg-champagne" /> {experienceIntro.eyebrow}
           </p>
