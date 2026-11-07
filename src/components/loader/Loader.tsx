@@ -23,7 +23,7 @@ import { motionDisabled } from "@/lib/a11y/store";
 
 const STEPS = 7;
 const RUN = { entryY: 0.67, exitX: 0.29, bend: 0.53, gap: 0.16, duration: 2.2, tileW: 14 };
-const TILE_TINTS = ["#2a2733", "#24212c", "#201d27", "#1c1a22", "#19171f", "#16141c", "#131118"];
+const TILE_TINTS = ["#4a030b", "#3a0207", "#2e0206", "#250104", "#1e0103", "#170102", "#100001"]; // black-red ramp
 
 function curve(t: number, mirrored: boolean): [number, number] {
   const W = window.innerWidth;
@@ -208,6 +208,7 @@ export function Loader() {
       flyer.style.transform = `translate(${x}px, ${y}px) rotate(${r}deg)`;
     };
 
+    const welcome = ui.loader.welcome; // read before `t` is shadowed by the timeline below
     const t = gsap.timeline({ defaults: { ease: "power3.out" }, onComplete: done });
     tl.current = t;
 
@@ -241,7 +242,7 @@ export function Loader() {
 
     // Cycle greetings; the grid re-fits each word
     let at = 2.55;
-    const list = [...greetings.slice(1), `${t.welcome}.`];
+    const list = [...greetings.slice(1), `${welcome}.`];
     list.forEach((g, i) => {
       const last = i === list.length - 1;
       t.to(q(".lg-word"), { opacity: 0, duration: 0.14, ease: "power1.in" }, at);
@@ -268,7 +269,7 @@ export function Loader() {
 
     // "Welcome." softens, grid steps back, the streams run
     const runAt = at;
-    t.to(q(".lg-cell"), { backgroundColor: getComputedStyle(document.documentElement).getPropertyValue("--c-blush").trim(), duration: 0.5, ease: "power2.out" }, runAt - 0.2);
+    t.to(q(".lg-cell"), { backgroundColor: getComputedStyle(document.documentElement).getPropertyValue("--c-crimson").trim(), duration: 0.5, ease: "power2.out" }, runAt - 0.2);
     t.to(q(".lg-lines, .lg-labels"), { opacity: 0, duration: 0.4 }, runAt);
     t.to(q(".lg-center"), { opacity: 0.35, duration: 0.5 }, runAt);
     t.to(drive, { s: 1 + (half - 1) * RUN.gap, duration: RUN.duration, ease: "power2.inOut", onUpdate: place }, runAt);
@@ -284,7 +285,7 @@ export function Loader() {
     return () => {
       t.kill();
     };
-  }, [phase, done, greetings, t.welcome]);
+  }, [phase, done, greetings, ui.loader.welcome]);
 
   if (!mounted) return null;
 
@@ -297,7 +298,7 @@ export function Loader() {
         <Laptop typed={typed} word={t.welcome} />
         <button
           onClick={start}
-          className="mt-5 flex items-center gap-1.5 rounded-lg bg-ink px-3.5 py-1.5 text-[13px] text-on-ink shadow-sm transition-transform hover:scale-[1.04]"
+          className="mt-6 flex items-center gap-2 rounded-full bg-accent px-5 py-2 text-[13px] font-bold tracking-[0.08em] text-on-accent uppercase shadow-[0_8px_30px_-8px_rgb(var(--c-globe-lit)/0.6)] transition-transform hover:scale-[1.05]"
         >
           {t.enter} <span aria-hidden>↵</span>
         </button>
@@ -328,7 +329,7 @@ export function Loader() {
           <span className="lg-h1 absolute top-0 left-0 h-px w-full origin-center bg-ink/15 opacity-0" />
           <span className="lg-h2 absolute top-0 left-0 h-px w-full origin-center bg-ink/15 opacity-0" />
         </div>
-        <span className="lg-cell absolute top-0 left-0 bg-pink opacity-0" />
+        <span className="lg-cell absolute top-0 left-0 bg-crimson opacity-0" />
         <div
           className="lg-labels absolute inset-0 font-mono text-[9px] tracking-[0.16em] text-ink-3"
           style={{ ["--cw" as string]: "0px", ["--ch" as string]: "88px" }}
@@ -352,10 +353,10 @@ export function Loader() {
           ))}
         </div>
         <div className="absolute inset-0 grid place-items-center">
-          <span className="lg-word font-display text-[clamp(36px,4.4vw,60px)] leading-none font-semibold tracking-tight text-ink opacity-0" />
+          <span className="lg-word font-display text-[clamp(38px,5.2vw,76px)] leading-none font-[650] tracking-[-0.045em] text-ink uppercase opacity-0" />
         </div>
         <span
-          className="lg-measure invisible absolute top-0 left-0 font-display text-[clamp(36px,4.4vw,60px)] leading-none font-semibold tracking-tight whitespace-nowrap"
+          className="lg-measure invisible absolute top-0 left-0 font-display text-[clamp(38px,5.2vw,76px)] leading-none font-[650] tracking-[-0.045em] whitespace-nowrap uppercase"
           aria-hidden
         />
       </div>
@@ -371,7 +372,7 @@ export function Loader() {
               key={i}
               className="absolute top-0 left-0 aspect-[4/5] overflow-hidden rounded-[14px] opacity-0 shadow-[0_20px_40px_-20px_rgba(0,0,0,0.5)]"
               style={{
-                background: portrait ? `center / cover no-repeat url(${img("portrait.webp")}), linear-gradient(160deg,#cdb8ff,#ffb6d9)` : TILE_TINTS[side ? STEPS - 1 - k : k],
+                background: portrait ? `center / cover no-repeat url(${img("portrait.webp")}), linear-gradient(160deg,#dc0208,#ffef93)` : TILE_TINTS[side ? STEPS - 1 - k : k],
                 backgroundImage: portrait ? undefined : "radial-gradient(rgba(255,255,255,0.08) 1px, transparent 1px)",
                 backgroundSize: portrait ? undefined : "12px 12px",
               }}
@@ -394,21 +395,21 @@ function Laptop({ typed, word }: { typed: string; word: string }) {
   const complete = typed === word;
   return (
     <svg width="140" height="96" viewBox="0 0 140 96" aria-hidden>
-      <rect x="18" y="6" width="104" height="70" rx="6" fill="#e9e6e1" stroke="#c9c5bf" />
-      <rect x="23" y="11" width="94" height="60" rx="3" fill="#fbf3e6" />
-      <text x="70" y="47" textAnchor="middle" fontFamily="var(--font-display)" fontSize="13" fontWeight="600" fill="#1a1822">
+      <rect x="18" y="6" width="104" height="70" rx="6" fill="var(--c-surface-3)" stroke="var(--c-line)" />
+      <rect x="23" y="11" width="94" height="60" rx="3" fill="#100001" />
+      <text x="70" y="47" textAnchor="middle" fontFamily="var(--font-display)" fontSize="13" fontWeight="700" fill="#ffef93">
         {typed}
         {!complete && <tspan style={{ animation: "caret 1s steps(1) infinite" }}>|</tspan>}
       </text>
       {complete && (
-        <g stroke="#3f8f4f" strokeWidth="1.6" strokeLinecap="round" fill="none">
+        <g stroke="#dc0208" strokeWidth="1.6" strokeLinecap="round" fill="none">
           <path d="M70 32 L70 26" />
           <path d="M70 28 C66 26 64 23 64 21" />
           <path d="M70 28 C74 26 76 23 76 21" />
         </g>
       )}
-      <path d="M6 80 H134 L128 90 H12 Z" fill="#dedad4" stroke="#c9c5bf" />
-      <rect x="60" y="80" width="20" height="3" rx="1.5" fill="#c9c5bf" />
+      <path d="M6 80 H134 L128 90 H12 Z" fill="var(--c-surface-3)" stroke="var(--c-line)" />
+      <rect x="60" y="80" width="20" height="3" rx="1.5" fill="var(--c-ink-3)" />
     </svg>
   );
 }
