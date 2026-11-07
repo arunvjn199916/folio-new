@@ -78,6 +78,29 @@ export const hero = {
   polaroidCaption: "Based in Chennai, TN",
 };
 
+// v2 "before / after" line section (right after the hero).
+export const shift = {
+  eyebrow: "Two gaps. Same result.",
+  title: "Where do AI products lose people?",
+  start: "User",
+  marker: "Answer",
+  end: "Trust",
+  before: {
+    label: "Before the answer",
+    title: "They don't get what the AI can do.",
+    chips: ["Onboarding", "Prompting", "Discovery"],
+    cta: "Aura design system",
+    href: "/design-system",
+  },
+  after: {
+    label: "After the answer",
+    title: "They get an answer, but don't trust it.",
+    chips: ["Citations", "Confirmations", "Undo"],
+    cta: "Kairo case study",
+    href: "/work/kairo-ai-personal-assistant",
+  },
+};
+
 export const about = {
   greeting: "Hey, I'm Arun Vijayan.",
   paragraphs: richList([

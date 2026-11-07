@@ -1,4 +1,4 @@
-import { profile, hero, about, greetings, contact } from "@/content/profile";
+import { profile, hero, shift, about, greetings, contact } from "@/content/profile";
 import { projects, projectFilters } from "@/content/projects";
 import { experienceIntro, roles } from "@/content/experience";
 import { skillPills, toolGroups, process, education } from "@/content/skills";
@@ -10,6 +10,7 @@ import { testimonials, aiWorkflow } from "@/content/extras";
 export const en = {
   profile: { ...profile },
   hero,
+  shift,
   about,
   greetings,
   contact,

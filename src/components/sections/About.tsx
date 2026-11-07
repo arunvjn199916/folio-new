@@ -6,6 +6,7 @@ import { AboutSlides, Sticker, CopyEmail } from "./AboutClient";
 import { Reveal } from "@/components/ui/Motion";
 import { Mail } from "lucide-react";
 import { ToolIcon } from "@/components/ui/ToolIcon";
+import { SectionHead } from "@/components/ui/SectionHead";
 
 // Ishika reference: a scrapbook board — tilted polaroid over an auto-cycling work
 // screenshot, an "ABOUT ME" tape label, monospace copy with highlighter marks,
@@ -17,8 +18,9 @@ export async function About() {
   const portrait = img("about-portrait.webp");
 
   return (
-    <section id="about" className="relative px-4 py-28 md:px-6">
-      <div className="dot-grid relative mx-auto max-w-[1240px] overflow-hidden rounded-[28px] border border-surface/70 bg-surface/80 px-6 py-12 shadow-[0_30px_80px_-40px_rgba(26,24,34,0.35)] md:px-14 md:py-16">
+    <section id="about" className="relative px-4 py-24 md:px-12 md:py-32">
+      <SectionHead eyebrow={ui.about.tape} title={about.greeting} className="mb-12 md:mb-16" />
+      <div className="dot-grid relative overflow-hidden rounded-[28px] border border-ink/10 bg-card/70 px-6 py-12 shadow-[var(--card-shadow)] backdrop-blur md:px-14 md:py-16">
         {/* scattered pins */}
         {[
           [8, 12],
@@ -38,14 +40,7 @@ export async function About() {
               <AboutSlides slides={slides} portrait={portrait} photoLabel={ui.about.photo} portraitAlt={profile.name} />
             </div>
 
-            <div data-reveal className="mt-10">
-              <span className="inline-block -rotate-2 bg-[#f7a7b8] px-3 py-1 font-display text-[15px] font-semibold tracking-[0.08em] text-[#7a1730] shadow-[2px_2px_0_#e07b92]">
-                {ui.about.tape}
-              </span>
-            </div>
-
-            <div data-reveal className="mt-5 max-w-[520px] space-y-4 font-mono text-[13px] leading-[1.75] text-ink-2">
-              <p>{about.greeting}</p>
+            <div data-reveal className="mt-10 max-w-[540px] space-y-4 text-[16px] leading-[1.65] text-ink-2 md:text-[17px]">
               {about.paragraphs.map((p, i) => (
                 <p key={i}>
                   <RichText segments={p} />
@@ -57,20 +52,20 @@ export async function About() {
           <div className="flex flex-col justify-between gap-12">
             {/* Sticker nav */}
             <div className="flex flex-wrap items-start justify-end gap-3 md:pr-14">
-              <Sticker href="#about" kind="scallop" color="#c9d6ff" rotate={-4}>
+              <Sticker href="#about" kind="scallop" color="#f7f1e3" rotate={-4}>
                 {ui.about.stickers.about}
               </Sticker>
-              <Sticker href={localePath(locale, "/ai-workflow")} kind="stamp" color="#ff4d5e" rotate={3}>
+              <Sticker href={localePath(locale, "/ai-workflow")} kind="stamp" color="#dc0208" rotate={3}>
                 <span className="block font-serif text-[22px] leading-none italic">{ui.about.stickers.ai}</span>
                 <span className="block text-[13px] font-bold tracking-wide">{ui.about.stickers.workflow}</span>
               </Sticker>
-              <Sticker href="#work" kind="pill" color="#ff9fd0" rotate={-3}>
+              <Sticker href="#work" kind="pill" color="#ffc9c2" rotate={-3}>
                 {ui.about.stickers.work}
               </Sticker>
-              <Sticker href={profile.links.resume} kind="label" color="#ffe066" rotate={4}>
+              <Sticker href={profile.links.resume} kind="label" color="#ffef93" rotate={4}>
                 {ui.about.stickers.resume}
               </Sticker>
-              <Sticker href="#contact" kind="photo" color="#3ec98a" rotate={-2}>
+              <Sticker href="#contact" kind="photo" color="#6b0410" rotate={-2}>
                 {ui.about.stickers.reachOut}
               </Sticker>
             </div>
@@ -80,7 +75,7 @@ export async function About() {
                 <p className="eyebrow mb-4 text-ink">{ui.about.workedWith}</p>
                 <ul className="flex flex-wrap gap-x-6 gap-y-3">
                   {about.workedWith.map((c) => (
-                    <li key={c} className="font-display text-[15px] font-semibold tracking-tight text-ink/80 grayscale transition hover:text-ink">
+                    <li key={c} className="font-display text-[16px] font-bold tracking-[-0.02em] text-ink/70 uppercase transition hover:text-accent">
                       {c}
                     </li>
                   ))}

@@ -4,6 +4,7 @@ import { Grainient } from "@/components/global/Grainient";
 import { DotGlow } from "@/components/global/DotGlow";
 import { SmoothScroll } from "@/components/global/SmoothScroll";
 import { Nav } from "@/components/global/Nav";
+import { PageProgress } from "@/components/global/PageProgress";
 import { MusicPlayer } from "@/components/global/MusicPlayer";
 import { Loader } from "@/components/loader/Loader";
 import { ChatWidget } from "@/components/chat/ChatWidget";
@@ -79,6 +80,7 @@ export default async function RootLayout({ children }: LayoutProps<"/[lang]">) {
           <SmoothScroll />
           <Loader />
           <Nav />
+          <PageProgress />
           <main id="main" tabIndex={-1}>
             {children}
           </main>

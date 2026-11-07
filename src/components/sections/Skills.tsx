@@ -2,7 +2,7 @@
 
 import { useEffect, useRef } from "react";
 import { useI18n } from "@/i18n/client";
-import { BlurHeading } from "@/components/ui/Motion";
+import { SectionHead } from "@/components/ui/SectionHead";
 import { motionDisabled } from "@/lib/a11y/store";
 
 /*
@@ -129,22 +129,17 @@ export function Skills() {
   }, []);
 
   return (
-    <section id="skills" className="relative bg-night px-6 pt-28 pb-10 text-on-night">
-      <div className="mx-auto max-w-[1100px] text-center">
-        <p className="font-serif text-[20px] text-on-night/60 italic">{ui.skills.eyebrow}</p>
-        <BlurHeading className="mt-2 font-display text-[clamp(32px,3.8vw,50px)] leading-none font-semibold tracking-[-0.02em]">
-          {ui.skills.title}
-        </BlurHeading>
-        <p className="mt-3 font-mono text-[11px] tracking-[0.16em] text-on-night/40">{ui.skills.hint}</p>
-      </div>
-      <div ref={box} className="cursor-grab relative mx-auto mt-6 h-[460px] max-w-[1100px] overflow-hidden select-none">
+    <section id="skills" className="dark-stage relative rounded-t-[32px] bg-night px-4 pt-24 pb-10 text-on-night md:rounded-t-[56px] md:px-12 md:pt-32">
+      <SectionHead eyebrow={ui.skills.eyebrow} title={ui.skills.title} sub={ui.skills.hint} />
+      <div ref={box} className="cursor-grab relative mt-6 h-[460px] overflow-hidden select-none">
         {skillPills.map((s, i) => (
           <span
             key={s}
             data-pill
-            className="absolute top-0 left-0 rounded-full border border-on-night/10 px-5 text-white py-2.5 text-[14px] font-medium whitespace-nowrap shadow-[0_8px_20px_-8px_rgba(0,0,0,0.6)]"
+            className="absolute top-0 left-0 rounded-full border border-on-night/10 px-5 py-2.5 text-[14px] font-bold tracking-[0.02em] whitespace-nowrap uppercase shadow-[0_8px_20px_-8px_rgba(0,0,0,0.6)]"
             style={{
-              background: i % 3 === 0 ? "var(--c-pink)" : i % 3 === 1 ? "var(--c-violet)" : "#2b2836",
+              background: i % 3 === 0 ? "#dc0208" : i % 3 === 1 ? "#ffef93" : "#2a0b0e",
+              color: i % 3 === 1 ? "#100001" : "#f7f1e3",
               // static scatter for touch / reduced motion; physics resets left/top to 0
               left: `${(i % 3) * 32 + 2}%`,
               top: `${Math.floor(i / 3) * 64 + 20}px`,

@@ -66,8 +66,8 @@ export function AboutSlides({
 const shapes = {
   scallop: "rounded-[46%] px-6 py-6",
   stamp: "rounded-[6px] px-4 py-3 text-center text-white [outline:2px_dashed_rgba(255,255,255,0.7)] [outline-offset:-6px]",
-  pill: "rounded-full px-6 py-2.5 font-display text-[18px] font-bold tracking-wide text-[#6b1450] border-2 border-[#6b1450]",
-  label: "rounded-[4px] px-4 py-2 font-mono text-[13px] text-ink border border-ink/20",
+  pill: "rounded-full px-6 py-2.5 font-display text-[18px] font-bold tracking-wide text-[#6b0410] border-2 border-[#6b0410]",
+  label: "rounded-[4px] px-4 py-2 font-mono text-[13px] font-bold text-[#100001] border border-[#100001]/20",
   photo: "rounded-[6px] px-4 py-6 font-script text-[22px] text-white",
 };
 
@@ -94,14 +94,14 @@ export function Sticker({
       whileTap={{ scale: 0.95 }}
       transition={{ type: "spring", stiffness: 400, damping: 14 }}
       className={cn(
-        "inline-block font-semibold shadow-[0_6px_14px_-6px_rgba(26,24,34,0.35)] select-none",
+        "inline-block font-semibold shadow-[0_6px_14px_-6px_rgba(0,0,0,0.5)] select-none",
         shapes[kind],
-        kind === "scallop" && "font-display text-[17px] text-[#1e2a6b]",
+        kind === "scallop" && "font-display text-[17px] font-bold text-[#100001] uppercase",
       )}
       style={{
         background:
           kind === "photo"
-            ? `linear-gradient(160deg, ${color}99, #1f7a52dd), center / cover no-repeat url(${img("reachout.webp")})`
+            ? `linear-gradient(160deg, ${color}99, #dc0208cc), center / cover no-repeat url(${img("reachout.webp")})`
             : color,
         ...(kind === "scallop"
           ? { clipPath: "polygon(50% 0%,61% 8%,75% 5%,80% 18%,95% 25%,91% 39%,100% 50%,91% 61%,95% 75%,80% 82%,75% 95%,61% 92%,50% 100%,39% 92%,25% 95%,20% 82%,5% 75%,9% 61%,0% 50%,9% 39%,5% 25%,20% 18%,25% 5%,39% 8%)" }

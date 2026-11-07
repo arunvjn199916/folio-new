@@ -372,6 +372,10 @@ body {
   --c-line: rgba(247, 241, 227, 0.12);
 }
 
+.progress-tick.is-on {
+  background: var(--c-accent);
+}
+
 /* ── v2 journey timeline: stops light up as the runner passes ── */
 .xp-stop.is-on .xp-dot,
 .xp-vstop.is-on .xp-dot {

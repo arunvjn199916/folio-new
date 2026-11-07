@@ -55,7 +55,7 @@ export function WorkGrid({ filters, cards, ariaLabel }: { filters: { id: string;
 
   return (
     <>
-      <div role="tablist" aria-label={ariaLabel} className="mt-8 mb-10 flex flex-wrap justify-center gap-2">
+      <div role="tablist" aria-label={ariaLabel} className="mt-10 mb-10 flex flex-wrap gap-2">
         {filters.map((f) => (
           <button
             key={f.id}
@@ -63,9 +63,9 @@ export function WorkGrid({ filters, cards, ariaLabel }: { filters: { id: string;
             aria-selected={active === f.id}
             onClick={() => select(f.id)}
             className={cn(
-              "rounded-full border px-5 py-3 text-[13px] leading-none transition-colors duration-[250ms]",
+              "rounded-full border px-5 py-3 text-[12px] leading-none font-bold tracking-[0.08em] uppercase transition-colors duration-[250ms]",
               active === f.id
-                ? "border-ink bg-ink text-paper"
+                ? "border-accent bg-accent text-on-accent"
                 : "border-ink/20 bg-surface/40 text-ink/70 hover:border-ink/45 hover:text-ink",
             )}
           >
@@ -73,7 +73,7 @@ export function WorkGrid({ filters, cards, ariaLabel }: { filters: { id: string;
           </button>
         ))}
       </div>
-      <div ref={grid} className="grid grid-cols-1 items-stretch gap-6 md:grid-cols-2 md:gap-10">
+      <div ref={grid} className="grid grid-cols-1 items-stretch gap-6 md:grid-cols-2 md:gap-8 xl:grid-cols-3">
         {cards.map((c) => (
           <div key={c.slug} data-flip-id={c.slug} hidden={active !== "All" && !c.filters.includes(active)}>
             {c.node}
