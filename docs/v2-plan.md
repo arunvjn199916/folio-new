@@ -78,17 +78,18 @@ Light mode keeps the toggle (and the "System" option in the accessibility panel)
   `display-l` 6vw; `display-m` H2 4.4vw (min 34px); body-l 20px; body 17–18px; eyebrow 12–13px +0.1em.
 - Tamil / Hindi: no uppercase, normal tracking, line-height 1.3, display sizes × 0.72 (existing script rules extended).
 
-### 3.3 Hero copy (new, built for the two-statement layout)
-- Eyebrow: `AI-FIRST PRODUCT DESIGNER · ENTERPRISE SAAS · FINTECH`
-- Statement 1 (dims on scroll): **SMART AI. / CONFUSED USERS?**
+### 3.3 Hero copy (personal — revised)
+- Availability pill: `● Open to work — GCC & remote`
+- Eyebrow: `AI-FIRST PRODUCT DESIGNER · CHENNAI, INDIA · 5+ YEARS`
+- Statement 1 (dims on scroll): **HI, I'M / ARUN VIJAYAN.**
 - Statement 2 (indented, stays bright): **I DESIGN AI / PEOPLE TRUST.**
-- Sub-copy: "I'm Arun Vijayan. I turn complex AI and enterprise workflows into products people understand,
-  trust and actually use — 5+ years, from research to shipped UI."
+- Sub-copy: "Executive UI/UX Designer at Congruent Solutions. I design AI search, voice and agentic experiences
+  for US 401(k) platforms — and prototype them in real code with Claude & Cursor."
+- Proof row: **5+ YEARS · 4 COMPANIES · 500+ BETA USERS**
 - CTAs: **LET'S TALK →** (accent, to contact) · **VIEW WORK ↘** (outline, to work)
 - HUD: `CHENNAI 10:42` live clock · legend `● USERS  ● TRUSTED` · state `AI · BEFORE DESIGN` → `AI · AFTER DESIGN` · `DRAG TO ROTATE`
-- Globe story: grey dots = users; on scroll they light up champagne/crimson = users who trust the product;
-  they gather into one glowing dot as the page moves on.
-- Tamil and Hindi versions written for every new string.
+- Story: the name dims as the globe's users light up — "this is Arun, and this is what he does".
+- Tamil and Hindi versions written for every string.
 
 ### 3.4 Intro
 Keep the existing intro flow (Enter gate → greetings grid → tile stream). Only re-theme it:

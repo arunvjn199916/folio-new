@@ -39,12 +39,13 @@ export const profile: Profile = {
 
 export const hero = {
   // v2 hero: two uppercase statements over the globe (statement one dims on scroll).
-  eyebrow: "AI-first product designer · Enterprise SaaS · FinTech",
+  eyebrow: "AI-first product designer · Chennai, India · 5+ years",
+  status: "Open to work — GCC & remote",
   statements: [
-    ["Smart AI.", "Confused users?"],
+    ["Hi, I'm", "Arun Vijayan."],
     ["I design AI", "people trust."],
   ],
-  sub: "I'm Arun Vijayan. I turn complex AI and enterprise workflows into products people understand, trust and actually use — 5+ years, from research to shipped UI.",
+  sub: "Executive UI/UX Designer at Congruent Solutions. I design AI search, voice and agentic experiences for US 401(k) platforms — and prototype them in real code with Claude & Cursor.",
   lead: "I'm Arun Vijayan, a product designer who",
   words: [
     { text: "designs agentic AI experiences.", color: "var(--c-violet)" },

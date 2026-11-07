@@ -136,10 +136,17 @@ export function Hero() {
         </div>
 
         {/* Text */}
-        <div className="hero-text pointer-events-none absolute inset-0 flex flex-col px-4 pt-[124px] pb-[118px] md:px-12 md:pt-[22vh] md:pb-[88px] xl:pb-12">
-          <p data-hide className="hero-eyebrow eyebrow invisible">
-            {hero.eyebrow}
-          </p>
+        <div className="hero-text pointer-events-none absolute inset-0 flex flex-col px-4 pt-[124px] pb-[118px] md:px-12 md:pt-[22vh] md:pb-[100px]">
+          <div data-hide className="hero-eyebrow invisible flex flex-wrap items-center gap-x-4 gap-y-2">
+            <span className="flex items-center gap-2 rounded-full border border-ink/15 bg-paper/40 px-3 py-1 text-[12px] font-semibold tracking-[0.04em] text-ink backdrop-blur">
+              <span className="relative flex size-2">
+                <span className="absolute inset-0 animate-ping rounded-full bg-green opacity-60" />
+                <span className="relative size-2 rounded-full bg-green" />
+              </span>
+              {hero.status}
+            </span>
+            <p className="eyebrow">{hero.eyebrow}</p>
+          </div>
           <h1 data-hide className="invisible mt-4 text-ink md:mt-6">
             <span className="hero-a block">
               {a.map((line) => (
@@ -158,7 +165,23 @@ export function Hero() {
           </h1>
 
           <div data-hide className="invisible mt-auto flex flex-col gap-6 md:flex-row md:items-end md:justify-between">
-            <p className="hero-fade max-w-[520px] [text-shadow:0_1px_14px_var(--c-paper)] text-[17px] leading-[1.45] tracking-[-0.01em] text-ink md:text-[clamp(18px,1.45vw,24px)]">{hero.sub}</p>
+            <div className="hero-fade max-w-[560px]">
+              <p className="[text-shadow:0_1px_14px_var(--c-paper)] text-[16px] leading-[1.45] tracking-[-0.01em] text-ink md:text-[clamp(17px,1.3vw,21px)]">{hero.sub}</p>
+              <dl className="mt-5 flex flex-wrap gap-x-6 gap-y-2">
+                {hero.stats.map((st) => (
+                  <div key={st.label} className="flex items-baseline gap-2">
+                    <dt className="sr-only">{st.label}</dt>
+                    <dd className="font-display text-[22px] leading-none font-extrabold tracking-[-0.04em] text-accent md:text-[26px]">
+                      {st.value}
+                      {st.suffix}
+                    </dd>
+                    <span aria-hidden className="font-mono text-[11px] tracking-[0.12em] text-ink-2 uppercase">
+                      {st.label}
+                    </span>
+                  </div>
+                ))}
+              </dl>
+            </div>
             <div className="hero-fade pointer-events-auto flex flex-col gap-3 sm:flex-row md:mr-[10vw]">
               <a href="#contact" className="btn-accent">
                 {t.talk} <ArrowRight size={18} strokeWidth={2.4} />
