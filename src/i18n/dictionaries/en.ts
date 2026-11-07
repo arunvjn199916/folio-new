@@ -32,7 +32,7 @@ export const en = {
       aiDescription: `How ${profile.name} uses Claude, Cursor, Figma and AI research tools across the product design workflow.`,
     },
     skipToContent: "Skip to content",
-    nav: { about: "About", work: "Work", journey: "Journey", contact: "Contact", aiWorkflow: "AI Workflow", resume: "Resume", menu: "Open menu", primary: "Primary" },
+    nav: { about: "About", work: "Work", journey: "Journey", contact: "Contact", aiWorkflow: "AI Workflow", resume: "Resume", menu: "Open menu", primary: "Primary", letsTalk: "Let's talk", closeMenu: "Close menu", menuEyebrow: "Menu", megaConceptsEyebrow: "Self-initiated", megaConcepts: "Case studies", megaClientEyebrow: "Shipped at work", megaClient: "Client work", megaAura: "Aura design system", megaAuraSub: "63 components · live docs", allWork: "All work" },
     theme: { label: "Theme", system: "System", light: "Light", dark: "Dark", toggle: "Switch theme" },
     language: { label: "Language", change: "Change language" },
     hero: { builderStack: "My builder stack", wordmark: "PRODUCT DESIGNER", penHint: "↖ HOVER THE LETTERS · DRAG A POINT TO RESHAPE", reset: "RESET", portraitAlt: profile.name },

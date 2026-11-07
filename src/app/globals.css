@@ -315,6 +315,51 @@ body {
   }
 }
 
+/* ── v2 nav links: uppercase, accent + soft glow on hover / active ── */
+.nav-link {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35em;
+  height: 40px;
+  padding: 0 0.9rem;
+  font-size: 14px;
+  font-weight: 650;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: color-mix(in srgb, var(--c-ink) 88%, transparent);
+  transition: color 0.3s ease;
+}
+.nav-link::before {
+  content: "";
+  position: absolute;
+  inset: -2px 6px;
+  border-radius: 999px;
+  background: radial-gradient(closest-side, rgb(var(--c-globe-lit) / 0.28), transparent);
+  opacity: 0;
+  transform: scale(0.6);
+  filter: blur(6px);
+  transition:
+    opacity 0.4s ease,
+    transform 0.5s cubic-bezier(0.22, 1, 0.36, 1);
+  pointer-events: none;
+}
+.nav-link:hover,
+.nav-link:focus-visible,
+.nav-link.is-active {
+  color: var(--c-accent);
+}
+.nav-link:hover::before,
+.nav-link:focus-visible::before,
+.nav-link.is-active::before {
+  opacity: 1;
+  transform: scale(1);
+}
+:where(:root:lang(ta), :root:lang(hi)) .nav-link {
+  font-size: 13px;
+  padding: 0 0.6rem;
+}
+
 /* ── v2 buttons: accent pill + outline pill, uppercase label with an arrow ── */
 .btn-accent,
 .btn-outline {

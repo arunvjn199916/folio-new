@@ -116,7 +116,7 @@ export const hi: Dictionary = {
       aiDescription: `${name} प्रोडक्ट डिज़ाइन वर्कफ़्लो में Claude, Cursor, Figma और AI रिसर्च टूल कैसे इस्तेमाल करते हैं।`,
     },
     skipToContent: "मुख्य सामग्री पर जाएँ",
-    nav: { about: "परिचय", work: "काम", journey: "सफ़र", contact: "संपर्क", aiWorkflow: "AI वर्कफ़्लो", resume: "रिज़्यूमे", menu: "मेनू खोलें", primary: "मुख्य" },
+    nav: { about: "परिचय", work: "काम", journey: "सफ़र", contact: "संपर्क", aiWorkflow: "AI वर्कफ़्लो", resume: "रिज़्यूमे", menu: "मेनू खोलें", primary: "मुख्य", letsTalk: "बात करें", closeMenu: "मेनू बंद करें", menuEyebrow: "मेनू", megaConceptsEyebrow: "स्व-प्रेरित", megaConcepts: "केस स्टडी", megaClientEyebrow: "काम पर शिप किया", megaClient: "क्लाइंट वर्क", megaAura: "Aura डिज़ाइन सिस्टम", megaAuraSub: "63 कंपोनेंट · लाइव डॉक्स", allWork: "सारा काम" },
     theme: { label: "थीम", system: "सिस्टम", light: "लाइट", dark: "डार्क", toggle: "थीम बदलें" },
     language: { label: "भाषा", change: "भाषा बदलें" },
     hero: { ...en.ui.hero, builderStack: "मेरा बिल्डर स्टैक", penHint: "↖ अक्षरों पर होवर करें · पॉइंट खींचकर आकार बदलें", reset: "रीसेट", portraitAlt: name },

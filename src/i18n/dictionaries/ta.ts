@@ -116,7 +116,7 @@ export const ta: Dictionary = {
       aiDescription: `Claude, Cursor, Figma மற்றும் AI ஆய்வுக் கருவிகளை ${name} எப்படிப் பயன்படுத்துகிறார்.`,
     },
     skipToContent: "உள்ளடக்கத்திற்குச் செல்",
-    nav: { about: "என்னைப் பற்றி", work: "படைப்புகள்", journey: "பயணம்", contact: "தொடர்பு", aiWorkflow: "AI பணிப்பாய்வு", resume: "ரெஸ்யூம்", menu: "மெனுவைத் திற", primary: "முதன்மை" },
+    nav: { about: "என்னைப் பற்றி", work: "படைப்புகள்", journey: "பயணம்", contact: "தொடர்பு", aiWorkflow: "AI பணிப்பாய்வு", resume: "ரெஸ்யூம்", menu: "மெனுவைத் திற", primary: "முதன்மை", letsTalk: "பேசுவோம்", closeMenu: "மெனுவை மூடு", menuEyebrow: "மெனு", megaConceptsEyebrow: "சுய முயற்சி", megaConcepts: "கேஸ் ஸ்டடிகள்", megaClientEyebrow: "பணியில் வெளியிட்டவை", megaClient: "வாடிக்கையாளர் பணி", megaAura: "Aura டிசைன் சிஸ்டம்", megaAuraSub: "63 கூறுகள் · நேரடி ஆவணங்கள்", allWork: "அனைத்து படைப்புகள்" },
     theme: { label: "தீம்", system: "சிஸ்டம்", light: "லைட்", dark: "டார்க்", toggle: "தீம் மாற்று" },
     language: { label: "மொழி", change: "மொழியை மாற்று" },
     hero: { ...en.ui.hero, builderStack: "என் கருவித் தொகுப்பு", penHint: "↖ எழுத்துகளின் மேல் நகர்த்தி · புள்ளியை இழுத்து வடிவை மாற்றுங்கள்", reset: "மீட்டமை", portraitAlt: "அருண் விஜயன்" },
