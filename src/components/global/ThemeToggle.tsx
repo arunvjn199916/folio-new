@@ -8,7 +8,7 @@ import { useI18n } from "@/i18n/client";
 import { cn } from "@/lib/utils";
 
 const getResolved = () => theme.resolved();
-const serverResolved = () => "light" as const;
+const serverResolved = () => "dark" as const;
 
 // One-tap light/dark switch for the nav. "System" lives in the accessibility panel.
 export function ThemeToggle({ className }: { className?: string }) {

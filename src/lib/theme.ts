@@ -15,9 +15,9 @@ const isPref = (v: unknown): v is ThemePref => v === "system" || v === "light" |
 function readPref(): ThemePref {
   try {
     const v = localStorage.getItem(THEME_KEY);
-    return isPref(v) ? v : "system";
+    return isPref(v) ? v : "dark"; // v2 is dark-first: no saved choice → dark
   } catch {
-    return "system";
+    return "dark";
   }
 }
 

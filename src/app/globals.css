@@ -8,93 +8,121 @@
    [data-theme="dark"] redefines them. Fixed brand/illustration colours (tool logos,
    stickers, the orb, the always-dark music player) are intentionally not tokens. */
 :root {
+  /* v2 palette — brand colours: black red #100001, crimson #dc0208, champagne #ffef93.
+     Light theme: champagne cream page, black-red text, crimson accent. */
   color-scheme: light;
-  --c-paper: #f7f4fb; /* page background */
-  --c-ink: #1a1822;
-  --c-ink-2: #4b4858;
-  --c-ink-3: #8a8798;
-  --c-line: rgba(26, 24, 34, 0.1);
+  --c-paper: #fbf6e9; /* page background */
+  --c-ink: #100001;
+  --c-ink-2: #5a3a38;
+  --c-ink-3: #7a5e5a;
+  --c-line: rgba(16, 0, 1, 0.12);
   --c-card: #ffffff; /* solid cards */
-  --c-surface: #ffffff; /* translucent panels use surface/NN */
-  --c-surface-3: #efedf3; /* chips, subtle fills */
-  --c-on-ink: #ffffff; /* text on ink-filled buttons */
-  --c-night: #16141d; /* the dark bands (skills, tools, essay) */
-  --c-on-night: #ffffff;
-  --c-note: #fffdf7; /* handwritten note paper */
+  --c-surface: #fffdf6; /* translucent panels use surface/NN */
+  --c-surface-3: #f3ead2; /* chips, subtle fills */
+  --c-on-ink: #fbf6e9; /* text on ink-filled buttons */
+  --c-night: #100001; /* the dark bands (skills, tools, journey) */
+  --c-on-night: #f7f1e3;
+  --c-note: #fffbea; /* handwritten note paper */
   --c-photo: #ffffff; /* polaroid / window frames */
-  --c-on-photo: #4b4858;
-  --c-loader: #f4f3f1;
-  --c-dot: rgba(26, 24, 34, 0.14);
-  --c-glow: 123 92 255; /* rgb triplet for the cursor dot glow */
-  --c-grain-1: #bfe0ff;
-  --c-grain-2: #ffd0e8;
-  --c-grain-3: #e2d8ff;
-  --c-grain-4: #f7f4fb;
-  --c-sky-1: #cfe6ff; /* footer sky */
-  --c-sky-2: #a8d0ff;
+  --c-on-photo: #5a3a38;
+  --c-loader: #fbf6e9;
+  --c-dot: rgba(16, 0, 1, 0.12);
+  --c-glow: 220 2 8; /* rgb triplet for the cursor dot glow */
+  --c-grain-1: #ffef93;
+  --c-grain-2: #ffd3c8;
+  --c-grain-3: #fff3cf;
+  --c-grain-4: #fbf6e9;
+  --c-sky-1: #ffe7c2; /* footer sky */
+  --c-sky-2: #ffc9bd;
   --c-cloud: #ffffff;
-  --c-highlight: #fff07a;
+  --c-highlight: #ffef93;
 
-  --c-sky: #a8d8ff;
-  --c-pink: #ff5c9d;
-  --c-blush: #ffb6d9;
-  --c-lav: #cdb8ff;
-  --c-mint: #bff0e0;
-  --c-butter: #ffe3a8;
+  /* brand */
+  --c-accent: #dc0208; /* CTA pills, active dots, active nav */
+  --c-on-accent: #ffffff;
+  --c-crimson: #dc0208; /* glows, fills, large display words */
+  --c-crimson-text: #b8000a; /* AA-safe red text */
+  --c-champagne: #ffef93;
+  --c-space-1: #fbf6e9; /* hero / colour-bleed gradient */
+  --c-space-2: #ffe7c2;
+  --c-space-3: #ffc9bd;
+  --c-globe-dot: 16 0 1; /* rgb triplets read by the globe canvas */
+  --c-globe-lit: 220 2 8;
+  --c-globe-rim: 220 2 8;
 
-  --c-violet: #7b5cff;
-  --c-blue: #2f80ff;
-  --c-green: #18a957;
-  --c-red: #ff3b5c;
+  /* legacy pastel names, remapped into the brand family */
+  --c-sky: #ffd9c9;
+  --c-pink: #dc0208;
+  --c-blush: #ffc9c2;
+  --c-lav: #ffe7a6;
+  --c-mint: #fff0b8;
+  --c-butter: #ffef93;
+
+  --c-violet: #b8000a;
+  --c-blue: #b8000a;
+  --c-green: #18874a;
+  --c-red: #dc0208;
 
   --radius: 20px;
-  --card-shadow: 0 1px 2px rgba(26, 24, 34, 0.06), 0 8px 24px -12px rgba(26, 24, 34, 0.18);
-  --card-shadow-hover: 0 2px 4px rgba(26, 24, 34, 0.06), 0 16px 40px -12px rgba(26, 24, 34, 0.28);
+  --card-shadow: 0 1px 2px rgba(16, 0, 1, 0.06), 0 8px 24px -12px rgba(16, 0, 1, 0.2);
+  --card-shadow-hover: 0 2px 4px rgba(16, 0, 1, 0.06), 0 16px 40px -12px rgba(16, 0, 1, 0.3);
   --ease-out: cubic-bezier(0.25, 0.46, 0.45, 0.94);
 }
 
 :root[data-theme="dark"] {
   color-scheme: dark;
-  --c-paper: #0f0d15;
-  --c-ink: #f2eff9;
-  --c-ink-2: #c4bed4;
-  --c-ink-3: #8d869f;
-  --c-line: rgba(242, 239, 249, 0.12);
-  --c-card: #1b1824;
-  --c-surface: #1b1824;
-  --c-surface-3: #2a2636;
-  --c-on-ink: #0f0d15;
-  --c-night: #07060b;
-  --c-on-night: #f2eff9;
-  --c-note: #24202e;
-  --c-photo: #ece8f3;
-  --c-on-photo: #4b4858;
-  --c-loader: #0f0d15;
-  --c-dot: rgba(242, 239, 249, 0.12);
-  --c-glow: 170 150 255;
-  --c-grain-1: #1a1a4a;
-  --c-grain-2: #3a1636;
-  --c-grain-3: #241a46;
-  --c-grain-4: #0f0d15;
-  --c-sky-1: #121a33;
-  --c-sky-2: #1b2b57;
-  --c-cloud: #4b5590;
-  --c-highlight: #8a7a1c;
+  --c-paper: #100001;
+  --c-ink: #f7f1e3;
+  --c-ink-2: #c9bcae;
+  --c-ink-3: #8f8278;
+  --c-line: rgba(247, 241, 227, 0.12);
+  --c-card: #1a0507;
+  --c-surface: #1a0507;
+  --c-surface-3: #2a0b0e;
+  --c-on-ink: #100001;
+  --c-night: #0a0001;
+  --c-on-night: #f7f1e3;
+  --c-note: #22090b;
+  --c-photo: #f7f1e3;
+  --c-on-photo: #5a3a38;
+  --c-loader: #100001;
+  --c-dot: rgba(247, 241, 227, 0.1);
+  --c-glow: 220 2 8;
+  --c-grain-1: #240205;
+  --c-grain-2: #45030a;
+  --c-grain-3: #160102;
+  --c-grain-4: #100001;
+  --c-sky-1: #2a0306;
+  --c-sky-2: #5a0410;
+  --c-cloud: #8a2a2e;
+  --c-highlight: #6b4a08;
 
-  --c-sky: #5a8fc4;
-  --c-pink: #ff74ad;
-  --c-blush: #a8577d;
-  --c-lav: #7c66c9;
-  --c-mint: #3f8d78;
-  --c-butter: #a08648;
+  --c-accent: #ffef93;
+  --c-on-accent: #100001;
+  --c-crimson: #dc0208;
+  --c-crimson-text: #ff4d4f;
+  --c-champagne: #ffef93;
+  --c-space-1: #100001;
+  --c-space-2: #3a0207;
+  --c-space-3: #6b0410;
+  --c-globe-dot: 247 241 227;
+  --c-globe-lit: 255 239 147;
+  --c-globe-rim: 220 2 8;
 
-  --c-violet: #a28dff;
-  --c-blue: #6aa5ff;
-  --c-green: #3bc985;
-  --c-red: #ff6b85;
+  --c-sky: #f2b8a0;
+  --c-pink: #ff4d4f;
+  --c-blush: #7a1a22;
+  --c-lav: #5a1218;
+  --c-mint: #6b5a1a;
+  --c-butter: #ffef93;
 
-  --card-shadow: 0 1px 2px rgba(0, 0, 0, 0.4), 0 8px 24px -12px rgba(0, 0, 0, 0.6);
-  --card-shadow-hover: 0 2px 4px rgba(0, 0, 0, 0.4), 0 16px 40px -12px rgba(0, 0, 0, 0.75);
+  --c-violet: #ffef93;
+  --c-blue: #ffd27a;
+  --c-green: #7fd68f;
+  --c-red: #ff4d4f;
+
+  --card-shadow: 0 1px 2px rgba(0, 0, 0, 0.5), 0 8px 24px -12px rgba(0, 0, 0, 0.7);
+  --card-shadow-hover: 0 2px 4px rgba(0, 0, 0, 0.5), 0 16px 40px -12px rgba(0, 0, 0, 0.85);
 }
 
 @theme inline {
@@ -126,9 +154,14 @@
   --color-blue: var(--c-blue);
   --color-green: var(--c-green);
   --color-red: var(--c-red);
+  --color-accent: var(--c-accent);
+  --color-on-accent: var(--c-on-accent);
+  --color-crimson: var(--c-crimson);
+  --color-crimson-text: var(--c-crimson-text);
+  --color-champagne: var(--c-champagne);
 
-  --font-display: var(--font-clash), var(--font-noto-tamil), var(--font-noto-deva), ui-sans-serif, system-ui, sans-serif;
-  --font-sans: var(--font-geist), var(--font-noto-tamil), var(--font-noto-deva), ui-sans-serif, system-ui, sans-serif;
+  --font-display: var(--font-manrope), var(--font-noto-tamil), var(--font-noto-deva), ui-sans-serif, system-ui, sans-serif;
+  --font-sans: var(--font-manrope), var(--font-noto-tamil), var(--font-noto-deva), ui-sans-serif, system-ui, sans-serif;
   --font-serif: var(--font-instrument), var(--font-noto-tamil), var(--font-noto-deva), Georgia, serif;
   --font-script: var(--font-caveat), var(--font-noto-tamil), var(--font-noto-deva), cursive;
   --font-mono: var(--font-dm-mono), var(--font-noto-tamil), var(--font-noto-deva), ui-monospace, monospace;
@@ -177,12 +210,12 @@ body {
 }
 
 ::selection {
-  background: var(--c-blush);
-  color: var(--c-ink);
+  background: var(--c-champagne);
+  color: #100001;
 }
 
 :focus-visible {
-  outline: 2px solid var(--c-violet);
+  outline: 2px solid var(--c-accent);
   outline-offset: 3px;
 }
 
@@ -221,11 +254,126 @@ body {
 
 .eyebrow {
   font-family: var(--font-sans);
-  font-size: 11px;
+  font-size: 12px;
   font-weight: 600;
-  letter-spacing: 0.14em;
+  letter-spacing: 0.1em;
   text-transform: uppercase;
   color: var(--c-ink-3);
+}
+
+/* ── v2 display type (reference: heavy uppercase grotesk, very tight) ──
+   Sizes are fluid: phones get a larger vw share so two-word lines still fill the column. */
+.display-xl,
+.display-l,
+.display-m {
+  font-family: var(--font-display);
+  font-weight: 650;
+  text-transform: uppercase;
+  letter-spacing: -0.05em;
+  line-height: 0.9;
+  font-variation-settings: "wght" 650;
+}
+.display-xl {
+  font-size: clamp(38px, 10.4vw, 64px);
+}
+.display-l {
+  font-size: clamp(34px, 9vw, 56px);
+  letter-spacing: -0.045em;
+}
+.display-m {
+  font-size: clamp(30px, 7.4vw, 44px);
+  letter-spacing: -0.035em;
+  line-height: 0.98;
+}
+@media (min-width: 768px) {
+  .display-xl {
+    font-size: clamp(64px, 7.85vw, 150px);
+  }
+  .display-l {
+    font-size: clamp(52px, 6vw, 112px);
+  }
+  .display-m {
+    font-size: clamp(40px, 4.4vw, 84px);
+  }
+}
+/* Tamil / Hindi have no case and break with negative tracking: mixed case, roomier, smaller. */
+:where(:root:lang(ta), :root:lang(hi)) :is(.display-xl, .display-l, .display-m) {
+  text-transform: none;
+}
+:where(:root:lang(ta), :root:lang(hi)) .display-xl {
+  font-size: clamp(30px, 7.6vw, 46px);
+}
+@media (min-width: 768px) {
+  :where(:root:lang(ta), :root:lang(hi)) .display-xl {
+    font-size: clamp(44px, 5.4vw, 104px);
+  }
+  :where(:root:lang(ta), :root:lang(hi)) .display-l {
+    font-size: clamp(38px, 4.3vw, 80px);
+  }
+  :where(:root:lang(ta), :root:lang(hi)) .display-m {
+    font-size: clamp(30px, 3.2vw, 60px);
+  }
+}
+
+/* ── v2 buttons: accent pill + outline pill, uppercase label with an arrow ── */
+.btn-accent,
+.btn-outline {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.75em;
+  min-height: 48px;
+  border-radius: 999px;
+  padding: 0 1.6em;
+  font-family: var(--font-sans);
+  font-size: 14px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  white-space: nowrap;
+  transition:
+    transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1),
+    box-shadow 0.35s ease,
+    background-color 0.25s ease,
+    border-color 0.25s ease,
+    color 0.25s ease;
+}
+.btn-accent {
+  background: var(--c-accent);
+  color: var(--c-on-accent);
+  box-shadow: 0 0 0 0 rgb(var(--c-globe-lit) / 0);
+}
+.btn-accent:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 40px -8px rgb(var(--c-globe-lit) / 0.55);
+}
+.btn-outline {
+  border: 1px solid color-mix(in srgb, var(--c-ink) 28%, transparent);
+  color: var(--c-ink);
+  background: color-mix(in srgb, var(--c-paper) 35%, transparent);
+  backdrop-filter: blur(8px);
+}
+.btn-outline:hover {
+  transform: translateY(-2px);
+  border-color: var(--c-ink);
+}
+.btn-accent svg,
+.btn-outline svg {
+  transition: transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+.btn-accent:hover svg,
+.btn-outline:hover svg {
+  transform: translateX(3px);
+}
+.btn-outline:hover svg.arrow-diag {
+  transform: translate(2px, 2px);
+}
+@media (min-width: 768px) {
+  .btn-accent,
+  .btn-outline {
+    min-height: 52px;
+    font-size: 15px;
+  }
 }
 
 .highlighter {

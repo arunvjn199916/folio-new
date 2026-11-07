@@ -1,6 +1,5 @@
 import type { Metadata, Viewport } from "next";
-import localFont from "next/font/local";
-import { Geist, Instrument_Serif, Caveat, DM_Mono, Noto_Sans_Tamil, Noto_Sans_Devanagari, Atkinson_Hyperlegible_Next } from "next/font/google";
+import { Geist, Manrope, Instrument_Serif, Caveat, DM_Mono, Noto_Sans_Tamil, Noto_Sans_Devanagari, Atkinson_Hyperlegible_Next } from "next/font/google";
 import { Grainient } from "@/components/global/Grainient";
 import { DotGlow } from "@/components/global/DotGlow";
 import { SmoothScroll } from "@/components/global/SmoothScroll";
@@ -18,12 +17,8 @@ import { InlineScript } from "@/components/global/InlineScript";
 import "../globals.css";
 import "../a11y.css";
 
-const clash = localFont({
-  src: "../../fonts/ClashDisplay-Variable.woff2",
-  variable: "--font-clash",
-  weight: "200 700",
-  display: "swap",
-});
+// v2: Manrope carries display and body; Geist stays for the Aura design-system docs.
+const manrope = Manrope({ variable: "--font-manrope", subsets: ["latin"], display: "swap" });
 const geist = Geist({ variable: "--font-geist", subsets: ["latin"] });
 const instrument = Instrument_Serif({ variable: "--font-instrument", subsets: ["latin"], weight: "400", style: ["normal", "italic"] });
 const caveat = Caveat({ variable: "--font-caveat", subsets: ["latin"] });
@@ -57,15 +52,15 @@ export async function generateMetadata(): Promise<Metadata> {
 
 export const viewport: Viewport = {
   themeColor: [
-    { media: "(prefers-color-scheme: light)", color: "#f7f4fb" },
-    { media: "(prefers-color-scheme: dark)", color: "#0f0d15" },
+    { media: "(prefers-color-scheme: light)", color: "#fbf6e9" },
+    { media: "(prefers-color-scheme: dark)", color: "#100001" },
   ],
 };
 
 export default async function RootLayout({ children }: LayoutProps<"/[lang]">) {
   const locale = await getLocale();
   const dict = await getDictionary();
-  const fonts = [clash, geist, instrument, caveat, dmMono, notoTamil, notoDeva, readable].map((f) => f.variable).join(" ");
+  const fonts = [manrope, geist, instrument, caveat, dmMono, notoTamil, notoDeva, readable].map((f) => f.variable).join(" ");
 
   return (
     // data-theme / data-a11y-* are set by the head script before paint, so the server

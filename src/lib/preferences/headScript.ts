@@ -10,7 +10,7 @@ import { THEME_KEY_SERVER, A11Y_KEY_SERVER } from "./keys";
 export const headScript = `(function(){try{
 var d=document.documentElement;
 var t=localStorage.getItem(${JSON.stringify(THEME_KEY_SERVER)});
-var dark=t==="dark"||(t!=="light"&&window.matchMedia("(prefers-color-scheme: dark)").matches);
+var dark=t==="system"?window.matchMedia("(prefers-color-scheme: dark)").matches:t!=="light";
 d.setAttribute("data-theme",dark?"dark":"light");
 var raw=localStorage.getItem(${JSON.stringify(A11Y_KEY_SERVER)});
 if(raw){(${applyA11y.toString()})(JSON.parse(raw),d);}
