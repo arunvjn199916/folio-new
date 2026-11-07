@@ -169,3 +169,37 @@ Each phase is its own commit on a `v2-redesign` branch so we can review/merge in
 | 4 · Before/after line section | ⏳ next | |
 | 6 · Page-progress rail, section transitions | ⏳ next | |
 | 7 · Restyle remaining sections (About, Work, Skills, Toolkit, Testimonials, Contact) | ⏳ next | |
+
+## 9. Phase 8 — every remaining section and page (reference: eezyinn home lower half, /projects/, /projects/annotech/)
+
+### Reference patterns found
+| Reference block | What it does |
+|---|---|
+| Projects | Big "PROJECTS." head → featured latest case (large media card, NEW pill, VIEW CASE) → index of rows: number · uppercase problem-title · meta chips · tag · arrow circle |
+| Clients marquee | Two rows of logo tiles scrolling in opposite directions |
+| Stance | Sticky stage; short statements ("Not every business needs a relaunch.") reveal word by word, then grey out |
+| Process | "FROM BOTTLENECK TO RESULT." — numbered steps light up one by one on scroll, with a dot rail |
+| Agency | Photo with dot-matrix canvas, short text, awards, "Meet the agency" |
+| CTA rows | "Where are you losing potential customers?" → full-width rows with arrows |
+| Footer | "LET'S TALK ABOUT YOUR PROJECT." + phone / email rows with arrows, link columns, giant glowing wordmark |
+| Project page | Breadcrumb · category · huge uppercase name · summary + scope chips · hero media panel · "WHAT HAPPENED." · centred statement · "WHAT WE CHANGED." feature list + big screens · "IN NUMBERS" · closing CTA |
+
+### Mapping to this site
+| Ours | v2 treatment |
+|---|---|
+| Work | Featured case card (Kairo, the deepest written study) + project index rows with hover preview image, filters kept, UI archive folder kept |
+| About | Agency-style split: portrait with dot-matrix overlay · "ENGINEER FIRST. DESIGNER BY CHOICE." · story · worked-with chips · Résumé / LinkedIn buttons (sticker board and slideshow retired) |
+| **Principles (new)** | Stance-style sticky statements about designing AI people trust |
+| Skills | Keep the throwable pills on the rounded dark panel (done) |
+| Toolkit | Clients-style tool marquee (two rows, opposite directions) |
+| Process + education | "FROM RESEARCH TO RELEASE." numbered steps lighting up on scroll, each with one line; education beside it |
+| Testimonials | Hidden behind `showTestimonials` until real quotes exist |
+| **Hire rows (new)** | "WHAT ARE YOU HIRING FOR?" rows → full-time role (email) · résumé · say hello (LinkedIn) |
+| Contact / footer | "LET'S DESIGN AI PEOPLE TRUST." · email / LinkedIn rows with arrows · link columns · giant wordmark with glowing dot |
+| Case-study pages | Reference project-page hero (breadcrumb, category, huge uppercase name, summary + meta chips, dark media panel); blocks re-typed to v2 (uppercase heads, dark cards, accent metrics, centred statements); "NEXT CASE." closing row |
+| Projects without a written study | Same hero + "Case study in progress" panel + CTA rows |
+| AI Workflow page | Uppercase hero, phases as numbered rows, closing CTA |
+| 404 | Big uppercase line + back-home button |
+| Aura design-system docs | Keeps its own product look (Geist, Aura tokens); only shell colours follow v2 |
+
+Content for all of the above comes from `docs/v2-content.md` (defaults: "I DESIGN AI YOU CAN BANK ON", availability pill on, testimonials hidden). Every new string ships in EN / TA / HI.
