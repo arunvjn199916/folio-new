@@ -6,26 +6,11 @@ import { Skills } from "@/components/sections/Skills";
 import { Toolkit } from "@/components/sections/Toolkit";
 import { Testimonials } from "@/components/sections/Testimonials";
 import { Contact } from "@/components/sections/Contact";
-import { Media } from "@/components/ui/Placeholder";
-import { getDictionary } from "@/i18n/server";
 
-export default async function Home() {
-  const { ui } = await getDictionary();
+export default function Home() {
   return (
     <>
-      <Hero
-        portrait={
-          <Media
-            src="portrait.webp"
-            alt={ui.hero.portraitAlt}
-            label="Portrait 4:5"
-            className="absolute inset-0"
-            tint="linear-gradient(160deg,#cdb8ff,#ffb6d9)"
-            sizes="330px"
-            priority
-          />
-        }
-      />
+      <Hero />
       <About />
       <Work />
       <Experience />

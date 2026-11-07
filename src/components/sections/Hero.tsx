@@ -1,240 +1,175 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
-import dynamic from "next/dynamic";
-import { gsap, SplitText, useGSAP } from "@/lib/gsap";
+import { useEffect, useRef, useState, useSyncExternalStore } from "react";
+import { ArrowDownRight, ArrowRight } from "lucide-react";
+import { gsap, ScrollTrigger, SplitText, useGSAP } from "@/lib/gsap";
 import { intro } from "@/lib/intro";
 import { useI18n } from "@/i18n/client";
-import { BlurCycle } from "@/components/ui/BlurCycle";
-import { CountUp, Marquee } from "@/components/ui/Motion";
-import { RichText } from "@/components/ui/Text";
-import { ToolIcon, toolSlug } from "@/components/ui/ToolIcon";
-import { motionDisabled } from "@/lib/a11y/store";
-import { splitTypeFor } from "@/lib/text";
+import { a11y, motionDisabled } from "@/lib/a11y/store";
+import { Globe } from "@/components/hero/Globe";
+import { cn } from "@/lib/utils";
 
-const PenHeadline = dynamic(
-  () => import("@/components/ui/PenHeadline").then((m) => m.PenHeadline),
-  { ssr: false },
-);
-
-const MOSAIC = { cols: 8, rows: 10 };
+const getStill = () => motionDisabled();
+const serverStill = () => false;
 
 /*
-  Sudhanva layout (chip → headline with a blur-cycling last line → bio → builder stack,
-  tilted polaroid on the right), Anjali's stats column with count-up, pixel-mosaic photo
-  reveal and the skills marquee, and Ashu's editable vector "PRODUCT DESIGNER" wordmark.
-  Everything waits for the intro to release it.
+  v2 hero. The section is ~2.3 screens tall with a sticky stage, so scrolling plays a story
+  instead of moving the page: the planet horizon pulls back into a dot globe, the first
+  statement dims, "users" on the globe light up, then gather into one glowing dot as the
+  hero hands over to the next section. The globe can be dragged at any point.
+  Reduced motion / Stop animations: one screen tall, finished state, no scrubbing.
 */
-export function Hero({ portrait }: { portrait: React.ReactNode }) {
+export function Hero() {
   const { dict } = useI18n();
-  const { hero, profile, ui } = dict;
+  const { hero } = dict;
+  const t = dict.ui.hero;
   const root = useRef<HTMLElement>(null);
+  const progress = useRef(0);
+  const state = useRef<HTMLSpanElement>(null);
+  const clock = useRef<HTMLSpanElement>(null);
   const [play, setPlay] = useState(false);
+  const still = useSyncExternalStore(a11y.subscribe, getStill, serverStill);
 
   useEffect(() => intro.onRelease(() => setPlay(true)), []);
 
+  // Live local time in Chennai for the HUD (client only, so no hydration mismatch).
+  useEffect(() => {
+    const fmt = new Intl.DateTimeFormat("en-GB", { hour: "2-digit", minute: "2-digit", timeZone: "Asia/Kolkata" });
+    const tick = () => clock.current && (clock.current.textContent = fmt.format(new Date()));
+    tick();
+    const id = setInterval(tick, 15_000);
+    return () => clearInterval(id);
+  }, []);
+
+  // Entrance after the intro: headline lines rise out of their masks, the rest fades up.
   useGSAP(
     () => {
       if (!play) return;
-      const reduce = motionDisabled();
       const q = gsap.utils.selector(root);
       gsap.set(q("[data-hide]"), { visibility: "visible" });
-      if (reduce) return;
-      // chars for Latin, words for Indic scripts (keeps letters shaped correctly)
-      const leadType = splitTypeFor(hero.lead, "chars");
-      const lead = SplitText.create(q(".hero-lead"), { type: leadType, aria: "auto" });
-      const leadUnits = leadType === "words" ? lead.words : lead.chars;
-      const tl = gsap.timeline({ defaults: { ease: "power3.out" } });
-      tl.from(
-        q(".hero-chip"),
-        { opacity: 0, y: 8, filter: "blur(6px)", duration: 0.6 },
-        0,
-      )
-        .from(
-          leadUnits,
-          {
-            opacity: 0,
-            filter: "blur(12px)",
-            y: 6,
-            duration: 0.7,
-            stagger: 0.018,
-          },
-          0.1,
-        )
-        .from(
-          q(".hero-bio"),
-          { opacity: 0, filter: "blur(8px)", y: 10, duration: 0.8 },
-          0.6,
-        )
-        .from(q(".hero-stack-label"), { opacity: 0, duration: 0.5 }, 0.8)
-        .from(
-          q(".hero-stack > *"),
-          {
-            opacity: 0,
-            y: 8,
-            scale: 0.6,
-            duration: 0.45,
-            stagger: 0.07,
-            ease: "back.out(2)",
-          },
-          0.85,
-        )
-        .from(
-          q(".hero-stat"),
-          { opacity: 0, x: 12, duration: 0.6, stagger: 0.1 },
-          0.3,
-        )
-        .from(q(".hero-marquee"), { opacity: 0, y: 20, duration: 0.8 }, 0.9)
-        .from(
-          q(".hero-caption"),
-          { opacity: 0, rotate: -6, duration: 0.6 },
-          1.0,
-        );
-
-      // Pixel mosaic reveal unless the loader already dropped the card in place.
-      const cells = q(".mosaic-cell");
-      if (intro.handoff) gsap.set(cells, { opacity: 0 });
-      else
-        gsap.to(cells, {
-          opacity: 0,
-          duration: 0.12,
-          stagger: { each: 0.008, from: "random" },
-          delay: 0.2,
-        });
-      return () => lead.revert();
+      if (still) return;
+      const splits = q(".hero-line").map((el) => SplitText.create(el, { type: "words", mask: "words", aria: "auto" }));
+      const tl = gsap.timeline({ defaults: { ease: "expo.out" } });
+      tl.from(q(".hero-globe"), { opacity: 0, scale: 1.04, duration: 2.2, ease: "power2.out" }, 0)
+        .from(q(".hero-eyebrow"), { opacity: 0, y: 12, duration: 0.8 }, 0.15)
+        .from(splits.flatMap((s) => s.words), { yPercent: 110, duration: 1.2, stagger: 0.07 }, 0.2)
+        .from(q(".hero-fade"), { opacity: 0, y: 18, duration: 1, stagger: 0.08 }, 0.7);
+      return () => splits.forEach((s) => s.revert());
     },
-    { scope: root, dependencies: [play] },
+    { scope: root, dependencies: [play, still] },
   );
 
-  // Polaroid follows the pointer a little (tilt), like a physical card.
-  const card = useRef<HTMLDivElement>(null);
-  const onCardMove = (e: React.PointerEvent) => {
-    const el = card.current;
-    if (!el) return;
-    const r = el.getBoundingClientRect();
-    const x = (e.clientX - r.left) / r.width - 0.5;
-    const y = (e.clientY - r.top) / r.height - 0.5;
-    gsap.to(el, {
-      rotateY: x * 10,
-      rotateX: -y * 10,
-      rotate: 3 + x * 2,
-      duration: 0.6,
-      ease: "power3.out",
-    });
-  };
-  const onCardLeave = () =>
-    card.current &&
-    gsap.to(card.current, {
-      rotateY: 0,
-      rotateX: 0,
-      rotate: 3,
-      duration: 0.8,
-      ease: "elastic.out(1,0.6)",
-    });
+  // Scroll story (desktop + mobile; skipped when motion is off).
+  useGSAP(
+    () => {
+      const sec = root.current!;
+      const q = gsap.utils.selector(sec);
+      if (still) {
+        progress.current = 0.5;
+        if (state.current) state.current.textContent = t.after;
+        return;
+      }
+      let after = false;
+      const st = ScrollTrigger.create({
+        trigger: sec,
+        start: "top top",
+        end: "bottom bottom",
+        scrub: true,
+        onUpdate: (self) => {
+          progress.current = self.progress;
+          const now = self.progress > 0.42;
+          if (now !== after && state.current) {
+            after = now;
+            state.current.textContent = now ? t.after : t.before;
+            gsap.fromTo(state.current.parentElement, { opacity: 0, y: 6 }, { opacity: 1, y: 0, duration: 0.5 });
+          }
+        },
+      });
+      const scrub = { trigger: sec, start: "top top", end: "bottom bottom", scrub: 0.4 };
+      const tl = gsap.timeline({ scrollTrigger: scrub, defaults: { ease: "none" } });
+      // timeline length = 1 so positions read as scroll progress
+      tl.to(q(".hero-a"), { opacity: 0.22, duration: 0.18 }, 0.12)
+        .to(q(".hero-text"), { yPercent: -4, duration: 0.6 }, 0.3)
+        .to(q(".hero-bleed"), { opacity: 1, duration: 0.25 }, 0.72)
+        .set({}, {}, 1);
+      return () => {
+        st.kill();
+        tl.scrollTrigger?.kill();
+        tl.kill();
+      };
+    },
+    { scope: root, dependencies: [still, t.after, t.before] },
+  );
+
+  const [a, b] = hero.statements;
 
   return (
-    <section
-      ref={root}
-      id="top"
-      className="relative flex min-h-svh flex-col pt-28"
-    >
-      <div className="mx-auto grid w-full max-w-[1240px] grid-cols-1 items-center gap-12 px-6 md:grid-cols-[minmax(0,1.25fr)_minmax(0,0.85fr)_auto] md:gap-10">
-        {/* Left — Sudhanva text column */}
-        <div className="invisible" data-hide>
-          <span className="hero-chip inline-flex items-center gap-1.5 rounded-full border border-ink/10 bg-surface/70 px-3 py-1.5 text-[12px] text-ink-2 backdrop-blur">
-            {profile.currently.title} @{" "}
-            <strong className="font-semibold text-ink">
-              {profile.currently.company}
-            </strong>
-          </span>
-          <h1 className="mt-5 font-display text-[clamp(34px,3.9vw,56px)] leading-[1.02] font-semibold tracking-[-0.02em] text-ink">
-            <span className="hero-lead block">{hero.lead}</span>
-            <BlurCycle words={hero.words} play={play} />
-          </h1>
-          <p className="hero-bio mt-6 max-w-[440px] text-[15px] leading-relaxed text-ink-2">
-            <RichText segments={hero.bio} />
+    <section ref={root} id="top" className={cn("relative", still ? "h-svh" : "h-[260vh] md:h-[230vh]")}>
+      <div className="sticky top-0 h-svh overflow-hidden">
+        {/* space backdrop + end-of-section colour bleed */}
+        <div aria-hidden className="absolute inset-0 bg-[radial-gradient(120%_80%_at_70%_110%,var(--c-space-3)_0%,var(--c-space-2)_35%,transparent_70%)] opacity-60" />
+        <div aria-hidden className="hero-bleed absolute inset-0 bg-[radial-gradient(80%_60%_at_68%_50%,color-mix(in_srgb,var(--c-space-3)_55%,transparent),transparent_75%)] opacity-0" />
+
+        <div className="hero-globe absolute inset-0">
+          <Globe progress={progress} still={still} label={t.globeLabel} className="absolute inset-0 h-full w-full cursor-grab active:cursor-grabbing" />
+        </div>
+
+        {/* HUD */}
+        <div data-hide className="hero-hud hero-fade pointer-events-none invisible absolute top-[86px] right-4 left-4 flex flex-col items-end gap-2 font-mono text-[11px] tracking-[0.12em] text-ink-2 uppercase md:top-[104px] md:right-10 md:left-auto">
+          <div className="flex items-center gap-3 md:gap-4">
+            <span>
+              {t.city} <span ref={clock} className="ml-1 text-ink">--:--</span>
+            </span>
+            <span className="h-3 w-px bg-ink/25" />
+            <span className="hidden items-center gap-1.5 sm:flex">
+              <span className="size-1.5 rounded-full bg-ink/50" /> {t.users}
+            </span>
+            <span className="flex items-center gap-1.5">
+              <span className="size-1.5 rounded-full bg-accent shadow-[0_0_8px_rgb(var(--c-globe-lit)/0.9)]" /> {t.trusted}
+            </span>
+          </div>
+          <div className="hidden items-center gap-1.5 text-ink sm:flex">
+            <span className="size-1.5 rounded-full bg-accent" />
+            <span ref={state}>{t.before}</span>
+          </div>
+          <span className="hidden text-ink-3 md:block">{t.drag}</span>
+        </div>
+
+        {/* Text */}
+        <div className="hero-text pointer-events-none absolute inset-0 flex flex-col px-4 pt-[124px] pb-[118px] md:px-12 md:pt-[22vh] md:pb-12">
+          <p data-hide className="hero-eyebrow eyebrow invisible">
+            {hero.eyebrow}
           </p>
-          <p className="hero-stack-label mt-9 text-[15px] font-semibold text-ink">
-            {ui.hero.builderStack}
-          </p>
-          <div className="hero-stack mt-3.5 flex max-w-[560px] flex-wrap items-center gap-2.5">
-            {hero.stack.map((t) => (
-              // GSAP staggers the outer span in; the hover lift is on the inner chip.
-              <span key={t}>
-                <span className="flex items-center gap-2.5 rounded-2xl border border-ink/[0.06] bg-surface/85 py-2 pr-4 pl-2 text-[14px] font-medium text-ink shadow-[0_4px_14px_-8px_rgba(26,24,34,0.35)] transition-transform duration-300 hover:-translate-y-1 hover:rotate-[-2deg]">
-                  <span className="grid size-9 place-items-center rounded-xl bg-paper">
-                    <ToolIcon slug={toolSlug(t)} size={22} />
-                  </span>
-                  {t}
+          <h1 data-hide className="invisible mt-4 text-ink md:mt-6">
+            <span className="hero-a block">
+              {a.map((line) => (
+                <span key={line} className="hero-line display-xl block">
+                  {line}
                 </span>
-              </span>
-            ))}
+              ))}
+            </span>
+            <span className="hero-b mt-[0.08em] block pl-[6vw] md:pl-[8vw]">
+              {b.map((line) => (
+                <span key={line} className="hero-line display-xl block">
+                  {line}
+                </span>
+              ))}
+            </span>
+          </h1>
+
+          <div data-hide className="invisible mt-auto flex flex-col gap-6 md:flex-row md:items-end md:justify-between">
+            <p className="hero-fade max-w-[520px] [text-shadow:0_1px_14px_var(--c-paper)] text-[17px] leading-[1.45] tracking-[-0.01em] text-ink md:text-[clamp(18px,1.45vw,24px)]">{hero.sub}</p>
+            <div className="hero-fade pointer-events-auto flex flex-col gap-3 sm:flex-row md:mr-[10vw]">
+              <a href="#contact" className="btn-accent">
+                {t.talk} <ArrowRight size={18} strokeWidth={2.4} />
+              </a>
+              <a href="#work" className="btn-outline">
+                {t.viewWork} <ArrowDownRight size={18} strokeWidth={2.2} className="arrow-diag" />
+              </a>
+            </div>
           </div>
         </div>
-
-        {/* Middle — polaroid portrait (landing spot for the loader's card) */}
-        <div className="flex justify-center [perspective:900px]">
-          <div
-            ref={card}
-            onPointerMove={onCardMove}
-            onPointerLeave={onCardLeave}
-            className="w-full max-w-[330px] rotate-[3deg] rounded-[6px] bg-photo p-3 pb-12 shadow-[0_30px_60px_-25px_rgba(26,24,34,0.45)] [transform-style:preserve-3d]"
-          >
-            <div
-              data-hero-card
-              className="relative aspect-[4/5] overflow-hidden rounded-[2px]"
-            >
-              {portrait}
-              <div
-                aria-hidden
-                className="absolute inset-0 grid"
-                style={{ gridTemplateColumns: `repeat(${MOSAIC.cols},1fr)` }}
-              >
-                {Array.from({ length: MOSAIC.cols * MOSAIC.rows }).map(
-                  (_, i) => (
-                    <span key={i} className="mosaic-cell bg-paper" />
-                  ),
-                )}
-              </div>
-            </div>
-            <p className="hero-caption mt-3 text-center font-script text-[22px] text-on-photo">
-              {hero.polaroidCaption}
-            </p>
-          </div>
-        </div>
-
-        {/* Right — Anjali stats column */}
-        <div
-          className="invisible flex flex-row justify-between gap-6 border-ink/10 md:flex-col md:justify-center md:gap-0 md:border-l md:pl-8"
-          data-hide
-        >
-          {hero.stats.map((s) => (
-            <div
-              key={s.label}
-              className="hero-stat border-ink/10 py-2 text-right md:border-b md:py-8 md:last:border-b-0"
-            >
-              <div className="font-display text-[clamp(30px,3vw,44px)] leading-none font-semibold">
-                <CountUp to={s.value} suffix={s.suffix} play={play} />
-              </div>
-              <div className="mt-2 text-[10px] font-semibold tracking-[0.18em] text-ink-3 uppercase">
-                {s.label}
-              </div>
-            </div>
-          ))}
-        </div>
       </div>
-
-      {/* Ashu — editable vector wordmark */}
-      <div data-decor className="mx-auto mt-14 w-full max-w-[1240px] px-6 text-ink">
-        <PenHeadline text={ui.hero.wordmark} label={profile.role} hint={ui.hero.penHint} resetLabel={ui.hero.reset} play={play} />
-      </div>
-
-      {/* Anjali — skills strip */}
-      <Marquee
-        decor
-        items={hero.marquee}
-        className="hero-marquee mt-auto border-y border-ink/10 bg-surface/60 py-3 font-serif text-[19px] text-ink"
-      />
     </section>
   );
 }

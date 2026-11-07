@@ -1,0 +1,307 @@
+"use client";
+
+import { useEffect, useRef } from "react";
+
+/*
+  Dot globe for the v2 hero, drawn on one 2D canvas.
+
+  `progress` (0 → 1) is written by the hero's scroll trigger and read every frame:
+    0.00–0.32  a huge planet horizon behind the headline pulls back into a globe on the right
+    0.28–0.52  "users" (a share of the dots) light up in the accent colour
+    0.56–0.80  lit dots gather into one glowing dot, the rest of the globe fades
+  The globe spins slowly on its own and can be dragged (with inertia). Colours come from
+  the theme tokens (--c-globe-dot / --c-globe-lit / --c-globe-rim), re-read on theme change.
+*/
+
+type Props = {
+  progress: React.RefObject<number>;
+  still?: boolean;
+  className?: string;
+  label: string;
+};
+
+const N = 1150;
+const LIT_SHARE = 0.14;
+
+const smooth = (a: number, b: number, x: number) => {
+  const t = Math.min(1, Math.max(0, (x - a) / (b - a)));
+  return t * t * (3 - 2 * t);
+};
+const mix = (a: number, b: number, t: number) => a + (b - a) * t;
+
+function readRgb(name: string, fallback: string) {
+  const v = getComputedStyle(document.documentElement).getPropertyValue(name).trim();
+  return (v || fallback).split(/[\s,]+/).map(Number) as [number, number, number];
+}
+
+function makeSprite(rgb: [number, number, number], size: number) {
+  const c = document.createElement("canvas");
+  c.width = c.height = size;
+  const g = c.getContext("2d")!;
+  const grad = g.createRadialGradient(size / 2, size / 2, 0, size / 2, size / 2, size / 2);
+  grad.addColorStop(0, `rgba(${rgb.join(",")},0.95)`);
+  grad.addColorStop(0.18, `rgba(${rgb.join(",")},0.55)`);
+  grad.addColorStop(0.5, `rgba(${rgb.join(",")},0.12)`);
+  grad.addColorStop(1, `rgba(${rgb.join(",")},0)`);
+  g.fillStyle = grad;
+  g.fillRect(0, 0, size, size);
+  return c;
+}
+
+export function Globe({ progress, still = false, className, label }: Props) {
+  const canvas = useRef<HTMLCanvasElement>(null);
+
+  useEffect(() => {
+    const cv = canvas.current!;
+    const ctx = cv.getContext("2d")!;
+    let W = 0;
+    let H = 0;
+    let dpr = 1;
+
+    // Fibonacci sphere + per-dot randomness (lit threshold, twinkle phase).
+    const pts = new Float32Array(N * 3);
+    const thr = new Float32Array(N);
+    const phase = new Float32Array(N);
+    const golden = Math.PI * (3 - Math.sqrt(5));
+    for (let i = 0; i < N; i++) {
+      const y = 1 - (i / (N - 1)) * 2;
+      const r = Math.sqrt(1 - y * y);
+      const a = golden * i;
+      pts[i * 3] = Math.cos(a) * r;
+      pts[i * 3 + 1] = y;
+      pts[i * 3 + 2] = Math.sin(a) * r;
+      // pseudo-random but stable
+      const h = Math.sin(i * 12.9898) * 43758.5453;
+      thr[i] = h - Math.floor(h);
+      phase[i] = (thr[i] * 997) % (Math.PI * 2);
+    }
+    const stars = Array.from({ length: 140 }, (_, i) => {
+      const h = Math.sin(i * 78.233) * 12543.123;
+      const f = h - Math.floor(h);
+      const g = Math.sin(i * 39.425) * 9821.77;
+      return { x: f, y: g - Math.floor(g), s: 0.4 + ((i * 7) % 10) / 12, p: f * 6.28 };
+    });
+
+    let dot: [number, number, number] = [247, 241, 227];
+    let lit: [number, number, number] = [255, 239, 147];
+    let rim: [number, number, number] = [220, 2, 8];
+    let litSprite = makeSprite(lit, 40);
+    let rimHi: [number, number, number] = [255, 90, 79];
+    let paper: [number, number, number] = [16, 0, 1];
+    const readColors = () => {
+      dot = readRgb("--c-globe-dot", "247 241 227");
+      lit = readRgb("--c-globe-lit", "255 239 147");
+      rim = readRgb("--c-globe-rim", "220 2 8");
+      rimHi = readRgb("--c-globe-rim-hi", "255 90 79");
+      paper = readRgb("--c-globe-body", "16 0 1");
+      litSprite = makeSprite(lit, 40);
+    };
+    readColors();
+    const themeObs = new MutationObserver(readColors);
+    themeObs.observe(document.documentElement, { attributes: true, attributeFilter: ["data-theme"] });
+
+    const resize = () => {
+      const r = cv.getBoundingClientRect();
+      dpr = Math.min(2, window.devicePixelRatio || 1);
+      W = r.width;
+      H = r.height;
+      cv.width = Math.round(W * dpr);
+      cv.height = Math.round(H * dpr);
+    };
+    resize();
+    const ro = new ResizeObserver(resize);
+    ro.observe(cv);
+
+    // Rotation state: yaw spins, pitch tilts; drag adds velocity that decays.
+    let yaw = 0.6;
+    let pitch = -0.32;
+    let vYaw = 0;
+    let vPitch = 0;
+    let dragging = false;
+    let lastX = 0;
+    let lastY = 0;
+    const onDown = (e: PointerEvent) => {
+      dragging = true;
+      lastX = e.clientX;
+      lastY = e.clientY;
+      cv.setPointerCapture(e.pointerId);
+    };
+    const onMove = (e: PointerEvent) => {
+      if (!dragging) return;
+      const dx = e.clientX - lastX;
+      const dy = e.clientY - lastY;
+      lastX = e.clientX;
+      lastY = e.clientY;
+      vYaw = dx * 0.006;
+      vPitch = e.pointerType === "touch" ? 0 : dy * 0.004;
+      yaw += vYaw;
+      pitch = Math.max(-1.1, Math.min(1.1, pitch + vPitch));
+    };
+    const onUp = (e: PointerEvent) => {
+      dragging = false;
+      if (cv.hasPointerCapture(e.pointerId)) cv.releasePointerCapture(e.pointerId);
+    };
+    cv.addEventListener("pointerdown", onDown);
+    cv.addEventListener("pointermove", onMove);
+    cv.addEventListener("pointerup", onUp);
+    cv.addEventListener("pointercancel", onUp);
+
+    let visible = true;
+    const io = new IntersectionObserver(([e]) => (visible = e.isIntersecting));
+    io.observe(cv);
+
+    let raf = 0;
+    let time = 0;
+    let last = performance.now();
+    const draw = (now: number) => {
+      raf = requestAnimationFrame(draw);
+      const dt = Math.min(0.05, (now - last) / 1000);
+      last = now;
+      if (!visible || document.hidden || W === 0) return;
+      time += dt;
+
+      const p = still ? 0.5 : (progress.current ?? 0);
+      if (!dragging) {
+        yaw += vYaw + (still ? 0 : dt * 0.09);
+        pitch = Math.max(-1.1, Math.min(1.1, pitch + vPitch));
+        vYaw *= 0.94;
+        vPitch *= 0.9;
+      }
+
+      // Layout: horizon → globe
+      const mobile = W < 768;
+      const pull = smooth(0.0, 0.32, p);
+      const hR = Math.max(W * 0.95, H * 1.6);
+      const hCx = W * 0.5;
+      const hCy = H * (mobile ? 0.42 : 0.2) + hR;
+      const gR = mobile ? Math.min(W * 0.46, H * 0.3) : Math.min(W * 0.27, H * 0.38);
+      const gCx = mobile ? W * 0.5 : W * 0.7;
+      const gCy = mobile ? H * 0.6 : H * 0.47;
+      const gather = smooth(0.56, 0.8, p);
+      const R = mix(hR, gR, pull) * (1 - gather * 0.25);
+      const cx = mix(hCx, gCx, pull);
+      const cy = mix(hCy, gCy, pull);
+      const litF = smooth(0.28, 0.52, p);
+
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+      ctx.clearRect(0, 0, W, H);
+
+      // background stars, drifting slowly with scroll
+      for (const s of stars) {
+        const tw = 0.35 + 0.35 * Math.sin(time * 1.2 + s.p);
+        ctx.globalAlpha = tw * 0.8;
+        ctx.fillStyle = `rgb(${dot.join(",")})`;
+        const sx = s.x * W;
+        const sy = ((s.y - p * 0.15 + 1) % 1) * H;
+        ctx.fillRect(sx, sy, s.s, s.s);
+      }
+
+      // planet body: darker than space, lit towards the rim
+      const fade = 1 - gather * 0.85;
+      const body = ctx.createRadialGradient(cx - R * 0.25, cy - R * 0.3, R * 0.05, cx, cy, R);
+      body.addColorStop(0, `rgba(${rim.join(",")},0.14)`);
+      body.addColorStop(0.55, `rgba(${paper.join(",")},0.92)`);
+      body.addColorStop(0.93, `rgba(${paper.join(",")},0.86)`);
+      body.addColorStop(1, `rgba(${rim.join(",")},0.35)`);
+      ctx.globalAlpha = fade;
+      ctx.fillStyle = body;
+      ctx.beginPath();
+      ctx.arc(cx, cy, R, 0, Math.PI * 2);
+      ctx.fill();
+      // atmosphere: layered strokes give a soft glow band with a bright edge
+      for (const [w, a] of [
+        [70, 0.05],
+        [34, 0.09],
+        [14, 0.18],
+        [5, 0.4],
+      ] as const) {
+        ctx.globalAlpha = a * fade;
+        ctx.strokeStyle = `rgb(${rim.join(",")})`;
+        ctx.lineWidth = w;
+        ctx.beginPath();
+        ctx.arc(cx, cy, R + w * 0.3, 0, Math.PI * 2);
+        ctx.stroke();
+      }
+      ctx.globalAlpha = 0.95 * fade;
+      ctx.strokeStyle = `rgb(${rimHi.join(",")})`;
+      ctx.lineWidth = 1.5;
+      ctx.beginPath();
+      ctx.arc(cx, cy, R, 0, Math.PI * 2);
+      ctx.stroke();
+
+      // dots
+      const cyw = Math.cos(yaw);
+      const syw = Math.sin(yaw);
+      const cp = Math.cos(pitch);
+      const sp = Math.sin(pitch);
+      const dotCol = `rgb(${dot.join(",")})`;
+      ctx.fillStyle = dotCol;
+      const litList: number[] = [];
+      for (let i = 0; i < N; i++) {
+        const x0 = pts[i * 3];
+        const y0 = pts[i * 3 + 1];
+        const z0 = pts[i * 3 + 2];
+        const x1 = x0 * cyw + z0 * syw;
+        const z1 = -x0 * syw + z0 * cyw;
+        const y2 = y0 * cp - z1 * sp;
+        const z2 = y0 * sp + z1 * cp;
+        let sx = cx + x1 * R;
+        let sy = cy - y2 * R;
+        const isLit = thr[i] < LIT_SHARE && thr[i] / LIT_SHARE < litF;
+        if (isLit && z2 > -0.2) {
+          // lit users drift into the centre as the section ends
+          sx = mix(sx, cx, gather);
+          sy = mix(sy, cy, gather);
+          if (sx > -20 && sx < W + 20 && sy > -20 && sy < H + 20) litList.push(sx, sy, z2);
+          continue;
+        }
+        if (sx < -4 || sx > W + 4 || sy < -4 || sy > H + 4) continue;
+        const front = z2 > 0;
+        const a = (front ? 0.22 + 0.5 * z2 : 0.07) * (1 - gather);
+        if (a < 0.01) continue;
+        ctx.globalAlpha = a * (0.75 + 0.25 * Math.sin(time * 2 + phase[i]));
+        const s = front ? 1.1 + z2 * 0.9 : 0.9;
+        ctx.fillRect(sx - s / 2, sy - s / 2, s, s);
+      }
+      // lit dots on top: glow sprite + core
+      for (let k = 0; k < litList.length; k += 3) {
+        const sx = litList[k];
+        const sy = litList[k + 1];
+        const z = litList[k + 2];
+        const g = 16 + z * 8;
+        ctx.globalAlpha = 0.55 + 0.35 * z;
+        ctx.drawImage(litSprite, sx - g / 2, sy - g / 2, g, g);
+        ctx.globalAlpha = 1;
+        ctx.fillStyle = `rgb(${lit.join(",")})`;
+        ctx.beginPath();
+        ctx.arc(sx, sy, 1.6 + z * 1.2, 0, Math.PI * 2);
+        ctx.fill();
+      }
+      // the single glowing dot they gather into
+      if (gather > 0) {
+        const size = 26 + gather * 70;
+        ctx.globalAlpha = gather;
+        ctx.drawImage(litSprite, cx - size / 2, cy - size / 2, size, size);
+        ctx.fillStyle = `rgb(${lit.join(",")})`;
+        ctx.beginPath();
+        ctx.arc(cx, cy, 3 + gather * 9, 0, Math.PI * 2);
+        ctx.fill();
+      }
+      ctx.globalAlpha = 1;
+    };
+    raf = requestAnimationFrame(draw);
+
+    return () => {
+      cancelAnimationFrame(raf);
+      ro.disconnect();
+      io.disconnect();
+      themeObs.disconnect();
+      cv.removeEventListener("pointerdown", onDown);
+      cv.removeEventListener("pointermove", onMove);
+      cv.removeEventListener("pointerup", onUp);
+      cv.removeEventListener("pointercancel", onUp);
+    };
+  }, [progress, still]);
+
+  return <canvas ref={canvas} role="img" aria-label={label} className={className} style={{ touchAction: "pan-y" }} />;
+}

@@ -36,14 +36,14 @@ export function MusicPlayer() {
   const box = useRef<HTMLDivElement>(null);
   const [corner, setCorner] = useState<Corner>("br");
   const [free, setFree] = useState<{ x: number; y: number } | null>(null);
-  const [min, setMin] = useState(false);
+  const [min, setMin] = useState(true);
   const [mounted, setMounted] = useState(false);
   const drag = useRef<{ dx: number; dy: number; sx: number; sy: number; moved: boolean } | null>(null);
 
   useEffect(() => {
     /* eslint-disable react-hooks/set-state-in-effect -- browser-only preferences, read after mount */
     setCorner(safeStore.get("player-corner", isCorner) ?? "br");
-    setMin(safeStore.get("player-min", isBool) ?? window.innerWidth < 768);
+    setMin(safeStore.get("player-min", isBool) ?? true); // v2: starts minimised so it never covers the hero CTAs
     setMounted(true);
     /* eslint-enable react-hooks/set-state-in-effect */
   }, []);

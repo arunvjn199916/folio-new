@@ -49,6 +49,8 @@
   --c-globe-dot: 16 0 1; /* rgb triplets read by the globe canvas */
   --c-globe-lit: 220 2 8;
   --c-globe-rim: 220 2 8;
+  --c-globe-rim-hi: 220 2 8;
+  --c-globe-body: 255 250 236;
 
   /* legacy pastel names, remapped into the brand family */
   --c-sky: #ffd9c9;
@@ -108,6 +110,8 @@
   --c-globe-dot: 247 241 227;
   --c-globe-lit: 255 239 147;
   --c-globe-rim: 220 2 8;
+  --c-globe-rim-hi: 255 110 96;
+  --c-globe-body: 12 0 1;
 
   --c-sky: #f2b8a0;
   --c-pink: #ff4d4f;

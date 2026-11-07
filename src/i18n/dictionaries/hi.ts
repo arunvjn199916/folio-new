@@ -18,6 +18,12 @@ export const hi: Dictionary = {
   },
   hero: {
     ...en.hero,
+    eyebrow: "AI-फ़र्स्ट प्रोडक्ट डिज़ाइनर · एंटरप्राइज़ SaaS · फ़िनटेक",
+    statements: [
+      ["स्मार्ट AI.", "उलझे यूज़र्स?"],
+      ["मैं ऐसा AI बनाता हूँ", "जिस पर लोग भरोसा करें।"],
+    ],
+    sub: "मैं अरुण विजयन हूँ। मैं जटिल AI और एंटरप्राइज़ वर्कफ़्लो को ऐसे प्रोडक्ट में बदलता हूँ जिन्हें लोग समझें, उन पर भरोसा करें और सच में इस्तेमाल करें — 5+ साल, रिसर्च से शिप्ड UI तक।",
     lead: "मैं अरुण विजयन हूँ, एक प्रोडक्ट डिज़ाइनर जो",
     words: withText(en.hero.words, ["एजेंटिक AI अनुभव डिज़ाइन करता है।", "Claude और Cursor के साथ शिप करता है।", "डिज़ाइन सिस्टम बनाता है।", "फ़िनटेक में भरोसा डिज़ाइन करता है।"]),
     bio: withSegments(en.hero.bio, [
@@ -119,7 +125,7 @@ export const hi: Dictionary = {
     nav: { about: "परिचय", work: "काम", journey: "सफ़र", contact: "संपर्क", aiWorkflow: "AI वर्कफ़्लो", resume: "रिज़्यूमे", menu: "मेनू खोलें", primary: "मुख्य", letsTalk: "बात करें", closeMenu: "मेनू बंद करें", menuEyebrow: "मेनू", megaConceptsEyebrow: "स्व-प्रेरित", megaConcepts: "केस स्टडी", megaClientEyebrow: "काम पर शिप किया", megaClient: "क्लाइंट वर्क", megaAura: "Aura डिज़ाइन सिस्टम", megaAuraSub: "63 कंपोनेंट · लाइव डॉक्स", allWork: "सारा काम" },
     theme: { label: "थीम", system: "सिस्टम", light: "लाइट", dark: "डार्क", toggle: "थीम बदलें" },
     language: { label: "भाषा", change: "भाषा बदलें" },
-    hero: { ...en.ui.hero, builderStack: "मेरा बिल्डर स्टैक", penHint: "↖ अक्षरों पर होवर करें · पॉइंट खींचकर आकार बदलें", reset: "रीसेट", portraitAlt: name },
+    hero: { ...en.ui.hero, builderStack: "मेरा बिल्डर स्टैक", penHint: "↖ अक्षरों पर होवर करें · पॉइंट खींचकर आकार बदलें", reset: "रीसेट", portraitAlt: name, talk: "बात करें", viewWork: "काम देखें", city: "चेन्नई", users: "यूज़र्स", trusted: "भरोसेमंद", before: "AI · डिज़ाइन से पहले", after: "AI · डिज़ाइन के बाद", drag: "घुमाने के लिए खींचें", globeLabel: "यूज़र्स का ग्लोब, जो प्रोडक्ट पर भरोसा होते ही चमक उठते हैं" },
     about: {
       tape: "मेरे बारे में",
       workedWith: "जिनके साथ काम किया",

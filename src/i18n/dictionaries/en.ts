@@ -35,7 +35,7 @@ export const en = {
     nav: { about: "About", work: "Work", journey: "Journey", contact: "Contact", aiWorkflow: "AI Workflow", resume: "Resume", menu: "Open menu", primary: "Primary", letsTalk: "Let's talk", closeMenu: "Close menu", menuEyebrow: "Menu", megaConceptsEyebrow: "Self-initiated", megaConcepts: "Case studies", megaClientEyebrow: "Shipped at work", megaClient: "Client work", megaAura: "Aura design system", megaAuraSub: "63 components · live docs", allWork: "All work" },
     theme: { label: "Theme", system: "System", light: "Light", dark: "Dark", toggle: "Switch theme" },
     language: { label: "Language", change: "Change language" },
-    hero: { builderStack: "My builder stack", wordmark: "PRODUCT DESIGNER", penHint: "↖ HOVER THE LETTERS · DRAG A POINT TO RESHAPE", reset: "RESET", portraitAlt: profile.name },
+    hero: { builderStack: "My builder stack", wordmark: "PRODUCT DESIGNER", penHint: "↖ HOVER THE LETTERS · DRAG A POINT TO RESHAPE", reset: "RESET", portraitAlt: profile.name, talk: "Let's talk", viewWork: "View work", city: "Chennai", users: "Users", trusted: "Trusted", before: "AI · before design", after: "AI · after design", drag: "Drag to rotate", globeLabel: "A globe of users that light up as they come to trust the product" },
     about: {
       tape: "ABOUT ME",
       workedWith: "Worked with",
