@@ -37,7 +37,7 @@ type Brand = CaseStudy["brand"];
 const COL = "mx-auto w-full max-w-[640px] px-6";
 const WIDE = "mx-auto w-full max-w-[1240px] px-4 sm:px-6";
 
-const H2 = "font-display text-[clamp(28px,3.2vw,40px)] leading-[1.08] font-semibold tracking-[-0.02em] text-ink";
+const H2 = "font-display text-[clamp(30px,3.8vw,60px)] leading-[0.95] font-[650] tracking-[-0.04em] text-ink uppercase text-balance";
 const EYEBROW = "font-mono text-[11px] font-semibold tracking-[0.16em] text-ink-3 uppercase";
 const BODY = "text-[15.5px] leading-[1.7] text-ink-2";
 
@@ -67,7 +67,7 @@ export function BlockView({ block, brand, labels }: { block: Block; brand: Brand
       return (
         <Reveal className="mx-auto max-w-[820px] px-6 text-center">
           <p data-reveal className={EYEBROW}>{block.eyebrow}</p>
-          <p data-reveal className="mt-4 font-display text-[clamp(30px,4vw,52px)] leading-[1.08] font-semibold tracking-[-0.02em] text-balance text-ink">
+          <p data-reveal className="mt-5 font-display text-[clamp(32px,5vw,80px)] leading-[0.95] font-[650] tracking-[-0.045em] text-balance text-ink uppercase">
             {block.line}
           </p>
           {block.sub && <p data-reveal className="mx-auto mt-4 max-w-[520px] text-[15px] text-ink-2">{block.sub}</p>}
@@ -81,10 +81,10 @@ export function BlockView({ block, brand, labels }: { block: Block; brand: Brand
           {block.intro && <p data-reveal className={cn(BODY, "mt-4")}>{block.intro}</p>}
           <div className={cn("mt-7 grid gap-3", block.items.length > 2 && "sm:grid-cols-2")}>
             {block.items.map((it, i) => (
-              <div data-reveal key={i} className="rounded-[14px] bg-[#1d1c21] p-5 text-white/85">
-                <p className="font-display text-[26px] font-bold text-white/20">#{i + 1}</p>
-                {it.title && <p className="mt-1 text-[16px] font-semibold text-white">{it.title}</p>}
-                <p className="mt-1.5 text-[14px] leading-relaxed text-white/70">{it.body}</p>
+              <div data-reveal key={i} className="rounded-[20px] border border-ink/10 bg-card p-6 text-ink-2">
+                <p className="font-mono text-[13px] tracking-[0.12em] text-accent">#{i + 1}</p>
+                {it.title && <p className="mt-2 text-[18px] font-bold tracking-[-0.01em] text-ink">{it.title}</p>}
+                <p className="mt-1.5 text-[15px] leading-relaxed text-ink-2">{it.body}</p>
               </div>
             ))}
           </div>
@@ -94,18 +94,18 @@ export function BlockView({ block, brand, labels }: { block: Block; brand: Brand
     case "metrics":
       return (
         <Reveal className={COL}>
-          <h2 data-reveal className="font-display text-[20px] font-semibold text-ink">{block.title}</h2>
+          <h2 data-reveal className={H2}>{block.title}</h2>
           {block.intro && <p data-reveal className={cn(BODY, "mt-2")}>{block.intro}</p>}
           <div className="mt-5 grid grid-cols-2 gap-3">
             {block.items.map((m) => (
               <div
                 data-reveal
                 key={m.label}
-                className={cn("rounded-[14px] p-5", m.tone === "up" ? "bg-[#e9f9e6] dark:bg-[#183322]" : "bg-[#fdecea] dark:bg-[#3a1d1d]")}
+                className="rounded-[20px] border border-ink/10 bg-card p-6"
               >
-                {m.tone === "up" ? <ArrowUp size={16} className="text-[#1f8a3a]" /> : <ArrowDown size={16} className="text-[#c0392b]" />}
+                {m.tone === "up" ? <ArrowUp size={16} className="text-green" /> : <ArrowDown size={16} className="text-crimson-text" />}
                 <p className="mt-3 text-[13px] leading-snug text-ink-2">{m.label}</p>
-                <p className="mt-2 font-display text-[30px] font-semibold text-ink">{m.value}</p>
+                <p className="mt-3 font-display text-[clamp(40px,4.4vw,68px)] leading-none font-extrabold tracking-[-0.05em] text-accent">{m.value}</p>
               </div>
             ))}
           </div>
@@ -236,13 +236,13 @@ export function BlockView({ block, brand, labels }: { block: Block; brand: Brand
           {(block.title || block.sub) && (
             <Reveal className="mx-auto mb-10 max-w-[640px]">
               {block.title && <h2 data-reveal className={H2}>{block.title}</h2>}
-              {block.sub && <p data-reveal className="mt-2 font-serif text-[20px] text-ink-2 italic">{block.sub}</p>}
+              {block.sub && <p data-reveal className="mt-2 font-sans font-medium text-[20px] text-ink-2">{block.sub}</p>}
             </Reveal>
           )}
           <Reveal stagger={0.1}>
             <div className="overflow-hidden rounded-[24px]" style={{ background: "var(--case-band)" }}>
               {block.crumbs && (
-                <p className="flex flex-wrap items-center gap-2 px-6 pt-6 font-serif text-[14px] text-[#3b3946] italic">
+                <p className="flex flex-wrap items-center gap-2 px-6 pt-6 font-sans font-medium text-[14px] text-[#3b3946]">
                   {block.crumbs.map((c, i) => (
                     <Fragment key={c}>
                       {i > 0 && <span className="text-[#3b3946]/40">→</span>}
@@ -259,7 +259,7 @@ export function BlockView({ block, brand, labels }: { block: Block; brand: Brand
                     <figure data-reveal key={it.shot.src} className="w-[168px] shrink-0 snap-center sm:w-[190px]">
                       <Phone src={it.shot.src} alt={it.shot.label} sizes="190px" />
                       <figcaption className="mt-3 text-center">
-                        <span className="block font-serif text-[15px] text-[#1c1b22]">{it.shot.label}</span>
+                        <span className="block font-sans font-medium text-[15px] text-[#1c1b22]">{it.shot.label}</span>
                         {it.shot.note && <span className="mt-0.5 block text-[11.5px] leading-snug text-[#55535f]">{it.shot.note}</span>}
                       </figcaption>
                     </figure>
@@ -274,7 +274,7 @@ export function BlockView({ block, brand, labels }: { block: Block; brand: Brand
                 )}
               </div>
               </div>
-              <p className="px-6 pb-8 text-center font-serif text-[clamp(20px,2vw,26px)] text-[#2b2a33] italic">{block.caption}</p>
+              <p className="px-6 pb-8 text-center font-sans font-medium text-[clamp(20px,2vw,26px)] text-[#2b2a33]">{block.caption}</p>
             </div>
           </Reveal>
         </section>
@@ -296,7 +296,7 @@ export function BlockView({ block, brand, labels }: { block: Block; brand: Brand
               {block.variants.map((v) => (
                 <figure data-reveal key={v.src}>
                   <Phone src={v.src} alt={v.label} sizes="170px" />
-                  <figcaption className="mt-3 text-center font-serif text-[15px] text-white/85">{v.label}</figcaption>
+                  <figcaption className="mt-3 text-center font-sans font-medium text-[15px] text-white/85">{v.label}</figcaption>
                 </figure>
               ))}
             </div>
@@ -316,7 +316,7 @@ export function BlockView({ block, brand, labels }: { block: Block; brand: Brand
             </p>
           )}
           <div className="mt-6 space-y-3">
-            <div data-reveal className="rounded-[14px] bg-[#e9f9e6] p-5 dark:bg-[#183322]">
+            <div data-reveal className="rounded-[14px] border border-ink/10 bg-card p-6">
               <p className="text-[13px] font-medium text-ink-2">
                 {block.source === "planned" ? labels.likedPlanned : block.source === "simulated" ? labels.likedSimulated : labels.liked}
               </p>
@@ -326,7 +326,7 @@ export function BlockView({ block, brand, labels }: { block: Block; brand: Brand
                 ))}
               </ul>
             </div>
-            <div data-reveal className="rounded-[14px] bg-[#fdecea] p-5 dark:bg-[#3a1d1d]">
+            <div data-reveal className="rounded-[14px] border border-ink/10 bg-card p-6">
               <p className="text-[13px] font-medium text-ink-2">
                 {block.source === "planned" ? labels.dislikedPlanned : block.source === "simulated" ? labels.dislikedSimulated : labels.disliked}
               </p>
@@ -388,7 +388,7 @@ export function BlockView({ block, brand, labels }: { block: Block; brand: Brand
               {block.shots.map((s) => (
                 <figure data-reveal key={s.src}>
                   <Browser src={s.src} alt={s.label} />
-                  <figcaption className="mt-3 text-center font-serif text-[16px] text-[#2b2a33] italic">{s.label}</figcaption>
+                  <figcaption className="mt-3 text-center font-sans font-medium text-[16px] text-[#2b2a33]">{s.label}</figcaption>
                 </figure>
               ))}
             </div>

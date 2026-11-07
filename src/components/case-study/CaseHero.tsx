@@ -1,63 +1,98 @@
+import Link from "next/link";
 import type { CaseStudy } from "@/content/case-studies/types";
 import { Reveal } from "@/components/ui/Motion";
 import { Phone } from "./Devices";
 
-// Tushar's hero: italic serif product name on a soft brand tint with a fan of phones
-// rising from the bottom edge, then the headline, summary and the meta row.
-export function CaseHero({ study, title, summary, conceptLabel }: { study: CaseStudy; title: string; summary: string; conceptLabel: string }) {
+/*
+  v2 case-study hero (reference: eezyinn project page). Breadcrumb, category, the product
+  name as a huge uppercase title, headline + summary on the left and the scope (meta) on
+  the right, then the phone fan inside a dark rounded panel lit by the product's colour.
+*/
+export function CaseHero({
+  study,
+  title,
+  summary,
+  conceptLabel,
+  crumbs,
+}: {
+  study: CaseStudy;
+  title: string;
+  summary: string;
+  conceptLabel: string;
+  crumbs: { label: string; href?: string }[];
+}) {
   const { hero, meta, brand } = study;
   const fan = hero.shots.slice(0, 5);
-  // middle phone tallest, neighbours step down (Tushar's 5-phone fan)
   const lift = [22, 10, 0, 10, 22];
   return (
-    <>
-      <section className="relative overflow-hidden pt-28" style={{ background: "var(--case-tint)" }}>
-        <Reveal className="relative mx-auto max-w-[1240px] px-4 text-center">
-          <p data-reveal className="font-serif text-[clamp(44px,6vw,84px)] leading-none text-(--case-accent) italic">
-            {brand.name}
-          </p>
-          <p data-reveal className="mt-2 font-serif text-[clamp(18px,1.8vw,24px)] text-[#3b3946] italic">
-            {hero.kicker}
-          </p>
-          {/* phones are cropped by the band's bottom edge; outer ones sit lower */}
-          <div data-reveal className="mx-auto mt-12 flex h-[clamp(240px,30vw,420px)] max-w-[980px] items-start justify-center gap-3 overflow-hidden sm:gap-5">
-            {fan.map((s, i) => (
-              <div
-                key={s.src}
-                className={i === 0 || i === 4 ? "hidden w-[18%] shrink-0 sm:block" : "w-[30%] shrink-0 sm:w-[19%]"}
-                style={{ transform: `translateY(${lift[i]}%)` }}
-              >
-                <Phone src={s.src} alt={s.label} sizes="(max-width: 640px) 30vw, 200px" priority={i === 2} />
+    <section className="px-4 pt-28 md:px-12 md:pt-32">
+      <Reveal>
+        <nav data-reveal aria-label="Breadcrumb" className="font-mono text-[11px] tracking-[0.14em] text-ink-3 uppercase">
+          <ol className="flex flex-wrap items-center gap-2">
+            {crumbs.map((c, i) => (
+              <li key={c.label} className="flex items-center gap-2">
+                {i > 0 && <span aria-hidden>/</span>}
+                {c.href ? (
+                  <Link href={c.href} className="transition-colors hover:text-ink">
+                    {c.label}
+                  </Link>
+                ) : (
+                  <span aria-current="page" className="text-ink">
+                    {c.label}
+                  </span>
+                )}
+              </li>
+            ))}
+          </ol>
+        </nav>
+
+        <p data-reveal className="mt-10 flex items-center gap-2 text-[12px] font-semibold tracking-[0.1em] text-ink-3 uppercase">
+          <span className="size-1.5 rounded-full" style={{ background: "var(--case-accent)" }} />
+          {conceptLabel} · {hero.kicker}
+        </p>
+        <h1 data-reveal className="display-xl mt-4 text-ink">
+          {brand.name}
+        </h1>
+
+        <div className="mt-10 grid gap-10 md:grid-cols-[minmax(0,1.2fr)_minmax(0,0.8fr)] md:gap-16">
+          <div data-reveal>
+            <p className="max-w-[22ch] text-[clamp(22px,2.2vw,34px)] leading-[1.15] font-semibold tracking-[-0.03em] text-ink">{hero.title || title}</p>
+            <p className="mt-5 max-w-[560px] text-[16px] leading-[1.6] text-ink-2 md:text-[17px]">{hero.sub || summary}</p>
+          </div>
+          <dl data-reveal className="grid grid-cols-2 gap-x-6 gap-y-6 self-end border-t border-ink/10 pt-6">
+            {meta.map((m) => (
+              <div key={m.label}>
+                <dt className="font-mono text-[11px] tracking-[0.14em] text-ink-3 uppercase">{m.label}</dt>
+                <dd className="mt-2 flex flex-wrap gap-1.5">
+                  {m.value.map((v) => (
+                    <span key={v} className="rounded-full border border-ink/15 px-2.5 py-1 text-[12px] font-semibold text-ink">
+                      {v}
+                    </span>
+                  ))}
+                </dd>
               </div>
             ))}
-          </div>
-        </Reveal>
-      </section>
+          </dl>
+        </div>
+      </Reveal>
 
-      <Reveal className="mx-auto max-w-[640px] px-6 pt-20">
-        <p data-reveal className="inline-flex items-center gap-2 rounded-full border border-line px-3 py-1 font-mono text-[11px] text-ink-2">
-          <span className="size-1.5 rounded-full" style={{ background: "var(--case-accent)" }} />
-          {conceptLabel}
-        </p>
-        <h1 data-reveal className="mt-5 font-serif text-[clamp(36px,4.6vw,56px)] leading-[1.04] text-balance text-ink">
-          {hero.title || title}
-        </h1>
-        <p data-reveal className="mt-5 text-[16px] leading-relaxed text-ink-2">{hero.sub || summary}</p>
-        <dl data-reveal className="mt-10 grid grid-cols-2 gap-x-6 gap-y-6 sm:grid-cols-4">
-          {meta.map((m) => (
-            <div key={m.label}>
-              <dt className="font-display text-[16px] font-semibold text-ink">{m.label}</dt>
-              <dd className="mt-1.5 space-y-0.5 text-[12.5px] leading-snug text-ink-2">
-                {m.value.map((v) => (
-                  <span key={v} className="block">
-                    {v}
-                  </span>
-                ))}
-              </dd>
+      {/* media panel */}
+      <div
+        className="relative mt-14 overflow-hidden rounded-[28px] border border-ink/10 bg-night pt-14 md:mt-20 md:rounded-[40px] md:pt-20"
+        style={{ backgroundImage: "radial-gradient(70% 80% at 50% 100%, color-mix(in srgb, var(--case-accent) 45%, transparent), transparent 70%)" }}
+      >
+        <div className="mx-auto flex h-[clamp(240px,32vw,460px)] max-w-[1040px] items-start justify-center gap-3 overflow-hidden px-4 sm:gap-5">
+          {fan.map((s, i) => (
+            <div
+              key={s.src}
+              className={i === 0 || i === 4 ? "hidden w-[18%] shrink-0 sm:block" : "w-[30%] shrink-0 sm:w-[19%]"}
+              style={{ transform: `translateY(${lift[i]}%)` }}
+            >
+              <Phone src={s.src} alt={s.label} sizes="(max-width: 640px) 30vw, 200px" priority={i === 2} />
             </div>
           ))}
-        </dl>
-      </Reveal>
-    </>
+        </div>
+      </div>
+    </section>
   );
 }

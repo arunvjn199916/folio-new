@@ -55,6 +55,10 @@ export const theme = {
     }
     return () => listeners.delete(cb);
   },
+  /** Applies the stored (or default) theme if the head script didn't run — e.g. a client-rendered 404. */
+  ensure() {
+    if (!document.documentElement.dataset.theme) apply(theme.get());
+  },
   resolved(): "light" | "dark" {
     return document.documentElement.dataset.theme === "dark" ? "dark" : "light";
   },

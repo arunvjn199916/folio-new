@@ -136,7 +136,7 @@ export function Hero() {
         </div>
 
         {/* Text */}
-        <div className="hero-text pointer-events-none absolute inset-0 flex flex-col px-4 pt-[124px] pb-[118px] md:px-12 md:pt-[22vh] md:pb-[100px]">
+        <div className="hero-text pointer-events-none absolute inset-0 flex flex-col px-4 pt-[124px] pb-[140px] md:px-12 md:pt-[22vh] md:pb-[100px]">
           <div data-hide className="hero-eyebrow invisible flex flex-wrap items-center gap-x-4 gap-y-2">
             <span className="flex items-center gap-2 rounded-full border border-ink/15 bg-paper/40 px-3 py-1 text-[12px] font-semibold tracking-[0.04em] text-ink backdrop-blur">
               <span className="relative flex size-2">
@@ -150,14 +150,14 @@ export function Hero() {
           <h1 data-hide className="invisible mt-4 text-ink md:mt-6">
             <span className="hero-a block">
               {a.map((line) => (
-                <span key={line} className="hero-line display-xl block">
+                <span key={line} className="hero-line display-xl block max-md:!text-[clamp(30px,8.6vw,46px)]">
                   {line}
                 </span>
               ))}
             </span>
             <span className="hero-b mt-[0.08em] block pl-[6vw] md:pl-[8vw]">
               {b.map((line) => (
-                <span key={line} className="hero-line display-xl block">
+                <span key={line} className="hero-line display-xl block max-md:!text-[clamp(30px,8.6vw,46px)]">
                   {line}
                 </span>
               ))}

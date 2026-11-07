@@ -203,3 +203,9 @@ Each phase is its own commit on a `v2-redesign` branch so we can review/merge in
 | Aura design-system docs | Keeps its own product look (Geist, Aura tokens); only shell colours follow v2 |
 
 Content for all of the above comes from `docs/v2-content.md` (defaults: "I DESIGN AI YOU CAN BANK ON", availability pill on, testimonials hidden). Every new string ships in EN / TA / HI.
+
+### Phase 8 status
+✅ Done: new content in EN/TA/HI (docs/v2-content.md), featured case + project index with hover preview, agency-style About,
+principles (stance) section, tool marquee, process steps with education, hire rows, dark footer with wordmark, testimonials
+hidden (`showTestimonials`), case-study hero + re-typed blocks + "Next case.", in-progress project pages, AI-workflow page,
+localised 404 for any unknown URL. Verified: lint, production build, no console/CSP errors, desktop 1440 + phone 390/360, dark.

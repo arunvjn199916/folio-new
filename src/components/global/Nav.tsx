@@ -8,6 +8,7 @@ import { blip, intro } from "@/lib/intro";
 import { useI18n } from "@/i18n/client";
 import { locales, localeMeta, type Locale } from "@/i18n/config";
 import { cn } from "@/lib/utils";
+import { theme } from "@/lib/theme";
 import { ThemeToggle } from "./ThemeToggle";
 import { switchLocale } from "./LanguageSwitcher";
 import { A11yTrigger } from "@/components/a11y/A11yTrigger";
@@ -37,6 +38,8 @@ export function Nav() {
   const [active, setActive] = useState<string | null>(null);
   const burger = useRef<HTMLButtonElement>(null);
   const megaTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
+
+  useEffect(() => theme.ensure(), []);
 
   useEffect(() => {
     // The bar folding away closes its dropdown; unfolding it closes the burger menu.
