@@ -52,6 +52,15 @@ export const tools: Tool[] = toolGroups.flatMap((g) => g.tools);
 
 export const process = ["Discover", "Define", "Design", "Validate", "Deliver"];
 
+/** One line per process step (same order as `process`). */
+export const processNotes = [
+  "Interviews, UX audits and the legacy screens nobody wants to touch.",
+  "Journeys, information architecture and the one question the design must answer.",
+  "Flows, systems and AI patterns — citations, confirmations, undo.",
+  "Real-code prototypes with Claude & Cursor, tested with users in days.",
+  "Specs, tokens and design QA, side by side with engineering.",
+];
+
 export const education = [
   { title: "Advanced Program in Design & Technology", place: "Buff Creative College, Coimbatore", years: "Sep 2022 – Jun 2023" },
   { title: "B.Tech — Information Technology", place: "Sathyabama Institute of Science and Technology, Chennai", years: "2016 – 2020" },

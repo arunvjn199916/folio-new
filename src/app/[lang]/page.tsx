@@ -7,18 +7,21 @@ import { Skills } from "@/components/sections/Skills";
 import { Toolkit } from "@/components/sections/Toolkit";
 import { Testimonials } from "@/components/sections/Testimonials";
 import { Contact } from "@/components/sections/Contact";
+import { Principles } from "@/components/sections/Principles";
+import { showTestimonials } from "@/content/extras";
 
 export default function Home() {
   return (
     <>
       <Hero />
       <Shift />
-      <About />
       <Work />
       <Experience />
+      <Principles />
       <Skills />
       <Toolkit />
-      <Testimonials />
+      <About />
+      {showTestimonials && <Testimonials />}
       <Contact />
     </>
   );

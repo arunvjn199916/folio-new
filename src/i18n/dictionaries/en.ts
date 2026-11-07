@@ -1,7 +1,7 @@
-import { profile, hero, shift, about, greetings, contact } from "@/content/profile";
+import { profile, hero, shift, principles, hire, about, greetings, contact } from "@/content/profile";
 import { projects, projectFilters } from "@/content/projects";
 import { experienceIntro, roles } from "@/content/experience";
-import { skillPills, toolGroups, process, education } from "@/content/skills";
+import { skillPills, toolGroups, process, processNotes, education } from "@/content/skills";
 import { testimonials, aiWorkflow } from "@/content/extras";
 
 // English is the source dictionary. Its shape is the `Dictionary` type every other
@@ -11,6 +11,8 @@ export const en = {
   profile: { ...profile },
   hero,
   shift,
+  principles,
+  hire,
   about,
   greetings,
   contact,
@@ -21,14 +23,15 @@ export const en = {
   skillPills,
   toolGroups,
   process,
+  processNotes,
   education,
   testimonials,
   aiWorkflow,
   ui: {
     meta: {
-      title: `${profile.name} — ${profile.role}`,
+      title: `${profile.name} — AI-First Product Designer · FinTech & Enterprise SaaS`,
       description:
-        "AI-first product designer for enterprise SaaS and FinTech — AI search, voice and agentic experiences for US retirement (401(k)) platforms. Based in Chennai, open to relocation.",
+        "AI-first product designer designing AI search, voice and agentic experiences for US retirement (401(k)) platforms. 5+ years, former engineer. Chennai · open to GCC & remote.",
       aiTitle: `How I Design in the Age of AI — ${profile.name}`,
       aiDescription: `How ${profile.name} uses Claude, Cursor, Figma and AI research tools across the product design workflow.`,
     },
@@ -46,30 +49,34 @@ export const en = {
       photo: "Photo",
     },
     work: {
-      eyebrow: "selected work",
-      title: "Work I'm proud of",
+      eyebrow: "Selected work",
+      title: "Shipped & explored.",
+      sub: "Client work shipped at Congruent and Euroland, plus self-initiated studies on how AI should hand control back to people.",
+      featured: "Latest case",
+      viewCase: "View case",
+      index: "All projects",
       filterLabel: "Filter projects",
       fixingBugs: "FIXING BUGS",
       folder: { name: "UI archive", items: "items · click to open", open: "Open the UI archive", close: "Close the UI archive", screen: "Screen" },
     },
     experience: { location: "Location", beforeLabel: "Design & engineering · the foundation", afterLabel: "Product design · AI-first", marker: "AI", nextTitle: "What's next", nextSub: "Open to relocation · GCC & remote", nextWhen: "2026 →" },
-    skills: { eyebrow: "skills", title: "what I bring to the table", hint: "GRAB A PILL AND THROW IT" },
+    skills: { eyebrow: "Skills", title: "What I bring.", hint: "Grab a pill and throw it." },
     tools: {
-      eyebrow: "Expertise",
-      title: "I'm highly skilled in the tools that matter.",
-      sub: "An AI-first toolkit: thinking and research with AI, designing and prototyping in real code, shipping fast.",
+      eyebrow: "Toolkit",
+      title: "Tools I ship with.",
+      sub: "AI to think and prototype, Figma to design, real code to prove it works.",
     },
-    processCard: { title: "My design process", line: "Research to release — with AI in every phase to think faster and prototype in real code." },
+    processCard: { title: "My process", heading: "From research to release.", line: "Research to release — AI in every phase to think faster, and real-code prototypes to prove it." },
     educationCard: { title: "Education & training" },
     testimonialsUi: { eyebrow: "Recommendations", title: "what people say about me", sub: "A few words from people I've designed, shipped and solved problems with." },
-    contactUi: { email: "Email", social: "Social", location: "Location", copyright: `© 2026 ${profile.name} · Designed & built with Claude + Cursor`, clipAlt: `${profile.name} on a bench in a mountain valley` },
-    caseStudy: { back: "← All work", soon: "Case study content coming soon — problem, process, decisions and outcomes.", cover: "Cover 16:9",
+    contactUi: { email: "Email", social: "Social", location: "Location", emailMe: "Email me", resume: "Download résumé", pages: "Pages", elsewhere: "Elsewhere", backTop: "Back to top", copyright: `© 2026 ${profile.name} · Designed & built with Claude + Cursor`, clipAlt: `${profile.name} on a bench in a mountain valley` },
+    caseStudy: { home: "Home", work: "Work", inProgress: "Full case study in progress", inProgressSub: "The problem, process, decisions and outcomes are being written up. Until then, here's the short version — and I'm happy to walk you through it live.", walkthrough: "Ask for a walkthrough", nextCase: "Next case.", scope: "Scope", back: "← All work", soon: "Case study content coming soon — problem, process, decisions and outcomes.", cover: "Cover 16:9",
       concept: "Concept project · self-initiated", sources: "Sources", thanks: "Thanks for scrolling to the end.", next: "Next project", backHome: "Back to work",
       blocks: { targets: "Targets — what success looks like, not measured results.", planned: "Planned validation · 5-person test", liked: "What they liked", disliked: "What they didn't like", likedPlanned: "What we expect to land", dislikedPlanned: "Risks we're testing for", tasks: "Tasks", measures: "What we measure", conclusion: "Conclusion:", case: "Case", simulated: "Simulated persona walkthrough · fictional characters, not real participants", likedSimulated: "What worked in the walkthrough", dislikedSimulated: "Where the characters struggled", participants: "Participants", comfort: "Tech comfort", taskSuccess: "Completed", outcomes: { pass: "Completed", hard: "Completed with difficulty", fail: "Did not complete" } },
     },
     aiPage: { introTitle: "How I Turn Ambiguity Into Design Decisions", back: "← Back to work", heroAlt: "Human and AI hands meeting", heroLabel: "Hero illustration 3:2" },
     dsDocs: { title: "Aura design system", sub: "A design system for AI products, built on shadcn/ui and extended with the components AI interfaces actually need.", overview: "Overview", foundations: "Foundations", components: "Components", ai: "AI components", patterns: "Patterns", preview: "Preview", usage: "Usage", props: "Props", prop: "Prop", type: "Type", default: "Default", description: "Description", accessibility: "Accessibility", do: "Do", dont: "Don't", basedOn: "Based on", newInAura: "New in Aura", theme: "Theme", light: "Light", dark: "Dark", system: "Site", previous: "Previous", next: "Next", navLabel: "Design system", caseStudy: "Read the case study", colors: "Colour", type_: "Type", spacing: "Spacing & radius", elevation: "Elevation", motion: "Motion", principles: "Principles", count: "components" },
-    notFound: { title: "This page wandered off.", home: "Back home" },
+    notFound: { eyebrow: "404", title: "This page wandered off.", home: "Back home" },
     player: { nowPlaying: "Now Playing", minimize: "Minimize player", expand: "Expand player", title: "Spotify player" },
     loader: {
       intro: "Intro",

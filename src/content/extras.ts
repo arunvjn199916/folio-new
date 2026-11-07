@@ -1,3 +1,6 @@
+/** Testimonials stay hidden until real recommendations replace the placeholders below. */
+export const showTestimonials = false;
+
 // Placeholder quotes — replace with real recommendations.
 export const testimonials = [
   {

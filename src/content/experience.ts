@@ -17,8 +17,8 @@ export type Role = {
 
 export const experienceIntro = {
   eyebrow: "Experience",
-  title: "the journey so far",
-  sub: "From graphic design to engineering to AI-first product design — four roles across five years, and counting.",
+  title: "The journey so far.",
+  sub: "Graphic design → engineering → product design → AI-first. Every step added a lens I still use.",
 };
 
 export const roles: Role[] = [
@@ -35,6 +35,7 @@ export const roles: Role[] = [
       [{ text: "Lead " }, { text: "AI-first product design", bold: true }, { text: " for US retirement (401(k)) platforms — AI search, voice and agentic workflows." }],
       [{ text: "Defined " }, { text: "AI trust patterns", bold: true }, { text: " for regulated finance: citations, confirmations before transactions, fallbacks." }],
       [{ text: "Ran " }, { text: "9 usability sessions", bold: true }, { text: " and a UX audit that surfaced 11 issues across the CORE portals." }],
+      [{ text: "Designed an " }, { text: "AI search & command experience", bold: true }, { text: " for discovery, navigation and task execution across every module." }],
     ],
     shots: ["#cdb8ff", "#a8d8ff", "#ffb6d9"],
   },

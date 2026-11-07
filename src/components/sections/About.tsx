@@ -1,99 +1,79 @@
-import { getDictionary, getLocale } from "@/i18n/server";
-import { localePath } from "@/i18n/config";
+import Image from "next/image";
+import { ArrowUpRight, Mail } from "lucide-react";
+import { getDictionary } from "@/i18n/server";
 import { RichText, ExternalLink } from "@/components/ui/Text";
 import { img } from "@/content/images";
-import { AboutSlides, Sticker, CopyEmail } from "./AboutClient";
-import { Reveal } from "@/components/ui/Motion";
-import { Mail } from "lucide-react";
-import { ToolIcon } from "@/components/ui/ToolIcon";
-import { SectionHead } from "@/components/ui/SectionHead";
+import { CopyEmail } from "./AboutClient";
+import { BlurHeading, Reveal } from "@/components/ui/Motion";
 
-// Ishika reference: a scrapbook board — tilted polaroid over an auto-cycling work
-// screenshot, an "ABOUT ME" tape label, monospace copy with highlighter marks,
-// sticker navigation, a vertical social stack and a "worked with" row.
+/*
+  v2 about (reference: the agency block): portrait behind a dot-matrix screen on one side;
+  eyebrow, the "engineer first" headline, the story, companies and actions on the other.
+*/
 export async function About() {
-  const { about, profile, projects, ui } = await getDictionary();
-  const locale = await getLocale();
-  const slides = projects.map((p) => ({ src: img(p.media), tint: p.tint, label: p.title }));
+  const { about, profile, ui } = await getDictionary();
   const portrait = img("about-portrait.webp");
 
   return (
     <section id="about" className="relative px-4 py-24 md:px-12 md:py-32">
-      <SectionHead eyebrow={ui.about.tape} title={about.greeting} className="mb-12 md:mb-16" />
-      <div className="dot-grid relative overflow-hidden rounded-[28px] border border-ink/10 bg-card/70 px-6 py-12 shadow-[var(--card-shadow)] backdrop-blur md:px-14 md:py-16">
-        {/* scattered pins */}
-        {[
-          [8, 12],
-          [46, 6],
-          [92, 22],
-          [60, 48],
-          [12, 70],
-          [88, 84],
-          [40, 92],
-        ].map(([x, y], i) => (
-          <span key={i} aria-hidden className="absolute size-2 rounded-full bg-ink/15 shadow-[inset_0_-1px_0_rgba(0,0,0,0.15)]" style={{ left: `${x}%`, top: `${y}%` }} />
-        ))}
+      <div className="grid items-center gap-12 md:grid-cols-[minmax(0,0.85fr)_minmax(0,1.15fr)] md:gap-16 xl:gap-24">
+        {/* portrait */}
+        <Reveal className="relative">
+          <div data-reveal className="group relative aspect-[4/5] overflow-hidden rounded-[28px] border border-ink/10 bg-card">
+            {portrait && (
+              <Image
+                src={portrait}
+                alt={profile.name}
+                fill
+                sizes="(max-width: 768px) 100vw, 40vw"
+                className="object-cover grayscale-[35%] transition-[filter,transform] duration-700 group-hover:scale-[1.03] group-hover:grayscale-0"
+              />
+            )}
+            {/* dot-matrix screen + brand wash */}
+            <span aria-hidden className="absolute inset-0 bg-[radial-gradient(color-mix(in_srgb,var(--c-paper)_70%,transparent)_1.1px,transparent_1.5px)] [background-size:6px_6px] opacity-70 mix-blend-multiply transition-opacity duration-700 group-hover:opacity-30" />
+            <span aria-hidden className="absolute inset-0 bg-[linear-gradient(180deg,transparent_45%,color-mix(in_srgb,var(--c-crimson)_35%,transparent))]" />
+            <span className="absolute bottom-4 left-4 flex items-center gap-2 rounded-full border border-white/20 bg-black/40 px-3 py-1.5 font-mono text-[11px] tracking-[0.12em] text-white uppercase backdrop-blur">
+              <span className="size-1.5 rounded-full bg-[#ffef93]" /> {profile.location}
+            </span>
+          </div>
+        </Reveal>
 
-        <div className="relative grid gap-12 md:grid-cols-[1.1fr_1fr] md:gap-16">
-          <Reveal className="relative">
-            <div data-reveal>
-              <AboutSlides slides={slides} portrait={portrait} photoLabel={ui.about.photo} portraitAlt={profile.name} />
-            </div>
-
-            <div data-reveal className="mt-10 max-w-[540px] space-y-4 text-[16px] leading-[1.65] text-ink-2 md:text-[17px]">
-              {about.paragraphs.map((p, i) => (
-                <p key={i}>
-                  <RichText segments={p} />
-                </p>
-              ))}
-            </div>
+        {/* story */}
+        <div>
+          <p className="eyebrow flex items-center gap-2">
+            <span className="size-1.5 rounded-full bg-accent shadow-[0_0_8px_rgb(var(--c-globe-lit)/0.8)]" />
+            {ui.about.tape}
+          </p>
+          <BlurHeading className="display-m mt-4 max-w-[16ch] text-ink">{about.greeting}</BlurHeading>
+          <Reveal className="mt-8 max-w-[600px] space-y-4 text-[16px] leading-[1.65] text-ink-2 md:text-[17px]">
+            {about.paragraphs.map((p, i) => (
+              <p key={i} data-reveal>
+                <RichText segments={p} highlightClass="font-semibold text-ink" />
+              </p>
+            ))}
           </Reveal>
 
-          <div className="flex flex-col justify-between gap-12">
-            {/* Sticker nav */}
-            <div className="flex flex-wrap items-start justify-end gap-3 md:pr-14">
-              <Sticker href="#about" kind="scallop" color="#f7f1e3" rotate={-4}>
-                {ui.about.stickers.about}
-              </Sticker>
-              <Sticker href={localePath(locale, "/ai-workflow")} kind="stamp" color="#dc0208" rotate={3}>
-                <span className="block font-serif text-[22px] leading-none italic">{ui.about.stickers.ai}</span>
-                <span className="block text-[13px] font-bold tracking-wide">{ui.about.stickers.workflow}</span>
-              </Sticker>
-              <Sticker href="#work" kind="pill" color="#ffc9c2" rotate={-3}>
-                {ui.about.stickers.work}
-              </Sticker>
-              <Sticker href={profile.links.resume} kind="label" color="#ffef93" rotate={4}>
-                {ui.about.stickers.resume}
-              </Sticker>
-              <Sticker href="#contact" kind="photo" color="#6b0410" rotate={-2}>
-                {ui.about.stickers.reachOut}
-              </Sticker>
-            </div>
+          <div className="mt-10 border-t border-ink/10 pt-6">
+            <p className="eyebrow">{ui.about.workedWith}</p>
+            <ul className="mt-4 flex flex-wrap gap-2">
+              {about.workedWith.map((c) => (
+                <li key={c} className="rounded-full border border-ink/15 px-4 py-2 text-[13px] font-bold tracking-[0.02em] text-ink uppercase">
+                  {c}
+                </li>
+              ))}
+            </ul>
+          </div>
 
-            <div className="flex items-end justify-between gap-6">
-              <div>
-                <p className="eyebrow mb-4 text-ink">{ui.about.workedWith}</p>
-                <ul className="flex flex-wrap gap-x-6 gap-y-3">
-                  {about.workedWith.map((c) => (
-                    <li key={c} className="font-display text-[16px] font-bold tracking-[-0.02em] text-ink/70 uppercase transition hover:text-accent">
-                      {c}
-                    </li>
-                  ))}
-                </ul>
-              </div>
-              {/* vertical social stack */}
-              <div className="flex flex-col gap-2">
-                <ExternalLink href={profile.links.linkedin} aria-label="LinkedIn" className="grid size-8 place-items-center rounded-lg bg-ink text-on-ink transition hover:-translate-y-0.5">
-                  <span className="font-sans text-[13px] font-bold">in</span>
-                </ExternalLink>
-                <ExternalLink href={profile.links.behance} aria-label="Behance" className="grid size-8 place-items-center rounded-lg bg-ink text-on-ink transition hover:-translate-y-0.5">
-                  <ToolIcon slug="behance" size={15} mono />
-                </ExternalLink>
-                <CopyEmail email={profile.email} label={ui.about.copyEmail} copiedLabel={ui.about.copied}>
-                  <Mail size={15} />
-                </CopyEmail>
-              </div>
-            </div>
+          <div className="mt-8 flex flex-wrap items-center gap-3">
+            <a href={profile.links.resume} target="_blank" rel="noopener" className="btn-accent">
+              {ui.nav.resume} <ArrowUpRight size={18} strokeWidth={2.4} />
+            </a>
+            <ExternalLink href={profile.links.linkedin} className="btn-outline">
+              LinkedIn <ArrowUpRight size={18} />
+            </ExternalLink>
+            <CopyEmail email={profile.email} label={ui.about.copyEmail} copiedLabel={ui.about.copied}>
+              <Mail size={15} />
+            </CopyEmail>
           </div>
         </div>
       </div>

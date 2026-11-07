@@ -1,82 +1,61 @@
 import { getDictionary } from "@/i18n/server";
 import { ToolIcon } from "@/components/ui/ToolIcon";
-import { BlurHeading, Reveal } from "@/components/ui/Motion";
+import { SectionHead } from "@/components/ui/SectionHead";
+import { ProcessSteps } from "./ProcessSteps";
 
-// Anjali — dark "tools that matter" band: heading blurs in letter by letter, then a
-// grid of tool cards. Followed by the design-process line and education cards.
+/*
+  v2 toolkit (reference: the clients marquee) — two rows of tool tiles drifting in opposite
+  directions on the dark panel, pausing on hover. Then the process: numbered steps that
+  light up on scroll (ProcessSteps), with education alongside.
+*/
 export async function Toolkit() {
-  const { toolGroups, process, education, ui } = await getDictionary();
+  const { toolGroups, process, processNotes, education, ui } = await getDictionary();
+  const tiles = toolGroups.flatMap((g) => g.tools.map((t) => ({ ...t, group: g.label })));
+  const half = Math.ceil(tiles.length / 2);
+  const rows = [tiles.slice(0, half), tiles.slice(half)];
+
   return (
     <>
-      <section id="tools" className="bg-night px-6 pt-16 pb-28 text-on-night">
-        <div className="mx-auto max-w-[1100px]">
-          <p className="eyebrow text-on-night/40">{ui.tools.eyebrow}</p>
-          <BlurHeading by="chars" className="mt-3 max-w-[680px] font-serif text-[clamp(32px,3.6vw,48px)] leading-[1.05]">
-            {ui.tools.title}
-          </BlurHeading>
-          <p className="mt-4 max-w-[520px] text-[14px] text-on-night/50">
-            {ui.tools.sub}
-          </p>
-          <div className="mt-14 space-y-12">
-            {toolGroups.map((g) => (
-              <div key={g.label} className="grid gap-5 md:grid-cols-[180px_1fr]">
-                <p className="pt-2 font-mono text-[11px] tracking-[0.16em] text-on-night/45 uppercase">{g.label}</p>
-                {/* GSAP animates the [data-reveal] wrappers; the hover transition lives on the inner
-                    card so CSS transitions never fight GSAP over opacity/transform. */}
-                <Reveal stagger={0.05} className="grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-6">
-                  {g.tools.map((t) => (
-                    <div key={t.name} data-reveal>
-                      <div className="group flex aspect-square flex-col justify-between rounded-[16px] border border-on-night/[0.06] bg-on-night/[0.04] p-4 transition-[transform,background-color,border-color] duration-300 hover:-translate-y-1 hover:border-on-night/15 hover:bg-on-night/[0.08]">
-                        <span className="grid size-10 place-items-center rounded-[10px] bg-white/90 transition-transform duration-300 group-hover:scale-110 group-hover:rotate-[-6deg]">
-                          <ToolIcon slug={t.slug} size={20} />
-                        </span>
-                        <div>
-                          <p className="font-serif text-[18px] leading-tight">{t.name}</p>
-                          <p className="mt-0.5 text-[11px] text-on-night/40">{t.note}</p>
-                        </div>
-                      </div>
-                    </div>
-                  ))}
-                </Reveal>
-              </div>
-            ))}
-          </div>
+      <section id="tools" className="dark-stage relative rounded-b-[32px] bg-night pt-16 pb-24 text-on-night md:rounded-b-[56px] md:pt-24 md:pb-32">
+        <div className="px-4 md:px-12">
+          <SectionHead eyebrow={ui.tools.eyebrow} title={ui.tools.title} sub={ui.tools.sub} />
         </div>
-      </section>
-
-      <section id="process" className="px-6 py-28">
-        <div className="mx-auto grid max-w-[1100px] grid-cols-[minmax(0,1fr)] gap-6 md:grid-cols-[minmax(0,1.35fr)_minmax(0,1fr)]">
-          <Reveal className="rounded-[22px] border border-surface/70 bg-surface/80 p-8">
-            <p data-reveal className="eyebrow">{ui.processCard.title}</p>
-            <div data-reveal className="relative mt-10 grid grid-cols-5 gap-1">
-              <span aria-hidden className="absolute top-[9px] right-[10%] left-[10%] h-[2px] bg-green/70" />
-              {process.map((s) => (
-                <div key={s} className="relative flex min-w-0 flex-col items-center gap-3">
-                  <span className="grid size-5 place-items-center rounded-full bg-green shadow-[0_0_0_4px_rgba(24,169,87,0.15)]">
-                    <span className="size-1.5 rounded-full bg-white" />
+        <div className="mt-14 space-y-4 [mask-image:linear-gradient(90deg,transparent,#000_8%,#000_92%,transparent)] md:mt-20">
+          {rows.map((row, r) => (
+            <ul
+              key={r}
+              className="flex w-max gap-4 pr-4 hover:[animation-play-state:paused]"
+              style={{ animation: `marquee ${34 + r * 6}s linear infinite`, animationDirection: r % 2 ? "reverse" : "normal" }}
+            >
+              {[...row, ...row].map((t, k) => (
+                <li
+                  key={`${t.slug}-${k}`}
+                  aria-hidden={k >= row.length || undefined}
+                  className="flex h-[96px] w-[230px] shrink-0 items-center gap-4 rounded-[20px] border border-on-night/10 bg-on-night/[0.04] px-5 transition-colors hover:border-[#ffef93]/50 hover:bg-on-night/[0.08]"
+                >
+                  <span className="grid size-12 shrink-0 place-items-center rounded-[14px] bg-white/95">
+                    <ToolIcon slug={t.slug} size={24} />
                   </span>
-                  <span className="text-center text-[12px] leading-snug font-medium text-ink-2 [overflow-wrap:anywhere]">{s}</span>
-                </div>
-              ))}
-            </div>
-            <p data-reveal className="mt-10 max-w-[460px] font-serif text-[22px] leading-snug text-ink">
-              {ui.processCard.line}
-            </p>
-          </Reveal>
-          <Reveal className="rounded-[22px] border border-surface/70 bg-surface/80 p-8">
-            <p data-reveal className="eyebrow">{ui.educationCard.title}</p>
-            <ul className="mt-6 space-y-5">
-              {education.map((e) => (
-                <li key={e.title} data-reveal>
-                  <p className="font-display text-[16px] font-semibold">{e.title}</p>
-                  <p className="text-[13px] text-ink-2">{e.place}</p>
-                  <p className="mt-0.5 font-mono text-[11px] text-ink-3">{e.years}</p>
+                  <span className="min-w-0">
+                    <span className="block truncate text-[16px] font-bold tracking-[-0.01em]">{t.name}</span>
+                    <span className="block truncate text-[12px] text-on-night/50">{t.note}</span>
+                    <span className="mt-1 block truncate font-mono text-[10px] tracking-[0.12em] text-[#ffef93]/70 uppercase">{t.group}</span>
+                  </span>
                 </li>
               ))}
             </ul>
-          </Reveal>
+          ))}
         </div>
       </section>
+
+      <ProcessSteps
+        eyebrow={ui.processCard.title}
+        heading={ui.processCard.heading}
+        line={ui.processCard.line}
+        steps={process.map((s, i) => ({ title: s, note: processNotes[i] ?? "" }))}
+        educationTitle={ui.educationCard.title}
+        education={education}
+      />
     </>
   );
 }

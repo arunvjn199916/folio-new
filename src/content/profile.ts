@@ -39,13 +39,13 @@ export const profile: Profile = {
 
 export const hero = {
   // v2 hero: two uppercase statements over the globe (statement one dims on scroll).
-  eyebrow: "AI-first product designer · Chennai, India · 5+ years",
-  status: "Open to work — GCC & remote",
+  eyebrow: "AI-first product designer · FinTech & enterprise SaaS · Chennai",
+  status: "Available for full-time roles — GCC & remote",
   statements: [
-    ["Hi, I'm", "Arun Vijayan."],
-    ["I design AI", "people trust."],
+    ["Arun Vijayan.", "Product designer."],
+    ["I design AI", "you can bank on."],
   ],
-  sub: "Executive UI/UX Designer at Congruent Solutions. I design AI search, voice and agentic experiences for US 401(k) platforms — and prototype them in real code with Claude & Cursor.",
+  sub: "I design AI search, voice and agentic workflows for US 401(k) platforms at Congruent Solutions — with citations, confirmations and fallbacks built in. Former engineer: I prototype in real code with Claude & Cursor.",
   lead: "I'm Arun Vijayan, a product designer who",
   words: [
     { text: "designs agentic AI experiences.", color: "var(--c-violet)" },
@@ -60,9 +60,9 @@ export const hero = {
   ]),
   stack: ["Figma", "Claude", "Claude Code", "Cursor", "Framer", "Miro", "Notion", "Adobe XD"],
   stats: [
-    { value: 5, suffix: "+", label: "Years" },
-    { value: 4, suffix: "", label: "Companies" },
-    { value: 500, suffix: "+", label: "Beta users" },
+    { value: 5, suffix: "+", label: "Years in design" },
+    { value: 35, suffix: "%", label: "Faster AI search queries" },
+    { value: 500, suffix: "+", label: "Beta users in 6 weeks" },
   ],
   marquee: [
     "Agentic AI",
@@ -81,46 +81,67 @@ export const hero = {
 
 // v2 "before / after" line section (right after the hero).
 export const shift = {
-  eyebrow: "Two gaps. Same result.",
-  title: "Where do AI products lose people?",
-  start: "User",
+  eyebrow: "Where AI loses people",
+  title: "AI fails quietly in two places.",
+  start: "Question",
   marker: "Answer",
-  end: "Trust",
+  end: "Action",
   before: {
     label: "Before the answer",
-    title: "They don't get what the AI can do.",
-    chips: ["Onboarding", "Prompting", "Discovery"],
-    cta: "Aura design system",
-    href: "/design-system",
+    title: "People can't find what the AI can do.",
+    chips: ["AI search", "Command bar", "Voice"],
+    cta: "AI search for investor relations",
+    href: "/work/ai-search-investor-relations",
   },
   after: {
     label: "After the answer",
-    title: "They get an answer, but don't trust it.",
-    chips: ["Citations", "Confirmations", "Undo"],
-    cta: "Kairo case study",
-    href: "/work/kairo-ai-personal-assistant",
+    title: "People don't trust what it did.",
+    chips: ["Citations", "Confirmations", "Fallbacks"],
+    cta: "Agentic AI participant portal",
+    href: "/work/agentic-ai-participant-portal",
   },
 };
 
+// v2 "stance" section: short principles revealed one at a time.
+export const principles = {
+  eyebrow: "How I design AI",
+  items: [
+    { lead: "Not every AI feature", rest: "needs a chat box." },
+    { lead: "Not every answer", rest: "should be trusted without a source." },
+    { lead: "Not every action", rest: "should happen without a way back." },
+  ],
+};
+
+// v2 "hire" rows above the footer.
+export const hire = {
+  eyebrow: "Next step",
+  title: "What are you hiring for?",
+  rows: [
+    { label: "A full-time product designer", kind: "email" as const },
+    { label: "A look at my résumé", kind: "resume" as const },
+    { label: "Just saying hello", kind: "linkedin" as const },
+  ],
+};
+
 export const about = {
-  greeting: "Hey, I'm Arun Vijayan.",
+  greeting: "Engineer first. Designer by choice.",
   paragraphs: richList([
     [
-      { text: "I'm an " },
-      { text: "AI-first product designer", highlight: true },
-      { text: " working on enterprise US retirement (401(k)) platforms — turning legacy dashboards into action-oriented " },
+      { text: "I'm Arun, an AI-first product designer in Chennai. At Congruent Solutions I lead design for enterprise US retirement (401(k)) platforms — turning legacy dashboards into " },
       { text: "AI workspaces", highlight: true },
-      { text: " with AI search, voice and agentic workflows that participants, plan sponsors and administrators can trust." },
+      { text: " that participants, plan sponsors and administrators can act on with confidence." },
     ],
     [
-      { text: "Before design I was an application engineer on client-facing web apps, so I design for what can actually be built. Today I use " },
-      { text: "Claude and Cursor to prototype and validate in days, not weeks", highlight: true },
-      { text: ", with users, product and engineering in the loop." },
+      { text: "I started out as an application engineer on client-facing web apps, then retrained in design and technology. So my designs are " },
+      { text: "built to ship", highlight: true },
+      { text: ": I know what engineering needs, and I prototype in real code with Claude and Cursor to test ideas with users in days, not weeks." },
     ],
     [
-      { text: "Based in Chennai, " },
-      { text: "open to relocation across the UAE, Oman, Saudi Arabia & GCC", highlight: true },
-      { text: ", and happy to work remotely. I speak English and Tamil." },
+      { text: "Before that I was a graphic designer, building brand systems for 6+ B2B clients — which is where my eye for detail comes from." },
+    ],
+    [
+      { text: "Open to full-time roles in the UAE, Oman, Saudi Arabia & GCC", highlight: true },
+      { text: ", or remote. English (fluent), Tamil (native)." },
     ],
   ]),
   workedWith: ["Congruent Solutions", "Euroland IR", "Embarckle", "Apexs Automation"],
@@ -131,7 +152,7 @@ export const greetings = ["Hello", "வணக்கம்", "नमस्ते"
 export const loaderLine = ["Where", "ideas", "ship"];
 
 export const contact = {
-  lead: "let's",
-  verbs: ["build", "design", "ship"],
-  line: "incredible work together.",
+  lead: "Let's",
+  verbs: ["design", "build", "ship"],
+  line: "AI people trust.",
 };

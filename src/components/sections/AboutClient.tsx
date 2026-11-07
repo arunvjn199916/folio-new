@@ -137,7 +137,7 @@ export function CopyEmail({
           window.location.href = `mailto:${email}`;
         }
       }}
-      className="relative grid size-8 place-items-center rounded-lg bg-ink text-on-ink transition hover:-translate-y-0.5"
+      className="relative grid size-12 place-items-center rounded-full border border-ink/20 text-ink transition hover:-translate-y-0.5 hover:border-accent hover:text-accent md:size-[52px]"
     >
       {copied ? <Check size={15} /> : children}
       <AnimatePresence>
