@@ -7,6 +7,8 @@ export type Role = {
   from: string;
   to: string;
   current?: boolean;
+  /** First role of the AI-first product-design era — the journey timeline puts its AI marker before it. */
+  aiShift?: boolean;
   initials: string;
   tint: string;
   bullets: Segment[][];
@@ -40,6 +42,7 @@ export const roles: Role[] = [
     role: "Product Designer",
     company: "Euroland IR",
     location: "Chennai, TN",
+    aiShift: true,
     from: "Jul '23",
     to: "Sep '25",
     initials: "EU",

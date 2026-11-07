@@ -51,7 +51,7 @@ export const en = {
       fixingBugs: "FIXING BUGS",
       folder: { name: "UI archive", items: "items · click to open", open: "Open the UI archive", close: "Close the UI archive", screen: "Screen" },
     },
-    experience: { location: "Location" },
+    experience: { location: "Location", beforeLabel: "Design & engineering · the foundation", afterLabel: "Product design · AI-first", marker: "AI", nextTitle: "What's next", nextSub: "Open to relocation · GCC & remote", nextWhen: "2026 →" },
     skills: { eyebrow: "skills", title: "what I bring to the table", hint: "GRAB A PILL AND THROW IT" },
     tools: {
       eyebrow: "Expertise",

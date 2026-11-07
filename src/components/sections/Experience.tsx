@@ -1,197 +1,250 @@
 "use client";
 
-import { useRef } from "react";
+import { useRef, useState, useSyncExternalStore } from "react";
 import { MapPin } from "lucide-react";
 import { gsap, ScrollTrigger, useGSAP } from "@/lib/gsap";
 import { useI18n } from "@/i18n/client";
 import { RichText } from "@/components/ui/Text";
-import { BlurHeading } from "@/components/ui/Motion";
+import { a11y, motionDisabled } from "@/lib/a11y/store";
 import { cn } from "@/lib/utils";
-import { motionDisabled } from "@/lib/a11y/store";
+
+const getStill = () => motionDisabled();
+const serverStill = () => false;
 
 /*
-  Sanjay — "the journey so far". The section sticks; scrolling moves a horizontal track
-  with a thin line, dots and date pills. Cards alternate above and below the line,
-  blur in as they enter from the right and fade at the left edge. Hovering a card
-  fans three screenshots out above it. Below md it's a plain vertical list.
+  v2 "journey" timeline (always on a dark stage, in both themes).
+  Desktop: the section is ~2.8 screens tall with a sticky stage — perspective road lines
+  converge on the horizon, a horizontal track holds one stop per role (oldest first) plus
+  "what's next", with an AI marker where the career turned to product design. Scrolling
+  slides a glowing dot along the track; passed stops light up and the active role's
+  details swap in underneath. Phones and reduced motion get a vertical timeline with a
+  scroll-filled line and every role written out.
 */
 export function Experience() {
-  const { roles, experienceIntro } = useI18n().dict;
+  const { roles, experienceIntro, ui } = useI18n().dict;
+  const t = ui.experience;
   const root = useRef<HTMLElement>(null);
-  const viewport = useRef<HTMLDivElement>(null);
-  const stage = useRef<HTMLDivElement>(null);
-  const scaler = useRef<HTMLDivElement>(null);
-  const track = useRef<HTMLDivElement>(null);
+  const runner = useRef<HTMLSpanElement>(null);
+  const fill = useRef<HTMLSpanElement>(null);
+  const road = useRef<SVGGElement>(null);
+  const [activeIdx, setActiveIdx] = useState(0);
+  const still = useSyncExternalStore(a11y.subscribe, getStill, serverStill);
+
+  // oldest → newest, then the open "next" stop
+  const chrono = [...roles].reverse();
+  const stops = [
+    ...chrono.map((r) => ({ key: r.company, title: r.role, sub: r.company, when: r.from, current: !!r.current })),
+    { key: "next", title: t.nextTitle, sub: t.nextSub, when: t.nextWhen, current: false },
+  ];
+  // the AI marker sits between the engineering years and the first product-design role
+  const shift = chrono.findIndex((r) => r.aiShift);
+  const markerAfter = shift > 0 ? shift - 1 : Math.floor((stops.length - 2) / 2);
+  const pos = (i: number) => (stops.length === 1 ? 0.5 : i / (stops.length - 1));
+  const markerX = (pos(markerAfter) + pos(markerAfter + 1)) / 2;
 
   useGSAP(
     () => {
       const mm = gsap.matchMedia();
-      mm.add({ desktop: "(min-width: 768px)", reduce: "(prefers-reduced-motion: reduce)" }, (ctx) => {
-        if (!ctx.conditions?.desktop) return;
-        const t = track.current!;
+      mm.add("(min-width: 768px)", () => {
+        if (still) return;
         const sec = root.current!;
-        const box = stage.current!;
-        const zoom = scaler.current!;
-        const still = !!ctx.conditions.reduce || motionDisabled();
-        let scale = 1;
-
-        // Cards sit above and below the centre line, so the track must be twice the tallest
-        // card (plus the connector). If that doesn't fit under the heading on this screen,
-        // the whole timeline scales down instead of cards spilling over the heading.
-        const fit = () => {
-          const tallest = Math.max(...gsap.utils.toArray<HTMLElement>(".xp-card", t).map((c) => c.offsetHeight));
-          const need = 2 * (tallest + 48);
-          t.style.height = `${need}px`;
-          scale = still ? 1 : Math.min(1, box.clientHeight / need);
-          zoom.style.transform = scale < 1 ? `scale(${scale})` : "";
-        };
-        fit();
-
-        if (still) {
-          // No scroll-driven motion: let people scroll the timeline sideways themselves.
-          box.style.overflow = "auto";
-          return () => {
-            box.style.overflow = "";
-            t.style.height = "";
-          };
-        }
-
-        // Track travel in its own (unscaled) units, so the last card ends inside the screen.
-        const distance = () => Math.max(0, t.scrollWidth - (window.innerWidth - 80) / scale);
-        // The section is as tall as the horizontal travel; its inner viewport is CSS-sticky,
-        // so the browser keeps it in place (no JS pin to fall out of sync with Lenis).
-        const setHeight = () => {
-          fit();
-          sec.style.height = `${window.innerHeight + distance() * scale}px`;
-        };
-        setHeight();
-        ScrollTrigger.addEventListener("refreshInit", setHeight);
-        // Web fonts change card heights after first paint.
-        document.fonts?.ready.then(() => ScrollTrigger.refresh());
-
-        const scroll = { trigger: sec, start: "top top", end: "bottom bottom", invalidateOnRefresh: true };
-        const tween = gsap.to(t, { x: () => -distance(), ease: "none", scrollTrigger: { ...scroll, scrub: 0.6 } });
-        gsap.fromTo(".xp-line", { scaleX: 0 }, { scaleX: 1, ease: "none", scrollTrigger: { ...scroll, scrub: true } });
-        // Cards ride in from the right. Transform + opacity only: a scrubbed blur would
-        // repaint every card on every scroll frame.
-        gsap.utils.toArray<HTMLElement>(".xp-node").forEach((node) => {
-          gsap.from(node.querySelectorAll(".xp-card, .xp-pill, .xp-dot"), {
-            opacity: 0,
-            x: 80,
-            scale: 0.96,
-            stagger: 0.08,
-            ease: "power3.out",
-            scrollTrigger: { trigger: node, containerAnimation: tween, start: "left 95%", end: "left 60%", scrub: true },
-          });
+        const q = gsap.utils.selector(sec);
+        let last = -1;
+        const st = ScrollTrigger.create({
+          trigger: sec,
+          start: "top top",
+          end: "bottom bottom",
+          scrub: 0.5,
+          onUpdate: (self) => {
+            // hold at the first stop for a moment, reach the last stop just before the end
+            const f = gsap.utils.clamp(0, 1, (self.progress - 0.08) / 0.84);
+            if (runner.current) runner.current.style.left = `${f * 100}%`;
+            if (fill.current) fill.current.style.transform = `scaleX(${f})`;
+            if (road.current) road.current.style.strokeDashoffset = `${-self.progress * 900}`;
+            let idx = 0;
+            stops.forEach((_, i) => {
+              const on = f >= pos(i) - 0.002;
+              if (on) idx = i;
+              q(`[data-stop="${i}"]`)[0]?.classList.toggle("is-on", on);
+            });
+            if (idx !== last) {
+              last = idx;
+              setActiveIdx(idx);
+            }
+          },
         });
-        return () => {
-          ScrollTrigger.removeEventListener("refreshInit", setHeight);
-          sec.style.height = "";
-          t.style.height = "";
-          zoom.style.transform = "";
-        };
+        gsap.from(q(".xp-head > *"), { opacity: 0, y: 30, duration: 1, stagger: 0.1, ease: "expo.out", scrollTrigger: { trigger: sec, start: "top 70%" } });
+        return () => st.kill();
+      });
+      // vertical (phones / still): the line fills as you scroll past it
+      mm.add("(max-width: 767px)", () => {
+        if (still) return;
+        const line = root.current!.querySelector<HTMLElement>(".xp-vfill");
+        if (!line) return;
+        const tw = gsap.fromTo(line, { scaleY: 0 }, { scaleY: 1, ease: "none", scrollTrigger: { trigger: line.parentElement, start: "top 70%", end: "bottom 60%", scrub: true } });
+        gsap.utils.toArray<HTMLElement>(".xp-vstop", root.current).forEach((el) =>
+          ScrollTrigger.create({ trigger: el, start: "top 65%", onToggle: (s) => el.classList.toggle("is-on", s.isActive || s.progress > 0), end: "bottom -100%" }),
+        );
+        return () => tw.scrollTrigger?.kill();
       });
       return () => mm.revert();
     },
-    { scope: root },
+    { scope: root, dependencies: [still, stops.length] },
+  );
+
+  const role = activeIdx < chrono.length ? chrono[activeIdx] : null;
+
+  const vertical = (
+    <div className={cn("relative px-4 pt-6 pb-24", !still && "md:hidden")}>
+      <div className="relative pl-8">
+        <span aria-hidden className="absolute top-2 bottom-2 left-[7px] w-px bg-on-night/15" />
+        <span aria-hidden className={cn("xp-vfill absolute top-2 bottom-2 left-[7px] w-px origin-top bg-champagne", still && "scale-y-100")} />
+        {stops.map((s, i) => {
+          const r = i < chrono.length ? chrono[i] : null;
+          return (
+            <div key={s.key}>
+              {i === markerAfter + 1 && (
+                <div className="relative mb-8 -ml-8 flex items-center gap-3">
+                  <span className="rounded-full border border-on-night/40 bg-night px-2.5 py-0.5 font-mono text-[11px] tracking-[0.12em] text-on-night">{t.marker}</span>
+                  <span className="eyebrow !text-on-night/60">{t.afterLabel}</span>
+                </div>
+              )}
+              <div className={cn("xp-vstop group relative pb-10", still && "is-on")}>
+                <span className="xp-dot absolute top-1.5 -left-8 size-[15px] rounded-full border-2 border-on-night/30 bg-night transition-all duration-500" />
+                <p className="font-mono text-[11px] tracking-[0.12em] text-on-night/50 uppercase">
+                  {s.when}
+                  {r && ` – ${r.to}`}
+                </p>
+                <h3 className="mt-1 text-[22px] leading-tight font-bold tracking-[-0.03em] text-on-night uppercase">{s.title}</h3>
+                <p className="text-[14px] text-on-night/60">{s.sub}</p>
+                {r && (
+                  <ul className="mt-3 space-y-1.5 text-[14px] leading-relaxed text-on-night/75">
+                    {r.bullets.slice(0, 2).map((b, k) => (
+                      <li key={k}>
+                        <RichText segments={b} />
+                      </li>
+                    ))}
+                  </ul>
+                )}
+              </div>
+            </div>
+          );
+        })}
+      </div>
+    </div>
   );
 
   return (
-    <section ref={root} id="experience" className="relative">
-      <div ref={viewport} className="relative flex min-h-svh flex-col justify-center overflow-hidden py-24 md:sticky md:top-0 md:h-screen md:min-h-0 md:justify-start md:pt-24 md:pb-6">
-        <div className="shrink-0 px-6 text-center">
-          <p className="eyebrow flex items-center justify-center gap-2 text-blue">
-            <span className="size-1.5 rounded-full bg-blue" /> {experienceIntro.eyebrow}
-          </p>
-          <BlurHeading className="mt-3 font-display text-[clamp(34px,4vw,52px)] leading-none font-semibold tracking-[-0.02em]">
-            {experienceIntro.title}
-          </BlurHeading>
-          <p className="mx-auto mt-3 max-w-[460px] text-[14px] text-ink-2 md:[@media(max-height:780px)]:hidden">{experienceIntro.sub}</p>
-        </div>
+    <section ref={root} id="experience" className={cn("dark-stage relative bg-night text-on-night", !still && "md:h-[280vh]")}>
+      {/* Desktop sticky stage */}
+      {!still && (
+        <div className="sticky top-0 hidden h-svh overflow-hidden md:block">
+          {/* glow + perspective road */}
+          <div aria-hidden className="absolute inset-0 bg-[radial-gradient(60%_50%_at_85%_0%,rgba(220,2,8,0.28),transparent_70%)]" />
+          <svg aria-hidden viewBox="0 0 1440 900" preserveAspectRatio="none" className="absolute inset-0 h-full w-full">
+            <g stroke="rgba(247,241,227,0.1)" strokeWidth="1" fill="none">
+              {[-1400, -700, -200, 260, 1180, 1640, 2140, 2840].map((x) => (
+                <line key={x} x1="720" y1="560" x2={x} y2="900" />
+              ))}
+              <line x1="0" y1="560" x2="1440" y2="560" stroke="rgba(247,241,227,0.05)" />
+            </g>
+            <g ref={road} stroke="rgba(247,241,227,0.22)" strokeWidth="1.5" strokeDasharray="16 26" fill="none">
+              <line x1="720" y1="560" x2="-200" y2="900" />
+              <line x1="720" y1="560" x2="1640" y2="900" />
+            </g>
+          </svg>
 
-        {/* stage = the space left under the heading; the scaler shrinks the timeline to fit it */}
-        <div
-          ref={stage}
-          className="relative mt-10 md:mt-4 md:flex md:min-h-0 md:flex-1 md:items-center md:[mask-image:linear-gradient(90deg,transparent,#000_7%,#000_93%,transparent)]"
-        >
-          <div ref={scaler} className="md:shrink-0 md:origin-left">
-          <div ref={track} className="relative flex flex-col gap-8 px-6 md:h-[640px] md:w-max md:flex-row md:items-center md:gap-0 md:px-[12vw]">
-            <span aria-hidden className="xp-line absolute top-1/2 right-0 left-0 hidden h-px origin-left bg-ink/15 md:block" />
-            {roles.map((r, i) => {
-              const up = i % 2 === 0;
-              return (
-                <div key={r.company} className="xp-node relative md:h-full md:w-[500px] md:shrink-0">
-                  {/* dot + date pill on the line */}
-                  <span
-                    className={cn(
-                      "xp-dot absolute top-1/2 left-10 z-10 hidden size-3 -translate-y-1/2 rounded-full border-2 border-surface shadow md:block",
-                      r.current ? "bg-green" : "bg-ink/40",
-                    )}
-                  />
-                  <span
-                    className={cn(
-                      "xp-pill z-10 mb-3 inline-block rounded-full border px-3 py-1 text-[11px] font-medium whitespace-nowrap md:absolute md:left-4 md:mb-0",
-                      up ? "md:top-[calc(50%+16px)]" : "md:bottom-[calc(50%+16px)]",
-                      r.current ? "border-green/30 bg-green/10 text-green" : "border-ink/10 bg-surface/80 text-ink-2",
-                    )}
-                  >
-                    {r.from} – {r.to}
+          <div className="relative flex h-full flex-col px-12 pt-[18vh] pb-10">
+            {/* heading row */}
+            <div className="xp-head flex items-start justify-between gap-10">
+              <div>
+                <p className="eyebrow flex items-center gap-2 !text-on-night/60">
+                  <span className="size-1.5 rounded-full bg-champagne" /> {experienceIntro.eyebrow}
+                </p>
+                <h2 className="display-l mt-4">{experienceIntro.title}</h2>
+              </div>
+              <p className="mt-10 max-w-[360px] text-[17px] leading-[1.5] text-on-night/65">{experienceIntro.sub}</p>
+            </div>
+
+            {/* track */}
+            <div className="relative mt-auto mb-[6vh]">
+              <div className="relative mx-3 mb-5 h-4 font-mono text-[11px] tracking-[0.14em] whitespace-nowrap text-on-night/50 uppercase">
+                <span className="absolute left-0">{t.beforeLabel}</span>
+                <span className="absolute translate-x-6" style={{ left: `${markerX * 100}%` }}>
+                  {t.afterLabel}
+                </span>
+              </div>
+              <div className="relative mx-3 h-[2px]">
+                <span className="absolute inset-0 rounded bg-on-night/15" />
+                <span ref={fill} className="absolute inset-0 origin-left scale-x-0 rounded bg-champagne/80" />
+                {/* AI marker */}
+                <span className="absolute top-1/2 -translate-x-1/2 -translate-y-1/2" style={{ left: `${markerX * 100}%` }}>
+                  <span className="block h-14 w-px -translate-y-[calc(50%-1px)] bg-on-night/30" />
+                  <span className="absolute top-8 left-1/2 -translate-x-1/2 rounded-full border border-on-night/40 bg-night px-2.5 py-0.5 font-mono text-[11px] tracking-[0.14em] text-on-night">
+                    {t.marker}
                   </span>
-                  {/* connector */}
-                  <span
-                    aria-hidden
-                    className={cn("absolute left-[45px] hidden w-px bg-ink/15 md:block", up ? "bottom-1/2 h-8" : "top-1/2 h-8")}
-                  />
-                  <article
-                    className={cn(
-                      "xp-card group relative w-full rounded-[18px] border border-surface/80 bg-card p-5 shadow-[var(--card-shadow)] md:absolute md:left-0 md:w-[520px]",
-                      up ? "md:bottom-[calc(50%+32px)]" : "md:top-[calc(50%+32px)]",
-                    )}
-                  >
-                    {/* hover fan */}
-                    <div aria-hidden className="pointer-events-none absolute -top-6 left-1/2 hidden h-0 w-0 md:block">
-                      {r.shots.map((tint, k) => (
-                        <span
-                          key={k}
-                          className="fan-shot absolute bottom-0 h-[90px] w-[130px] rounded-[8px] border-[3px] border-photo shadow-lg"
-                          style={{
-                            background: tint,
-                            transitionDelay: `${k * 40}ms`,
-                            ["--fan-x" as string]: `${(k - 1) * 90}px`,
-                            ["--fan-r" as string]: `${(k - 1) * 9}deg`,
-                          }}
-                        />
-                      ))}
+                </span>
+                {stops.map((s, i) => (
+                  <div key={s.key} data-stop={i} className="xp-stop absolute top-1/2" style={{ left: `${pos(i) * 100}%` }}>
+                    <span className="xp-dot absolute top-0 left-0 size-[11px] -translate-x-1/2 -translate-y-1/2 rounded-full border border-on-night/40 bg-night transition-all duration-500" />
+                    <div className={cn("absolute top-5 w-[min(17vw,220px)]", i === stops.length - 1 ? "right-0 text-right" : i === 0 ? "left-0" : "left-0 -translate-x-1/2 text-center")}>
+                      <p className="xp-label text-[15px] leading-tight font-semibold tracking-[-0.01em] text-on-night/35 transition-colors duration-500">{s.title}</p>
+                      <p className="mt-1 font-mono text-[11px] tracking-[0.1em] text-on-night/35 uppercase">{s.when}</p>
                     </div>
-                    <header className="flex items-start gap-3">
-                      <span className="grid size-10 shrink-0 place-items-center rounded-[10px] font-display text-[13px] font-bold text-ink" style={{ background: r.tint }}>
-                        {r.initials}
-                      </span>
-                      <div className="min-w-0 flex-1">
-                        <h3 className="font-display text-[16px] leading-tight font-semibold">{r.role}</h3>
-                        <p className="text-[13px] text-ink-3">{r.company}</p>
-                      </div>
-                      <span className="flex items-center gap-1 text-[11px] whitespace-nowrap text-ink-3">
-                        <MapPin size={11} /> {r.location}
-                      </span>
-                    </header>
-                    <ul className="mt-4 space-y-2 border-t border-ink/5 pt-4 text-[13px] leading-relaxed text-ink-2">
-                      {r.bullets.map((b, k) => (
-                        <li key={k} className="flex gap-2">
-                          <span className="mt-[7px] size-1 shrink-0 rounded-full bg-ink/40" />
+                  </div>
+                ))}
+                {/* runner */}
+                <span ref={runner} className="absolute top-1/2 left-0 z-10 -translate-x-1/2 -translate-y-1/2">
+                  <span className="block size-[18px] rounded-full bg-champagne shadow-[0_0_0_6px_rgba(255,239,147,0.15),0_0_30px_6px_rgba(255,239,147,0.55)]" />
+                </span>
+              </div>
+
+              {/* active role details */}
+              <div className="mt-[92px] grid min-h-[132px] grid-cols-[minmax(0,1fr)_minmax(0,1.4fr)] gap-10 border-t border-on-night/10 pt-6">
+                <div key={`h-${activeIdx}`} className="animate-[xp-in_0.6s_cubic-bezier(0.22,1,0.36,1)]">
+                  <p className="font-mono text-[11px] tracking-[0.12em] text-champagne uppercase">
+                    {role ? `${role.from} – ${role.to}` : stops[activeIdx]?.when}
+                  </p>
+                  <h3 className="mt-2 text-[clamp(22px,2vw,32px)] leading-none font-bold tracking-[-0.035em] uppercase">{stops[activeIdx]?.title}</h3>
+                  <p className="mt-2 flex items-center gap-2 text-[14px] text-on-night/60">
+                    {stops[activeIdx]?.sub}
+                    {role && (
+                      <>
+                        <span className="text-on-night/30">·</span>
+                        <MapPin size={13} /> {role.location}
+                      </>
+                    )}
+                  </p>
+                </div>
+                <ul key={`b-${activeIdx}`} className="animate-[xp-in_0.7s_cubic-bezier(0.22,1,0.36,1)] space-y-2 text-[15px] leading-relaxed text-on-night/75">
+                  {role
+                    ? role.bullets.map((b, k) => (
+                        <li key={k} className="flex gap-3">
+                          <span className="mt-[9px] size-1 shrink-0 rounded-full bg-champagne" />
                           <span>
                             <RichText segments={b} />
                           </span>
                         </li>
-                      ))}
-                    </ul>
-                  </article>
-                </div>
-              );
-            })}
-          </div>
+                      ))
+                    : null}
+                </ul>
+              </div>
+            </div>
           </div>
         </div>
+      )}
+
+      {/* Vertical timeline: phones, and everyone when motion is off */}
+      <div className={cn(!still && "md:hidden")}>
+        <div className="px-4 pt-24">
+          <p className="eyebrow flex items-center gap-2 !text-on-night/60">
+            <span className="size-1.5 rounded-full bg-champagne" /> {experienceIntro.eyebrow}
+          </p>
+          <h2 className="display-l mt-4">{experienceIntro.title}</h2>
+          <p className="mt-4 max-w-[460px] text-[16px] leading-[1.5] text-on-night/65">{experienceIntro.sub}</p>
+          <p className="mt-8 font-mono text-[11px] tracking-[0.14em] text-on-night/50 uppercase">{t.beforeLabel}</p>
+        </div>
+        {vertical}
       </div>
     </section>
   );

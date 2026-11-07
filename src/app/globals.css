@@ -364,6 +364,38 @@ body {
   padding: 0 0.6rem;
 }
 
+/* Sections that stay dark in both themes: children using ink tokens read as light text. */
+.dark-stage {
+  --c-ink: #f7f1e3;
+  --c-ink-2: #c9bcae;
+  --c-ink-3: #8f8278;
+  --c-line: rgba(247, 241, 227, 0.12);
+}
+
+/* ── v2 journey timeline: stops light up as the runner passes ── */
+.xp-stop.is-on .xp-dot,
+.xp-vstop.is-on .xp-dot {
+  background: var(--c-champagne);
+  border-color: var(--c-champagne);
+  box-shadow: 0 0 14px 2px rgb(255 239 147 / 0.55);
+}
+.xp-stop.is-on .xp-label,
+.xp-stop.is-on .xp-label + p {
+  color: var(--c-on-night);
+}
+@keyframes xp-in {
+  from {
+    opacity: 0;
+    transform: translateY(14px);
+    filter: blur(6px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+    filter: none;
+  }
+}
+
 /* ── v2 buttons: accent pill + outline pill, uppercase label with an arrow ── */
 .btn-accent,
 .btn-outline {
