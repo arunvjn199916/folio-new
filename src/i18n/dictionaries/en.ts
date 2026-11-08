@@ -59,7 +59,7 @@ export const en = {
       fixingBugs: "FIXING BUGS",
       folder: { name: "UI archive", items: "items · click to open", open: "Open the UI archive", close: "Close the UI archive", screen: "Screen" },
     },
-    caseStudies: { eyebrow: "Case studies", title: "Self-initiated, end to end.", sub: "Concept products where I owned everything — research, strategy, flows, UI and the test plan.", read: "Read case", viewAll: "View all case studies", allTitle: "All case studies.", allSub: "Four concept products and one design system — each written up from problem to prototype." },
+    caseStudies: { eyebrow: "Case studies", title: "Two products, end to end.", sub: "Concept products where I owned everything — research, strategy, flows, UI and the test plan.", read: "Read case", viewAll: "View all case studies", allTitle: "All case studies.", allSub: "Four concept products and one design system — each written up from problem to prototype." },
     archive: { eyebrow: "Archive", title: "Screens from the drawer.", sub: "Explorations, side quests and details that didn't make a case study. Open the folder." },
     projects: { eyebrow: "Projects", title: "Shipped work.", sub: "Products I designed and shipped with teams at Congruent Solutions and Euroland IR, plus tools of my own." },
     experience: { location: "Location", beforeLabel: "Design & engineering · the foundation", afterLabel: "Product design · AI-first", marker: "AI", nextTitle: "What's next", nextSub: "Open to relocation · GCC & remote", nextWhen: "2026 →" },

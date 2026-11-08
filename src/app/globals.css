@@ -398,6 +398,15 @@ body::before {
   --c-line: rgba(247, 241, 227, 0.12);
 }
 
+/* floating product screen on the home case-study cards */
+@keyframes cs-float {
+  0%, 100% { transform: translateY(0) rotate(10deg); }
+  50% { transform: translateY(-14px) rotate(7deg); }
+}
+.cs-float {
+  animation: cs-float 7s ease-in-out infinite;
+}
+
 .progress-tick.is-on {
   background: var(--c-accent);
 }

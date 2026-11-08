@@ -45,7 +45,7 @@ export const hero = {
     ["Hi, I'm", "Arun Vijayan."],
     ["Engineer turned", "designer."],
   ],
-  sub: "Product designer with 5+ years in enterprise SaaS and FinTech. I shape AI search, voice and agentic experiences for US retirement platforms at Congruent Solutions — and prototype them in real code with Claude & Cursor.",
+  sub: "Product designer with 5+ years in enterprise SaaS and FinTech — today designing AI search, voice and agentic experiences for US retirement platforms at Congruent Solutions.",
   lead: "I'm Arun Vijayan, a product designer who",
   words: [
     { text: "designs agentic AI experiences.", color: "var(--c-violet)" },
@@ -120,6 +120,14 @@ export const aboutPage = {
   title: "I'm Arun Vijayan.",
   line: "AI-first product designer from Chennai. I design products people understand — and I build the prototypes myself.",
   more: "Know more",
+  // Home About (no name/companies — the hero and Experience already say those)
+  homeTitle: "Engineer first. Designer by choice.",
+  hook: "I write the prototype before I write the spec — so ideas get tested with real people in days.",
+  traits: [
+    { title: "Thinks in systems", body: "Design systems, tokens and AI patterns that scale across products." },
+    { title: "Builds what he designs", body: "Real-code prototypes with Claude & Cursor, ready for engineering." },
+    { title: "Designs for trust", body: "Clear states, sources and a way back — for regulated finance." },
+  ],
   seeWork: "See my work",
   statement: {
     title: "A designer who speaks engineer.",

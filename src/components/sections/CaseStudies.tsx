@@ -6,6 +6,7 @@ import { caseStudies } from "@/content/case-studies";
 import { Media } from "@/components/ui/Placeholder";
 import { SectionHead } from "@/components/ui/SectionHead";
 import { Reveal } from "@/components/ui/Motion";
+import { Phone } from "@/components/case-study/Devices";
 
 type Dict = Awaited<ReturnType<typeof getDictionary>>;
 type Project = Dict["projects"][number];
@@ -60,20 +61,60 @@ export function CaseCard({ p, href, readLabel }: { p: Project; href: string; rea
 }
 
 const HOME_PICKS = ["kairo-ai-personal-assistant", "kosh-personal-finance"];
+const CHAPTERS = ["problem", "research", "design", "validation"] as const;
 
-/** Home: two case studies + "View all case studies". */
+/*
+  Home: the reference "solutions" block — two tall numbered cards, each with the product
+  name, its headline, chapter rows that jump into that part of the case, and "Read case";
+  a real screen from the product floats at the card's corner. Then "View all case studies".
+*/
 export async function CaseStudies() {
   const { projects, ui } = await getDictionary();
   const locale = await getLocale();
   const t = ui.caseStudies;
+  const ch = ui.caseStudy.chapters;
   const picks = HOME_PICKS.map((s) => projects.find((p) => p.slug === s)).filter((p): p is Project => !!p);
   return (
     <section id="case-studies" className="px-4 py-24 md:px-12 md:py-32">
       <SectionHead eyebrow={t.eyebrow} title={t.title} sub={t.sub} />
       <Reveal className="mt-12 grid gap-4 md:mt-16 md:grid-cols-2 md:gap-6">
-        {picks.map((p) => (
-          <CaseCard key={p.slug} p={p} href={localePath(locale, `/work/${p.slug}`)} readLabel={t.read} />
-        ))}
+        {picks.map((p, i) => {
+          const study = caseStudies[p.slug];
+          const href = localePath(locale, `/work/${p.slug}`);
+          const shot = study?.hero.shots[2] ?? study?.hero.shots[0];
+          return (
+            <article
+              key={p.slug}
+              data-reveal
+              className="dark-stage relative isolate flex min-h-[600px] flex-col overflow-hidden rounded-[28px] border border-on-night/10 bg-night p-6 text-on-night md:rounded-[36px] md:p-10"
+              style={{ backgroundImage: `radial-gradient(60% 50% at 100% 0%, color-mix(in srgb, ${study?.brand.accent ?? "#dc0208"} 30%, transparent), transparent 70%)` }}
+            >
+              {shot && (
+                <div aria-hidden className="cs-float pointer-events-none absolute -top-20 -right-6 -z-10 w-[110px] opacity-90 md:-top-28 md:right-2 md:w-[150px]">
+                  <Phone src={shot.src} alt="" sizes="200px" />
+                </div>
+              )}
+              <p className="font-mono text-[11px] tracking-[0.14em] text-on-night/60 uppercase">
+                {String(i + 1).padStart(2, "0")} · {p.descriptor}
+              </p>
+              <h3 className="mt-4 max-w-[60%] font-display text-[clamp(40px,4.4vw,72px)] leading-[0.9] font-[650] tracking-[-0.045em] uppercase">{study?.brand.name ?? p.title}</h3>
+              <p className="mt-4 max-w-[68%] text-[16px] leading-[1.45] text-on-night/80">{study?.hero.title ?? p.summary}</p>
+              <ul className="mt-auto border-t border-on-night/10 pt-2">
+                {CHAPTERS.map((c) => (
+                  <li key={c} className="border-b border-on-night/10">
+                    <Link href={`${href}#${c}`} className="group flex items-center justify-between gap-4 py-4">
+                      <span className="text-[clamp(17px,1.4vw,21px)] font-semibold tracking-[-0.01em] transition-colors group-hover:text-[#ffef93]">{ch[c]}</span>
+                      <ArrowRight size={18} className="shrink-0 transition-transform group-hover:translate-x-1 group-hover:text-[#ffef93]" />
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+              <Link href={href} className="btn-accent mt-8 self-start !bg-[#ffef93] !text-[#100001]">
+                {t.read} <ArrowRight size={18} strokeWidth={2.4} />
+              </Link>
+            </article>
+          );
+        })}
       </Reveal>
       <Link href={localePath(locale, "/case-studies")} className="group mt-8 flex items-center justify-between gap-6 border-y border-ink/10 py-6 md:mt-10">
         <span className="font-display text-[clamp(22px,2.6vw,38px)] leading-none font-[650] tracking-[-0.04em] text-ink uppercase transition-colors group-hover:text-accent">
