@@ -4,6 +4,7 @@ import { SmoothScroll } from "@/components/global/SmoothScroll";
 import { Nav } from "@/components/global/Nav";
 import { PageProgress } from "@/components/global/PageProgress";
 import { MusicPlayer } from "@/components/global/MusicPlayer";
+import { RobotCursor } from "@/components/global/RobotCursor";
 import { Loader } from "@/components/loader/Loader";
 import { ChatWidget } from "@/components/chat/ChatWidget";
 import { A11yPanel } from "@/components/a11y/A11yPanel";
@@ -81,6 +82,7 @@ export default async function RootLayout({ children }: LayoutProps<"/[lang]">) {
             {children}
           </main>
           <MusicPlayer />
+          <RobotCursor />
           <ChatWidget />
           <A11yPanel />
           <A11yOverlays />

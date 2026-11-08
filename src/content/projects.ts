@@ -141,10 +141,10 @@ export const projects: Project[] = [
     tint: "linear-gradient(135deg,#e6e4fb,#3b2fc9)",
   },
   {
-    slug: "myir-investor-app",
+    slug: "shareline-investor-app",
     audience: "B2C",
     descriptor: "White-label mobile app · Investor relations",
-    title: "MyIR — a company's investor-relations site in a shareholder's pocket",
+    title: "Shareline — a company's investor-relations site in a shareholder's pocket",
     summary: "15+ desktop IR tools — share graph, announcements, dividends, reports, calendar — reworked into one brandable mobile app, price first.",
     filters: ["Mobile"],
     media: "cases/covers/myir.webp",

@@ -28,7 +28,7 @@ export const imageManifest: Record<string, string> = {
   "cases/covers/kosh.webp": "/images/cases/covers/kosh.2a14ced6b6.webp",
   "cases/covers/magnil.webp": "/images/cases/covers/magnil.62fbe0ac7f.webp",
   "cases/covers/myir.webp": "/images/cases/covers/myir.5e7665f419.webp",
-  "cases/covers/orion.webp": "/images/cases/covers/orion.93d7748c35.webp",
+  "cases/covers/orion.webp": "/images/cases/covers/orion.65c1d082f4.webp",
   "cases/covers/secondly.webp": "/images/cases/covers/secondly.c68038b1b7.webp",
   "cases/covers/tandem.webp": "/images/cases/covers/tandem.b25923dd06.webp",
   "cases/covers/zeroq.webp": "/images/cases/covers/zeroq.2f7dec5070.webp",

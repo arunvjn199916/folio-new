@@ -7,7 +7,7 @@ import { img } from "@/content/images";
 import { SectionHead } from "@/components/ui/SectionHead";
 import { WorkGrid } from "./WorkGrid";
 
-const FEATURED = "aura-design-system";
+const FEATURED = "orion-support-system";
 
 /*
   v2 work section (reference: "PROJECTS."): a large featured-case card, then a project

@@ -4,12 +4,12 @@ import type { CaseStudy, Shot } from "./types";
 const s = (name: string, label: string, note?: string): Shot => ({ src: `cases/myir/${name}.webp`, label, note });
 
 export const myir: CaseStudy = {
-  slug: "myir-investor-app",
-  brand: { name: "MyIR", tint: "#dde6fb", band: "#e7edfb", accent: "#1d4ed8" },
+  slug: "shareline-investor-app",
+  brand: { name: "Shareline", tint: "#dde6fb", band: "#e7edfb", accent: "#1d4ed8" },
   hero: {
     kicker: "white-label investor-relations app",
     title: "Putting a company's whole investor-relations website in a shareholder's pocket",
-    sub: "MyIR turns 15+ desktop IR tools — share graph, reports, announcements, dividends, calendar, calculator — into one mobile app a listed company can brand as its own, without burying the share price.",
+    sub: "Shareline turns 15+ desktop IR tools — share graph, reports, announcements, dividends, calendar, calculator — into one mobile app a listed company can brand as its own, without burying the share price.",
     shots: [s("share-graph", "Share graph"), s("watchlist", "Watchlist"), s("announcements", "Announcements"), s("dividends", "Dividends"), s("calendar", "Financial calendar")],
   },
   client: true,
@@ -115,7 +115,7 @@ export const myir: CaseStudy = {
       eyebrow: "Concept · added for this portfolio",
       title: "Asking instead of browsing",
       body: [
-        "Fifteen modules are a lot to browse on a phone. These AI search and chat screens, designed in MyIR's style, let a shareholder simply ask — and answer only from what the company has published, with a link to every source. They extend the AI search I designed for IR managers to the shareholder's side; they are not part of the shipped app.",
+        "Fifteen modules are a lot to browse on a phone. These AI search and chat screens, designed in Shareline's style, let a shareholder simply ask — and answer only from what the company has published, with a link to every source. They extend the AI search I designed for IR managers to the shareholder's side; they are not part of the shipped app.",
       ],
       bullets: [
         "Answers cite the announcement, report page or data module they come from.",

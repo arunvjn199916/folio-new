@@ -60,7 +60,7 @@ export function CaseCard({ p, href, readLabel }: { p: Project; href: string; rea
   );
 }
 
-const HOME_PICKS = ["orion-support-system", "myir-investor-app", "agentic-ai-participant-portal"];
+const HOME_PICKS = ["agentic-ai-participant-portal", "shareline-investor-app"];
 const CHAPTERS = ["problem", "research", "design", "validation"] as const;
 
 /*
@@ -77,7 +77,7 @@ export async function CaseStudies() {
   return (
     <section id="case-studies" className="px-4 py-24 md:px-12 md:py-32">
       <SectionHead eyebrow={t.eyebrow} title={t.title} sub={t.sub} />
-      <Reveal className="mt-12 grid grid-cols-1 gap-4 md:mt-16 md:grid-cols-2 md:gap-6 xl:grid-cols-3">
+      <Reveal className="mt-12 grid grid-cols-1 gap-4 md:mt-16 md:grid-cols-2 md:gap-6">
         {picks.map((p, i) => {
           const study = caseStudies[p.slug];
           const href = localePath(locale, `/work/${p.slug}`);
@@ -90,13 +90,13 @@ export async function CaseStudies() {
               style={{ backgroundImage: `radial-gradient(60% 50% at 100% 0%, color-mix(in srgb, ${study?.brand.accent ?? "#dc0208"} 30%, transparent), transparent 70%)` }}
             >
               {shot && (
-                <div aria-hidden className="relative mb-7 h-[190px] overflow-hidden rounded-[20px] md:h-[210px]" style={{ background: `color-mix(in srgb, ${study?.brand.accent ?? "#dc0208"} 22%, transparent)` }}>
+                <div aria-hidden className="relative mb-7 h-[200px] overflow-hidden rounded-[20px] md:h-[280px]" style={{ background: `color-mix(in srgb, ${study?.brand.accent ?? "#dc0208"} 22%, transparent)` }}>
                   {study?.hero.layout === "web" ? (
-                    <div className="cs-float absolute top-7 left-1/2 w-[88%] -translate-x-1/2">
+                    <div className="cs-float absolute top-8 left-1/2 w-[86%] -translate-x-1/2">
                       <Browser src={shot.src} alt="" ratio={shot.ratio} sizes="420px" />
                     </div>
                   ) : (
-                    <div className="cs-float absolute top-7 left-1/2 w-[44%] max-w-[170px] -translate-x-1/2">
+                    <div className="cs-float absolute top-7 left-1/2 w-[38%] max-w-[190px] -translate-x-1/2">
                       <Phone src={shot.src} alt="" sizes="170px" />
                     </div>
                   )}

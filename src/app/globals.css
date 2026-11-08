@@ -616,3 +616,9 @@ body::before {
   :lang(ta) .ct-verb,
   :lang(hi) .ct-verb { font-size: 0.8em; }
 }
+
+/* rover cursor: hide the system arrow only while it's active; text fields keep the I-beam */
+html.robot-cursor,
+html.robot-cursor *:not(input, textarea, select, [contenteditable="true"]) {
+  cursor: none !important;
+}
