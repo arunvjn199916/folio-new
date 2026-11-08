@@ -109,6 +109,24 @@ export default async function CaseStudyPage({ params }: PageProps<"/[lang]/work/
     );
   }
 
+  // Group the study's blocks into the reference solution-page chapters (content unchanged):
+  // problem → research (personas) → design question (statement) → design → validation (test…) → details (edges, screens) → learnings (lists).
+  type ChapterId = keyof typeof t.chapters;
+  const chapters: { id: Exclude<ChapterId, "read">; blocks: typeof study.blocks }[] = [];
+  let current: Exclude<ChapterId, "read"> = "problem";
+  for (const b of study.blocks) {
+    if (b.kind === "personas") current = "research";
+    else if (b.kind === "statement") current = "question";
+    else if (current === "question") current = "design";
+    if (b.kind === "test" && current === "design") current = "validation";
+    if ((b.kind === "edges" || b.kind === "web" || b.kind === "gallery") && current === "validation") current = "details";
+    if (b.kind === "list" && current !== "learnings") current = "learnings";
+    const last = chapters[chapters.length - 1];
+    if (last?.id === current) last.blocks.push(b);
+    else chapters.push({ id: current, blocks: [b] });
+  }
+  const firstProblem = study.blocks.find((b) => b.kind === "numbered");
+
   return (
     <article
       className="pb-16"
@@ -122,13 +140,32 @@ export default async function CaseStudyPage({ params }: PageProps<"/[lang]/work/
         } as React.CSSProperties
       }
     >
-      <CaseHero study={study} title={p.title} summary={p.summary} conceptLabel={t.concept} crumbs={crumbs} />
+      <CaseHero study={study} title={p.title} summary={p.summary} conceptLabel={t.concept} crumbs={crumbs} readLabel={t.chapters.read} next={{ label: t.nextCase.replace(/\.$/, ""), href: localePath(locale, next.href ?? `/work/${next.slug}`) }} />
 
-      <div className="mt-24 space-y-28 sm:space-y-36">
-        {study.blocks.map((b, k) => (
-          <BlockView key={k} block={b} brand={study.brand} labels={t.blocks} />
-        ))}
-      </div>
+      {chapters.map((c, ci) =>
+        c.id === "question" ? (
+          <div key={c.id} id={c.id} className="mt-28 scroll-mt-24 sm:mt-36">
+            {c.blocks.map((b, k) => (
+              <BlockView key={k} block={b} brand={study.brand} labels={t.blocks} />
+            ))}
+          </div>
+        ) : (
+          <section key={c.id} id={c.id} aria-labelledby={`${c.id}-title`} className="mt-28 scroll-mt-24 sm:mt-36">
+            {/* chapter head (reference: "SERVICES / WEBSITES. ONLINE SHOPS…") */}
+            <div className="mx-4 flex items-end justify-between gap-6 border-t border-ink/10 pt-6 md:mx-12">
+              <h2 id={`${c.id}-title`} className="display-m text-ink">
+                {t.chapters[c.id]}
+              </h2>
+              <span className="font-mono text-[12px] text-ink-3">{String(ci + 1).padStart(2, "0")}</span>
+            </div>
+            <div className="mt-16 space-y-24 sm:space-y-32">
+              {c.blocks.map((b, k) => (
+                <BlockView key={k} block={b} brand={study.brand} labels={t.blocks} variant={c.id === "problem" && b === firstProblem ? "questions" : undefined} />
+              ))}
+            </div>
+          </section>
+        ),
+      )}
 
       <section id="sources" className="mx-auto mt-28 max-w-[640px] px-6">
         <h2 className="font-mono text-[11px] font-semibold tracking-[0.16em] text-ink-3 uppercase">{t.sources}</h2>

@@ -3,6 +3,7 @@ import { ArrowDown, ArrowUp } from "lucide-react";
 import type { Block, CaseStudy, Outcome } from "@/content/case-studies/types";
 import { Reveal } from "@/components/ui/Motion";
 import { Browser, Phone } from "./Devices";
+import { QuestionList } from "./QuestionList";
 import { cn } from "@/lib/utils";
 
 export type CaseLabels = {
@@ -41,7 +42,9 @@ const H2 = "font-display text-[clamp(30px,3.8vw,60px)] leading-[0.95] font-[650]
 const EYEBROW = "font-mono text-[11px] font-semibold tracking-[0.16em] text-ink-3 uppercase";
 const BODY = "text-[15.5px] leading-[1.7] text-ink-2";
 
-export function BlockView({ block, brand, labels }: { block: Block; brand: Brand; labels: CaseLabels }) {
+export function BlockView({ block, brand, labels, variant }: { block: Block; brand: Brand; labels: CaseLabels; variant?: "questions" }) {
+  // The first problem list renders as the reference's "questions" list that lights up on scroll.
+  if (variant === "questions" && block.kind === "numbered") return <QuestionList title={block.title} intro={block.intro} items={block.items} />;
   switch (block.kind) {
     case "text":
       return (
@@ -65,13 +68,17 @@ export function BlockView({ block, brand, labels }: { block: Block; brand: Brand
 
     case "statement":
       return (
-        <Reveal className="mx-auto max-w-[820px] px-6 text-center">
-          <p data-reveal className={EYEBROW}>{block.eyebrow}</p>
-          <p data-reveal className="mt-5 font-display text-[clamp(32px,5vw,80px)] leading-[0.95] font-[650] tracking-[-0.045em] text-balance text-ink uppercase">
-            {block.line}
-          </p>
-          {block.sub && <p data-reveal className="mx-auto mt-4 max-w-[520px] text-[15px] text-ink-2">{block.sub}</p>}
-        </Reveal>
+        <section className="px-4 md:px-12">
+          <div className="dark-stage rounded-[28px] bg-night px-6 py-24 text-center text-on-night md:rounded-[48px] md:py-36" style={{ backgroundImage: "radial-gradient(60% 70% at 50% 0%, color-mix(in srgb, var(--case-accent) 40%, transparent), transparent 70%)" }}>
+            <Reveal className="mx-auto max-w-[920px]">
+              <p data-reveal className={EYEBROW}>{block.eyebrow}</p>
+              <p data-reveal className="mt-6 font-display text-[clamp(32px,5vw,84px)] leading-[0.95] font-[650] tracking-[-0.045em] text-balance uppercase">
+                {block.line}
+              </p>
+              {block.sub && <p data-reveal className="mx-auto mt-6 max-w-[560px] text-[16px] text-on-night/75">{block.sub}</p>}
+            </Reveal>
+          </div>
+        </section>
       );
 
     case "numbered":
@@ -144,7 +151,7 @@ export function BlockView({ block, brand, labels }: { block: Block; brand: Brand
           <h2 data-reveal className={cn(H2, "mx-auto max-w-[1000px]")}>{block.title}</h2>
           <div className="mx-auto mt-8 grid max-w-[1000px] gap-4 md:grid-cols-2">
             {block.items.map((p) => (
-              <div data-reveal key={p.name} className="rounded-[20px] border border-line bg-surface/70 p-6">
+              <div data-reveal key={p.name} className="rounded-[24px] border border-ink/10 bg-card p-6 md:p-8">
                 <div className="flex items-center gap-3">
                   <span className="grid size-11 place-items-center rounded-full font-display text-[14px] font-semibold text-white" style={{ background: "var(--case-accent)" }}>
                     {p.name
@@ -182,17 +189,15 @@ export function BlockView({ block, brand, labels }: { block: Block; brand: Brand
             <h2 data-reveal className={cn(H2, "mt-3")}>{block.title}</h2>
             {block.sub && <p data-reveal className="mx-auto mt-3 max-w-[520px] text-[15px] text-ink-2">{block.sub}</p>}
           </div>
-          <ol className="mx-auto mt-12 grid max-w-[1000px] gap-8 md:grid-cols-3">
+          <ol className="mx-auto mt-12 grid max-w-[1200px] gap-4 md:grid-cols-3">
             {block.items.map((s, i) => (
-              <li data-reveal key={s.title} className="relative text-center">
-                <span className="mx-auto grid size-24 place-items-center rounded-full font-display text-[34px] font-semibold" style={{ background: "var(--case-tint)", color: "var(--case-accent)" }}>
-                  {String(i + 1).padStart(2, "0")}
-                </span>
-                <p className="mt-5 font-sans text-[19px] leading-snug font-semibold tracking-[-0.01em]" style={{ color: "var(--case-accent-text)" }}>
-                  “{s.quote}”
-                </p>
-                <p className="mt-2 font-display text-[18px] font-semibold text-ink">{s.title}</p>
-                <p className="mx-auto mt-1 max-w-[260px] text-[14px] text-ink-2">{s.body}</p>
+              <li data-reveal key={s.title} className="dark-stage flex flex-col justify-between gap-10 rounded-[24px] border border-on-night/10 bg-night p-6 text-on-night md:min-h-[360px] md:p-8">
+                <div>
+                  <p className="font-mono text-[11px] tracking-[0.14em] text-on-night/60 uppercase">{String(i + 1).padStart(2, "0")}</p>
+                  <p className="mt-4 font-display text-[clamp(24px,2.2vw,34px)] leading-[0.95] font-[650] tracking-[-0.04em] uppercase">{s.title}</p>
+                  <p className="mt-4 text-[15px] leading-relaxed text-on-night/75">{s.body}</p>
+                </div>
+                <p className="border-t border-on-night/10 pt-5 text-[16px] leading-snug font-semibold text-[#ffef93]">“{s.quote}”</p>
               </li>
             ))}
           </ol>
@@ -240,12 +245,12 @@ export function BlockView({ block, brand, labels }: { block: Block; brand: Brand
             </Reveal>
           )}
           <Reveal stagger={0.1}>
-            <div className="overflow-hidden rounded-[24px]" style={{ background: "var(--case-band)" }}>
+            <div className="dark-stage overflow-hidden rounded-[28px] bg-night text-on-night md:rounded-[40px]" style={{ backgroundImage: "radial-gradient(70% 70% at 50% 100%, color-mix(in srgb, var(--case-accent) 38%, transparent), transparent 70%)" }}>
               {block.crumbs && (
-                <p className="flex flex-wrap items-center gap-2 px-6 pt-6 font-sans font-medium text-[14px] text-[#3b3946]">
+                <p className="flex flex-wrap items-center gap-2 px-6 pt-6 font-mono text-[12px] tracking-[0.08em] text-on-night/70 uppercase">
                   {block.crumbs.map((c, i) => (
                     <Fragment key={c}>
-                      {i > 0 && <span className="text-[#3b3946]/40">→</span>}
+                      {i > 0 && <span className="text-on-night/40">→</span>}
                       {c}
                     </Fragment>
                   ))}
@@ -259,22 +264,22 @@ export function BlockView({ block, brand, labels }: { block: Block; brand: Brand
                     <figure data-reveal key={it.shot.src} className="w-[168px] shrink-0 snap-center sm:w-[190px]">
                       <Phone src={it.shot.src} alt={it.shot.label} sizes="190px" />
                       <figcaption className="mt-3 text-center">
-                        <span className="block font-sans font-medium text-[15px] text-[#1c1b22]">{it.shot.label}</span>
-                        {it.shot.note && <span className="mt-0.5 block text-[11.5px] leading-snug text-[#55535f]">{it.shot.note}</span>}
+                        <span className="block text-[15px] font-semibold">{it.shot.label}</span>
+                        {it.shot.note && <span className="mt-0.5 block text-[12px] leading-snug text-on-night/65">{it.shot.note}</span>}
                       </figcaption>
                     </figure>
                   ) : (
                     <div data-reveal key={`${it.node}-${i}`} className="shrink-0 pb-14">
-                      <span className="block rounded-full border-[5px] border-white/80 bg-white/60 px-4 py-2 text-center text-[12.5px] font-semibold text-[#1c1b22] shadow-sm" style={{ borderColor: "color-mix(in srgb, var(--case-accent) 25%, white)" }}>
+                      <span className="block rounded-full border-[4px] border-white/80 bg-white px-4 py-2 text-center text-[12.5px] font-semibold text-[#100001] shadow-sm" style={{ borderColor: "color-mix(in srgb, var(--case-accent) 25%, white)" }}>
                         {it.node}
-                        {it.sub && <span className="block text-[10.5px] font-normal text-[#55535f]">{it.sub}</span>}
+                        {it.sub && <span className="block text-[10.5px] font-normal text-[#4a2b29]">{it.sub}</span>}
                       </span>
                     </div>
                   ),
                 )}
               </div>
               </div>
-              <p className="px-6 pb-8 text-center font-sans font-medium text-[clamp(20px,2vw,26px)] text-[#2b2a33]">{block.caption}</p>
+              <p className="px-6 pb-8 text-center text-[clamp(18px,1.8vw,24px)] font-semibold tracking-[-0.02em]">{block.caption}</p>
             </div>
           </Reveal>
         </section>
@@ -291,7 +296,7 @@ export function BlockView({ block, brand, labels }: { block: Block; brand: Brand
               ))}
             </div>
           </Reveal>
-          <Reveal className="mt-10 rounded-[24px] bg-gradient-to-br from-[#0d0b1f] via-[#17133a] to-[#0d0b1f] px-5 py-10 sm:px-10" stagger={0.06}>
+          <Reveal className="dark-stage mt-10 rounded-[28px] bg-night px-5 py-10 sm:px-10 md:rounded-[40px]" stagger={0.06}>
             <div className="grid grid-cols-2 gap-x-4 gap-y-8 sm:grid-cols-3 lg:grid-cols-6">
               {block.variants.map((v) => (
                 <figure data-reveal key={v.src}>
@@ -353,17 +358,17 @@ export function BlockView({ block, brand, labels }: { block: Block; brand: Brand
                 <p data-reveal className={EYEBROW}>
                   {labels.case} {i + 1}
                 </p>
-                <h3 data-reveal className="mt-2 font-display text-[21px] leading-snug font-semibold text-ink">{c.title}</h3>
+                <h3 data-reveal className="mt-2 font-display text-[clamp(22px,2vw,30px)] leading-[1] font-[650] tracking-[-0.03em] text-ink uppercase">{c.title}</h3>
                 <p data-reveal className="mt-2 text-[14.5px] text-ink-2">
                   <strong className="font-semibold text-ink">{labels.conclusion}</strong> {c.conclusion}
                 </p>
-                <div data-reveal className="mt-6 grid place-items-center rounded-[18px] px-6 py-10" style={{ background: "var(--case-band)" }}>
+                <div data-reveal className="mt-6 grid place-items-center rounded-[24px] bg-night px-6 py-10" style={{ backgroundImage: "radial-gradient(60% 60% at 50% 100%, color-mix(in srgb, var(--case-accent) 35%, transparent), transparent 70%)" }}>
                   <Phone src={c.shot.src} alt={c.shot.label} className="w-[200px]" sizes="200px" />
                 </div>
                 {c.notes && (
                   <div data-reveal className="mt-6 grid gap-5 sm:grid-cols-2">
                     {c.notes.map((n) => (
-                      <div key={n.title} className="border-l-[3px] border-[#e5484d] pl-3">
+                      <div key={n.title} className="border-l-[3px] border-crimson pl-3">
                         <p className="text-[13.5px] font-semibold text-ink">{n.title}</p>
                         <p className="mt-1 text-[13px] leading-relaxed text-ink-2">{n.body}</p>
                       </div>
@@ -384,11 +389,11 @@ export function BlockView({ block, brand, labels }: { block: Block; brand: Brand
             {block.body && <p data-reveal className={cn(BODY, "mt-4")}>{block.body}</p>}
           </Reveal>
           <Reveal className="mx-auto mt-10 max-w-[1100px]" stagger={0.12}>
-            <div className="space-y-8 rounded-[24px] p-4 sm:p-10" style={{ background: "var(--case-band)" }}>
+            <div className="dark-stage space-y-8 rounded-[28px] bg-night p-4 text-on-night sm:p-10 md:rounded-[40px]" style={{ backgroundImage: "radial-gradient(70% 70% at 50% 100%, color-mix(in srgb, var(--case-accent) 35%, transparent), transparent 70%)" }}>
               {block.shots.map((s) => (
                 <figure data-reveal key={s.src}>
                   <Browser src={s.src} alt={s.label} />
-                  <figcaption className="mt-3 text-center font-sans font-medium text-[16px] text-[#2b2a33]">{s.label}</figcaption>
+                  <figcaption className="mt-3 text-center text-[16px] font-semibold">{s.label}</figcaption>
                 </figure>
               ))}
             </div>
@@ -451,7 +456,7 @@ export function BlockView({ block, brand, labels }: { block: Block; brand: Brand
           {/* the five characters */}
           <Reveal className="mx-auto mt-10 grid max-w-[1000px] gap-3 sm:grid-cols-2 lg:grid-cols-5" stagger={0.06}>
             {block.participants.map((p, i) => (
-              <div data-reveal key={p.name} className="rounded-[16px] border border-line bg-surface/70 p-4">
+              <div data-reveal key={p.name} className="rounded-[20px] border border-ink/10 bg-card p-4">
                 <div className="flex items-center gap-2.5">
                   <span className="grid size-9 shrink-0 place-items-center rounded-full font-mono text-[11px] font-semibold text-white" style={{ background: "var(--case-accent)" }}>
                     P{i + 1}
@@ -473,7 +478,7 @@ export function BlockView({ block, brand, labels }: { block: Block; brand: Brand
           </Reveal>
 
           {/* task × participant grid */}
-          <Reveal className="mx-auto mt-6 max-w-[1000px] overflow-x-auto rounded-[16px] border border-line bg-surface/70" label={block.title}>
+          <Reveal className="mx-auto mt-6 max-w-[1000px] overflow-x-auto rounded-[20px] border border-ink/10 bg-card" label={block.title}>
             <table data-reveal className="w-full min-w-[560px] text-left text-[13px]">
               <thead>
                 <tr className="border-b border-line text-ink-3">
@@ -530,7 +535,7 @@ export function BlockView({ block, brand, labels }: { block: Block; brand: Brand
           <h2 data-reveal className={H2}>{block.title}</h2>
           <p data-reveal className={cn(BODY, "mt-4")}>{block.intro}</p>
           <div data-reveal className="mt-6 grid gap-3 sm:grid-cols-2">
-            <div className="rounded-[14px] border border-line bg-surface/70 p-5">
+            <div className="rounded-[20px] border border-ink/10 bg-card p-6">
               <p className="text-[13px] font-semibold text-ink">{labels.tasks}</p>
               <ol className="mt-2 space-y-1.5 pl-5 text-[13.5px] leading-relaxed text-ink-2 [list-style:decimal]">
                 {block.tasks.map((t) => (
@@ -538,7 +543,7 @@ export function BlockView({ block, brand, labels }: { block: Block; brand: Brand
                 ))}
               </ol>
             </div>
-            <div className="rounded-[14px] border border-line bg-surface/70 p-5">
+            <div className="rounded-[20px] border border-ink/10 bg-card p-6">
               <p className="text-[13px] font-semibold text-ink">{labels.measures}</p>
               <ul className="mt-2 space-y-1.5 pl-5 text-[13.5px] leading-relaxed text-ink-2 [list-style:disc]">
                 {block.measures.map((t) => (

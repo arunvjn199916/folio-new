@@ -1,12 +1,13 @@
 import Link from "next/link";
+import { ArrowDown, ArrowRight } from "lucide-react";
 import type { CaseStudy } from "@/content/case-studies/types";
 import { Reveal } from "@/components/ui/Motion";
 import { Phone } from "./Devices";
 
 /*
-  v2 case-study hero (reference: eezyinn project page). Breadcrumb, category, the product
-  name as a huge uppercase title, headline + summary on the left and the scope (meta) on
-  the right, then the phone fan inside a dark rounded panel lit by the product's colour.
+  v2 case-study hero (reference: eezyinn solution page). Breadcrumb, product · category,
+  the case headline as the big statement, summary + "Read the story" / "Next case", the scope
+  (meta) on the right, then the phone fan inside a dark rounded panel lit by the product colour.
 */
 export function CaseHero({
   study,
@@ -14,12 +15,16 @@ export function CaseHero({
   summary,
   conceptLabel,
   crumbs,
+  readLabel,
+  next,
 }: {
   study: CaseStudy;
   title: string;
   summary: string;
   conceptLabel: string;
   crumbs: { label: string; href?: string }[];
+  readLabel: string;
+  next: { label: string; href: string };
 }) {
   const { hero, meta, brand } = study;
   const fan = hero.shots.slice(0, 5);
@@ -48,16 +53,22 @@ export function CaseHero({
 
         <p data-reveal className="mt-10 flex items-center gap-2 text-[12px] font-semibold tracking-[0.1em] text-ink-3 uppercase">
           <span className="size-1.5 rounded-full" style={{ background: "var(--case-accent)" }} />
-          {conceptLabel} · {hero.kicker}
+          {brand.name} · {conceptLabel}
         </p>
-        <h1 data-reveal className="display-xl mt-4 text-ink">
-          {brand.name}
+        <h1 data-reveal className="display-l mt-4 max-w-[18ch] text-ink">
+          {hero.title || title}
         </h1>
-
         <div className="mt-10 grid gap-10 md:grid-cols-[minmax(0,1.2fr)_minmax(0,0.8fr)] md:gap-16">
           <div data-reveal>
-            <p className="max-w-[22ch] text-[clamp(22px,2.2vw,34px)] leading-[1.15] font-semibold tracking-[-0.03em] text-ink">{hero.title || title}</p>
-            <p className="mt-5 max-w-[560px] text-[16px] leading-[1.6] text-ink-2 md:text-[17px]">{hero.sub || summary}</p>
+            <p className="max-w-[600px] text-[17px] leading-[1.6] text-ink-2 md:text-[19px]">{hero.sub || summary}</p>
+            <div className="mt-8 flex flex-wrap gap-3">
+              <a href="#problem" className="btn-accent">
+                {readLabel} <ArrowDown size={18} strokeWidth={2.4} />
+              </a>
+              <Link href={next.href} className="btn-outline">
+                {next.label} <ArrowRight size={18} />
+              </Link>
+            </div>
           </div>
           <dl data-reveal className="grid grid-cols-2 gap-x-6 gap-y-6 self-end border-t border-ink/10 pt-6">
             {meta.map((m) => (
