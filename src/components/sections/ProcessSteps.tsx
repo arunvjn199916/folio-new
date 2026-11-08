@@ -22,8 +22,8 @@ export function ProcessSteps({
   heading: string;
   line: string;
   steps: { title: string; note: string }[];
-  educationTitle: string;
-  education: { title: string; place: string; years: string }[];
+  educationTitle?: string;
+  education?: { title: string; place: string; years: string }[];
 }) {
   const root = useRef<HTMLElement>(null);
 
@@ -59,6 +59,7 @@ export function ProcessSteps({
           </p>
           <BlurHeading className="display-m mt-4 max-w-[12ch] text-ink">{heading}</BlurHeading>
           <p className="mt-5 max-w-[420px] text-[16px] leading-[1.55] text-ink-2">{line}</p>
+          {education && (
           <div className="mt-12 border-t border-ink/10 pt-6">
             <p className="eyebrow">{educationTitle}</p>
             <ul className="mt-4 space-y-4">
@@ -71,6 +72,7 @@ export function ProcessSteps({
               ))}
             </ul>
           </div>
+          )}
         </div>
 
         <div className="ps-list relative pl-8 md:pl-12">

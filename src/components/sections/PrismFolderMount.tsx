@@ -110,8 +110,8 @@ function Folder({ open, windows }: { open: boolean; windows: Win[] }) {
   return (
     <div className="relative h-[150px] w-[210px] transition-transform duration-300 ease-out group-hover:-translate-y-1 group-hover:scale-[1.03]">
       {/* back panel + tab */}
-      <div className="absolute top-0 left-0 h-6 w-[86px] rounded-t-[10px] bg-[#9a7bff]" />
-      <div className="absolute inset-x-0 top-4 bottom-0 rounded-[12px] rounded-tl-none bg-[#9a7bff]" />
+      <div className="absolute top-0 left-0 h-6 w-[86px] rounded-t-[10px] bg-[#a80006]" />
+      <div className="absolute inset-x-0 top-4 bottom-0 rounded-[12px] rounded-tl-none bg-[#a80006]" />
       {/* peeking pictures */}
       {windows.slice(0, 3).map((w, i) => (
         <motion.div
@@ -126,7 +126,7 @@ function Folder({ open, windows }: { open: boolean; windows: Win[] }) {
       <motion.div
         animate={{ rotateX: open ? -38 : 0 }}
         transition={{ type: "spring", stiffness: 220, damping: 20 }}
-        className="absolute inset-x-0 top-10 bottom-0 origin-bottom overflow-hidden rounded-[12px] border border-white/50 bg-[linear-gradient(160deg,rgba(220,206,255,0.72),rgba(154,123,255,0.6))] shadow-[inset_0_1px_0_rgba(255,255,255,0.7)] backdrop-blur-[6px] [transform-style:preserve-3d]"
+        className="absolute inset-x-0 top-10 bottom-0 origin-bottom overflow-hidden rounded-[12px] border border-white/50 bg-[linear-gradient(160deg,rgba(255,239,147,0.7),rgba(220,2,8,0.55))] shadow-[inset_0_1px_0_rgba(255,255,255,0.7)] backdrop-blur-[6px] [transform-style:preserve-3d]"
         style={{ transformPerspective: 600 }}
       >
         <GlassLight />

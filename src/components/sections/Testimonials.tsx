@@ -1,72 +1,31 @@
 import { getDictionary } from "@/i18n/server";
-import { BlurHeading, Reveal } from "@/components/ui/Motion";
-import { PlaceholderLabel } from "@/components/ui/PlaceholderLabel";
+import { Media } from "@/components/ui/Placeholder";
+import { SectionHead } from "@/components/ui/SectionHead";
+import { Reveal } from "@/components/ui/Motion";
 
-// Sanjay — "what people say": handwritten notes pinned with a paper clip and a small
-// polaroid of the person; each sits slightly askew and straightens up on hover.
+/*
+  v2 testimonials (in place of the reference's client tiles): two recommendation cards,
+  each with a photo thumbnail, the quote, and name + role. Rendered only when
+  showTestimonials is on (real quotes required).
+*/
 export async function Testimonials() {
   const { testimonials, ui } = await getDictionary();
+  const t = ui.testimonialsUi;
   return (
-    <section id="testimonials" className="px-6 py-28">
-      <div className="text-center">
-        <p className="eyebrow flex items-center justify-center gap-2 text-blue">
-          <span className="size-1.5 rounded-full bg-blue" /> {ui.testimonialsUi.eyebrow}
-        </p>
-        <BlurHeading className="mt-3 font-display text-[clamp(32px,3.8vw,50px)] leading-none font-semibold tracking-[-0.02em]">
-          {ui.testimonialsUi.title}
-        </BlurHeading>
-        <p className="mx-auto mt-3 max-w-[420px] text-[14px] text-ink-2">
-          {ui.testimonialsUi.sub}
-        </p>
-      </div>
-      <Reveal
-        stagger={0.12}
-        className="mx-auto mt-16 grid max-w-[1150px] grid-cols-[minmax(0,1fr)] gap-10 md:grid-cols-3"
-      >
-        {testimonials.map((t, i) => (
-          <div key={i} data-reveal>
-            <figure
-              className="group relative bg-note p-6 pt-10 shadow-[0_24px_50px_-28px_rgba(26,24,34,0.5)] transition-[translate,rotate] duration-500 ease-[cubic-bezier(.34,1.56,.64,1)] rotate-(--tilt) hover:-translate-y-2 hover:rotate-0"
-              style={{ ["--tilt" as string]: `${[-2, 1.5, -1][i % 3]}deg` }}
-            >
-              {/* paper clip */}
-              <svg
-                aria-hidden
-                width="26"
-                height="60"
-                viewBox="0 0 26 60"
-                className="absolute -top-6 left-8"
-              >
-                <path
-                  d="M8 44V12a5 5 0 0 1 10 0v34a8 8 0 0 1-16 0V16"
-                  fill="none"
-                  stroke="#9a98a6"
-                  strokeWidth="2.4"
-                  strokeLinecap="round"
-                />
-              </svg>
-              <div className="flex gap-4">
-                <div className="w-[76px] shrink-0 -rotate-3 bg-photo p-1.5 pb-5 shadow-md">
-                  <div
-                    className="relative aspect-square"
-                    style={{ background: t.tint }}
-                  >
-                    <PlaceholderLabel label="" />
-                  </div>
-                  <p className="mt-1 text-center font-script text-[13px] leading-none text-on-photo">
-                    {t.name.split(" ")[0]}
-                  </p>
-                </div>
-                <blockquote className="min-w-0 font-script text-[21px] leading-[1.25] text-ink [overflow-wrap:anywhere]">
-                  &ldquo;{t.quote}&rdquo;
-                </blockquote>
-              </div>
-              <figcaption className="mt-5 border-t border-dashed border-ink/15 pt-3 text-[12px] text-ink-3">
-                <span className="font-semibold text-ink-2">{t.name}</span> ·{" "}
-                {t.role}
-              </figcaption>
-            </figure>
-          </div>
+    <section id="testimonials" className="px-4 py-24 md:px-12 md:py-32">
+      <SectionHead eyebrow={t.eyebrow} title={t.title} sub={t.sub} />
+      <Reveal className="mt-12 grid gap-4 md:mt-16 md:grid-cols-2 md:gap-6">
+        {testimonials.slice(0, 2).map((q, i) => (
+          <figure key={i} data-reveal className="flex h-full flex-col justify-between gap-10 rounded-[28px] border border-ink/10 bg-card p-6 md:p-10">
+            <blockquote className="text-[clamp(20px,1.9vw,28px)] leading-[1.35] font-medium tracking-[-0.02em] text-ink">“{q.quote}”</blockquote>
+            <figcaption className="flex items-center gap-4">
+              <Media src={q.photo} alt="" label="" tint={q.tint} className="size-16 shrink-0 rounded-[16px]" sizes="64px" />
+              <span>
+                <span className="block text-[16px] font-bold text-ink">{q.name}</span>
+                <span className="block text-[14px] text-ink-2">{q.role}</span>
+              </span>
+            </figcaption>
+          </figure>
         ))}
       </Reveal>
     </section>

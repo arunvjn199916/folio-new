@@ -35,9 +35,9 @@ void main(){
   q = mat2(cos(a), -sin(a), sin(a), cos(a)) * q;
   float n = fbm(q + vec2(fbm(q + t*0.4), fbm(q - t*0.3)) * 1.6);
 
-  vec3 cyan = vec3(0.37, 0.91, 0.97);
-  vec3 blue = vec3(0.24, 0.42, 1.0);
-  vec3 magenta = vec3(0.93, 0.23, 0.94);
+  vec3 cyan = vec3(1.0, 0.94, 0.58);   // champagne
+  vec3 blue = vec3(0.86, 0.01, 0.03);  // crimson
+  vec3 magenta = vec3(0.42, 0.02, 0.06); // black red
   vec3 col = mix(cyan, blue, smoothstep(0.25, 0.65, n));
   col = mix(col, magenta, smoothstep(0.55, 0.85, n + uv.y*0.35 - uv.x*0.2));
   col = mix(col, vec3(1.0), smoothstep(0.2, 0.0, r) * 0.25);   // soft core light

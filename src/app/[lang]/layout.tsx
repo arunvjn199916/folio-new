@@ -1,7 +1,5 @@
 import type { Metadata, Viewport } from "next";
 import { Geist, Manrope, Instrument_Serif, Caveat, DM_Mono, Noto_Sans_Tamil, Noto_Sans_Devanagari, Atkinson_Hyperlegible_Next } from "next/font/google";
-import { Grainient } from "@/components/global/Grainient";
-import { DotGlow } from "@/components/global/DotGlow";
 import { SmoothScroll } from "@/components/global/SmoothScroll";
 import { Nav } from "@/components/global/Nav";
 import { PageProgress } from "@/components/global/PageProgress";
@@ -75,8 +73,6 @@ export default async function RootLayout({ children }: LayoutProps<"/[lang]">) {
           <a href="#main" className="skip-link">
             {dict.ui.skipToContent}
           </a>
-          <Grainient />
-          <DotGlow />
           <SmoothScroll />
           <Loader />
           <Nav />

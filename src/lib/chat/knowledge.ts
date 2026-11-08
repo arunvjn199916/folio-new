@@ -1,5 +1,5 @@
 import "server-only";
-import { profile, hero, about, principles } from "@/content/profile";
+import { profile, hero, about, crawl } from "@/content/profile";
 import { roles } from "@/content/experience";
 import { projects } from "@/content/projects";
 import { skillPills, toolGroups, process, education } from "@/content/skills";
@@ -17,9 +17,9 @@ function knowledge() {
     `LOCATION: ${profile.location}`,
     `CONTACT: email ${profile.email}; LinkedIn ${profile.links.linkedin}; Behance ${profile.links.behance}; resume download on the site (Resume button).`,
     `SUMMARY: ${text(hero.bio)}`,
-    `POSITIONING: An AI-first product designer for regulated finance — designs AI people can trust with their money, built so engineering can ship it. ${hero.sub}`,
+    `POSITIONING: Engineer turned AI-first product designer. ${hero.sub}`,
     `ABOUT: ${about.greeting} ${about.paragraphs.map(text).join(" ")}`,
-    `DESIGN PRINCIPLES: ${principles.items.map((p) => `${p.lead} ${p.rest}`).join(" ")}`,
+    `STORY: ${crawl.paragraphs.join(" ")}`,
     `FOCUS AREAS: ${hero.marquee.join(", ")}`,
     "",
     "EXPERIENCE:",

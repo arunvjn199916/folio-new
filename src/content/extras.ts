@@ -2,24 +2,22 @@
 export const showTestimonials = false;
 
 // Placeholder quotes — replace with real recommendations.
+// Two recommendations with a photo each (reference: client tiles → testimonial cards).
+// Placeholders until Arun sends real quotes — the section stays hidden while showTestimonials is false.
 export const testimonials = [
   {
-    quote: "Arun brings rare clarity to messy enterprise problems — he'll prototype three directions before most people finish the brief.",
-    name: "Colleague Name",
-    role: "Product Manager, Congruent",
-    tint: "#cdb8ff",
+    quote: "Real recommendation goes here — waiting for the quote from Arun.",
+    name: "Recommender name",
+    role: "Role, Company",
+    photo: "testimonials/person-1.webp",
+    tint: "linear-gradient(135deg,#3a0207,#dc0208)",
   },
   {
-    quote: "Our design system finally felt like one product. Arun sweated the details engineering usually has to chase.",
-    name: "Colleague Name",
-    role: "Engineering Lead, Euroland IR",
-    tint: "#a8d8ff",
-  },
-  {
-    quote: "He speaks both designer and developer, which made every handoff feel like a conversation instead of a ticket.",
-    name: "Colleague Name",
-    role: "Developer, Embarckle",
-    tint: "#ffb6d9",
+    quote: "Real recommendation goes here — waiting for the quote from Arun.",
+    name: "Recommender name",
+    role: "Role, Company",
+    photo: "testimonials/person-2.webp",
+    tint: "linear-gradient(135deg,#6b4a08,#ffef93)",
   },
 ];
 

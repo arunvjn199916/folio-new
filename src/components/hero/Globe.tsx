@@ -88,12 +88,14 @@ export function Globe({ progress, still = false, className, label }: Props) {
     let litSprite = makeSprite(lit, 40);
     let rimHi: [number, number, number] = [255, 90, 79];
     let paper: [number, number, number] = [16, 0, 1];
+    let glow = 1;
     const readColors = () => {
       dot = readRgb("--c-globe-dot", "247 241 227");
       lit = readRgb("--c-globe-lit", "255 239 147");
       rim = readRgb("--c-globe-rim", "220 2 8");
       rimHi = readRgb("--c-globe-rim-hi", "255 90 79");
       paper = readRgb("--c-globe-body", "16 0 1");
+      glow = Number(getComputedStyle(document.documentElement).getPropertyValue("--c-globe-glow").trim() || 1);
       litSprite = makeSprite(lit, 40);
     };
     readColors();
@@ -199,10 +201,11 @@ export function Globe({ progress, still = false, className, label }: Props) {
       // planet body: darker than space, lit towards the rim
       const fade = 1 - gather * 0.85;
       const body = ctx.createRadialGradient(cx - R * 0.25, cy - R * 0.3, R * 0.05, cx, cy, R);
-      body.addColorStop(0, `rgba(${rim.join(",")},0.14)`);
+      // light theme starts from the body colour (crimson → cream would interpolate through pink)
+      body.addColorStop(0, glow < 1 ? `rgba(${paper.join(",")},0.6)` : `rgba(${rim.join(",")},0.14)`);
       body.addColorStop(0.55, `rgba(${paper.join(",")},0.92)`);
       body.addColorStop(0.93, `rgba(${paper.join(",")},0.86)`);
-      body.addColorStop(1, `rgba(${rim.join(",")},0.35)`);
+      body.addColorStop(1, `rgba(${rim.join(",")},${0.35 * glow})`);
       ctx.globalAlpha = fade;
       ctx.fillStyle = body;
       ctx.beginPath();
@@ -215,7 +218,7 @@ export function Globe({ progress, still = false, className, label }: Props) {
         [14, 0.18],
         [5, 0.4],
       ] as const) {
-        ctx.globalAlpha = a * fade;
+        ctx.globalAlpha = a * fade * glow;
         ctx.strokeStyle = `rgb(${rim.join(",")})`;
         ctx.lineWidth = w;
         ctx.beginPath();
@@ -269,7 +272,7 @@ export function Globe({ progress, still = false, className, label }: Props) {
         const sy = litList[k + 1];
         const z = litList[k + 2];
         const g = 16 + z * 8;
-        ctx.globalAlpha = 0.55 + 0.35 * z;
+        ctx.globalAlpha = (0.55 + 0.35 * z) * glow;
         ctx.drawImage(litSprite, sx - g / 2, sy - g / 2, g, g);
         ctx.globalAlpha = 1;
         ctx.fillStyle = `rgb(${lit.join(",")})`;

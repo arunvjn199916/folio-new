@@ -1,26 +1,28 @@
 import { Hero } from "@/components/sections/Hero";
-import { Shift } from "@/components/sections/Shift";
 import { About } from "@/components/sections/About";
 import { Work } from "@/components/sections/Work";
+import { Archive } from "@/components/sections/Archive";
+import { CaseStudies } from "@/components/sections/CaseStudies";
 import { Experience } from "@/components/sections/Experience";
-import { Skills } from "@/components/sections/Skills";
-import { Toolkit } from "@/components/sections/Toolkit";
+import { Crawl } from "@/components/sections/Crawl";
+import { HowIWork } from "@/components/sections/HowIWork";
 import { Testimonials } from "@/components/sections/Testimonials";
 import { Contact } from "@/components/sections/Contact";
-import { Principles } from "@/components/sections/Principles";
 import { showTestimonials } from "@/content/extras";
 
+// v2 home, in the reference's order: hero → about → projects → archive → case studies →
+// experience → story crawl → how I work → testimonials (once real) → contact.
 export default function Home() {
   return (
     <>
       <Hero />
-      <Shift />
-      <Work />
-      <Experience />
-      <Principles />
-      <Skills />
-      <Toolkit />
       <About />
+      <Work />
+      <Archive />
+      <CaseStudies />
+      <Experience />
+      <Crawl />
+      <HowIWork />
       {showTestimonials && <Testimonials />}
       <Contact />
     </>

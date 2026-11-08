@@ -142,7 +142,7 @@ export function ChatWidget() {
             transition={{ type: "spring", stiffness: 380, damping: 26 }}
             onClick={() => setOpen(true)}
             aria-label={t.fab}
-            className="group fixed bottom-4 left-4 z-50 flex items-center gap-2 rounded-full border border-surface/80 bg-surface/90 p-1.5 pr-1.5 shadow-[0_12px_30px_-10px_rgba(61,107,255,0.45)] transition-[padding] duration-300 hover:pr-4"
+            className="group fixed bottom-4 left-4 z-50 flex items-center gap-2 rounded-full border border-ink/15 bg-paper/80 p-1.5 pr-1.5 shadow-[0_12px_30px_-10px_rgba(220,2,8,0.45)] backdrop-blur-xl transition-[padding] duration-300 hover:pr-4"
           >
             <Orb size={44} />
             <span className="max-w-0 overflow-hidden text-[13px] font-medium whitespace-nowrap text-ink transition-[max-width] duration-300 group-hover:max-w-[160px]">

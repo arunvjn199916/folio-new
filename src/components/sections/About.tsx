@@ -1,80 +1,57 @@
 import Image from "next/image";
-import { ArrowUpRight, Mail } from "lucide-react";
-import { getDictionary } from "@/i18n/server";
-import { RichText, ExternalLink } from "@/components/ui/Text";
+import Link from "next/link";
+import { ArrowRight, ArrowUpRight } from "lucide-react";
+import { getDictionary, getLocale } from "@/i18n/server";
+import { localePath } from "@/i18n/config";
 import { img } from "@/content/images";
-import { CopyEmail } from "./AboutClient";
 import { BlurHeading, Reveal } from "@/components/ui/Motion";
 
 /*
-  v2 about (reference: the agency block): portrait behind a dot-matrix screen on one side;
-  eyebrow, the "engineer first" headline, the story, companies and actions on the other.
+  v2 home About (reference: eezyinn /agency/ hero "WE ARE EEZY INN."). A rounded dark
+  panel with the portrait full-bleed behind a dark wash; name, one line, companies and
+  "Know more" → the full About page. Dark in both themes, like the reference.
 */
 export async function About() {
-  const { about, profile, ui } = await getDictionary();
+  const { aboutPage, about, profile, ui } = await getDictionary();
+  const locale = await getLocale();
   const portrait = img("about-portrait.webp");
 
   return (
-    <section id="about" className="relative px-4 py-24 md:px-12 md:py-32">
-      <div className="grid items-center gap-12 md:grid-cols-[minmax(0,0.85fr)_minmax(0,1.15fr)] md:gap-16 xl:gap-24">
-        {/* portrait */}
-        <Reveal className="relative">
-          <div data-reveal className="group relative aspect-[4/5] overflow-hidden rounded-[28px] border border-ink/10 bg-card">
-            {portrait && (
-              <Image
-                src={portrait}
-                alt={profile.name}
-                fill
-                sizes="(max-width: 768px) 100vw, 40vw"
-                className="object-cover grayscale-[35%] transition-[filter,transform] duration-700 group-hover:scale-[1.03] group-hover:grayscale-0"
-              />
-            )}
-            {/* dot-matrix screen + brand wash */}
-            <span aria-hidden className="absolute inset-0 bg-[radial-gradient(color-mix(in_srgb,var(--c-paper)_70%,transparent)_1.1px,transparent_1.5px)] [background-size:6px_6px] opacity-70 mix-blend-multiply transition-opacity duration-700 group-hover:opacity-30" />
-            <span aria-hidden className="absolute inset-0 bg-[linear-gradient(180deg,transparent_45%,color-mix(in_srgb,var(--c-crimson)_35%,transparent))]" />
-            <span className="absolute bottom-4 left-4 flex items-center gap-2 rounded-full border border-white/20 bg-black/40 px-3 py-1.5 font-mono text-[11px] tracking-[0.12em] text-white uppercase backdrop-blur">
-              <span className="size-1.5 rounded-full bg-[#ffef93]" /> {profile.location}
-            </span>
-          </div>
-        </Reveal>
+    <section id="about" className="px-4 py-12 md:px-12 md:py-20">
+      <div className="dark-stage relative isolate flex min-h-[78svh] overflow-hidden rounded-[32px] bg-night text-on-night md:rounded-[48px]">
+        {portrait && (
+          <Image src={portrait} alt="" fill sizes="100vw" className="-z-20 object-cover object-[70%_30%] grayscale-[45%]" />
+        )}
+        {/* dark wash + brand glow so text always sits on a dark field */}
+        <span aria-hidden className="absolute inset-0 -z-10 bg-[linear-gradient(90deg,rgba(10,0,1,0.96)_0%,rgba(10,0,1,0.86)_38%,rgba(10,0,1,0.35)_75%,rgba(10,0,1,0.15)_100%)] max-md:bg-[linear-gradient(0deg,rgba(10,0,1,0.97)_0%,rgba(10,0,1,0.85)_55%,rgba(10,0,1,0.3)_100%)]" />
+        <span aria-hidden className="absolute -bottom-40 -left-20 -z-10 h-[480px] w-[640px] rounded-full bg-[radial-gradient(closest-side,rgba(220,2,8,0.35),transparent)] blur-2xl" />
 
-        {/* story */}
-        <div>
+        <div className="relative mt-auto w-full max-w-[720px] p-6 md:p-14">
           <p className="eyebrow flex items-center gap-2">
-            <span className="size-1.5 rounded-full bg-accent shadow-[0_0_8px_rgb(var(--c-globe-lit)/0.8)]" />
+            <span className="size-1.5 rounded-full bg-[#ffef93] shadow-[0_0_8px_rgba(255,239,147,0.8)]" />
             {ui.about.tape}
           </p>
-          <BlurHeading className="display-m mt-4 max-w-[16ch] text-ink">{about.greeting}</BlurHeading>
-          <Reveal className="mt-8 max-w-[600px] space-y-4 text-[16px] leading-[1.65] text-ink-2 md:text-[17px]">
-            {about.paragraphs.map((p, i) => (
-              <p key={i} data-reveal>
-                <RichText segments={p} highlightClass="font-semibold text-ink" />
-              </p>
-            ))}
-          </Reveal>
-
-          <div className="mt-10 border-t border-ink/10 pt-6">
-            <p className="eyebrow">{ui.about.workedWith}</p>
-            <ul className="mt-4 flex flex-wrap gap-2">
+          <BlurHeading className="display-l mt-4">{aboutPage.title}</BlurHeading>
+          <Reveal>
+            <p data-reveal className="mt-5 max-w-[540px] text-[17px] leading-[1.55] text-on-night/80 md:text-[20px]">
+              {aboutPage.line}
+            </p>
+            <ul data-reveal className="mt-8 flex flex-wrap gap-2">
               {about.workedWith.map((c) => (
-                <li key={c} className="rounded-full border border-ink/15 px-4 py-2 text-[13px] font-bold tracking-[0.02em] text-ink uppercase">
+                <li key={c} className="rounded-full border border-on-night/20 px-3.5 py-1.5 text-[12px] font-bold tracking-[0.04em] uppercase">
                   {c}
                 </li>
               ))}
             </ul>
-          </div>
-
-          <div className="mt-8 flex flex-wrap items-center gap-3">
-            <a href={profile.links.resume} target="_blank" rel="noopener" className="btn-accent">
-              {ui.nav.resume} <ArrowUpRight size={18} strokeWidth={2.4} />
-            </a>
-            <ExternalLink href={profile.links.linkedin} className="btn-outline">
-              LinkedIn <ArrowUpRight size={18} />
-            </ExternalLink>
-            <CopyEmail email={profile.email} label={ui.about.copyEmail} copiedLabel={ui.about.copied}>
-              <Mail size={15} />
-            </CopyEmail>
-          </div>
+            <div data-reveal className="mt-8 flex flex-wrap gap-3">
+              <Link href={localePath(locale, "/about")} className="btn-accent !bg-[#ffef93] !text-[#100001]">
+                {aboutPage.more} <ArrowRight size={18} strokeWidth={2.4} />
+              </Link>
+              <a href={profile.links.resume} target="_blank" rel="noopener" className="btn-outline !border-on-night/30 !bg-transparent !text-on-night hover:!border-on-night">
+                {ui.nav.resume} <ArrowUpRight size={18} />
+              </a>
+            </div>
+          </Reveal>
         </div>
       </div>
     </section>

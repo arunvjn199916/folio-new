@@ -11,21 +11,21 @@
   /* v2 palette — brand colours: black red #100001, crimson #dc0208, champagne #ffef93.
      Light theme: champagne cream page, black-red text, crimson accent. */
   color-scheme: light;
-  --c-paper: #fbf6e9; /* page background */
+  --c-paper: #f6f1e7; /* page background */
   --c-ink: #100001;
-  --c-ink-2: #5a3a38;
-  --c-ink-3: #7a5e5a;
+  --c-ink-2: #4a2b29;
+  --c-ink-3: #6e5450;
   --c-line: rgba(16, 0, 1, 0.12);
   --c-card: #ffffff; /* solid cards */
-  --c-surface: #fffdf6; /* translucent panels use surface/NN */
-  --c-surface-3: #f3ead2; /* chips, subtle fills */
-  --c-on-ink: #fbf6e9; /* text on ink-filled buttons */
+  --c-surface: #fffcf5; /* translucent panels use surface/NN */
+  --c-surface-3: #eee5d3; /* chips, subtle fills */
+  --c-on-ink: #f6f1e7; /* text on ink-filled buttons */
   --c-night: #100001; /* the dark bands (skills, tools, journey) */
   --c-on-night: #f7f1e3;
   --c-note: #fffbea; /* handwritten note paper */
   --c-photo: #ffffff; /* polaroid / window frames */
   --c-on-photo: #5a3a38;
-  --c-loader: #fbf6e9;
+  --c-loader: #f6f1e7;
   --c-dot: rgba(16, 0, 1, 0.12);
   --c-glow: 220 2 8; /* rgb triplet for the cursor dot glow */
   --c-grain-1: #ffef93;
@@ -38,19 +38,20 @@
   --c-highlight: #ffef93;
 
   /* brand */
-  --c-accent: #dc0208; /* CTA pills, active dots, active nav */
+  --c-accent: #c40007; /* CTA pills, active dots, active nav (6.1:1 on paper) */
   --c-on-accent: #ffffff;
   --c-crimson: #dc0208; /* glows, fills, large display words */
   --c-crimson-text: #b8000a; /* AA-safe red text */
   --c-champagne: #ffef93;
-  --c-space-1: #fbf6e9; /* hero / colour-bleed gradient */
-  --c-space-2: #ffe7c2;
-  --c-space-3: #ffc9bd;
-  --c-globe-dot: 16 0 1; /* rgb triplets read by the globe canvas */
-  --c-globe-lit: 220 2 8;
-  --c-globe-rim: 220 2 8;
-  --c-globe-rim-hi: 220 2 8;
-  --c-globe-body: 255 250 236;
+  --c-space-1: #f6f1e7; /* hero / colour-bleed gradient */
+  --c-space-2: #f8e6c4;
+  --c-space-3: #f2c7b8;
+  --c-globe-dot: 74 43 41; /* rgb triplets read by the globe canvas */
+  --c-globe-lit: 196 0 7;
+  --c-globe-rim: 196 0 7;
+  --c-globe-rim-hi: 196 0 7;
+  --c-globe-body: 252 248 239;
+  --c-globe-glow: 0.35; /* light theme: crisp rim, no pink haze */
 
   /* legacy pastel names, remapped into the brand family */
   --c-sky: #ffd9c9;
@@ -112,6 +113,7 @@
   --c-globe-rim: 220 2 8;
   --c-globe-rim-hi: 255 110 96;
   --c-globe-body: 12 0 1;
+  --c-globe-glow: 1;
 
   --c-sky: #f2b8a0;
   --c-pink: #ff4d4f;
@@ -194,23 +196,20 @@ body {
   overflow-x: clip;
 }
 
-/* Pixel cursors (our own art, same idea as the Shalmali reference) */
-@media (hover: hover) and (pointer: fine) {
-  html,
-  body {
-    cursor: url("/cursors/arrow.svg") 1 1, auto;
-  }
-  a,
-  button,
-  [role="button"],
-  label,
-  summary,
-  .cursor-hand {
-    cursor: url("/cursors/hand.svg") 11 1, pointer;
-  }
-  .cursor-grab {
-    cursor: url("/cursors/grab.svg") 16 16, grab;
-  }
+/* Fine film grain over the flat page colour (replaces v1's animated gradient). */
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 .55 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  opacity: 0.06;
+}
+:root[data-theme="dark"] body::before {
+  opacity: 0.09;
+  mix-blend-mode: screen;
+  filter: invert(1);
 }
 
 ::selection {

@@ -50,15 +50,15 @@ export const toolGroups: { label: string; tools: Tool[] }[] = [
 
 export const tools: Tool[] = toolGroups.flatMap((g) => g.tools);
 
-export const process = ["Discover", "Define", "Design", "Validate", "Deliver"];
+// v2 "How I work" (reference: "FROM BOTTLENECK TO RESULT.").
+export const process = ["Discover", "Define", "Design & prototype", "Ship & learn"];
 
 /** One line per process step (same order as `process`). */
 export const processNotes = [
-  "Interviews, UX audits and the legacy screens nobody wants to touch.",
+  "Interviews, UX audits and time with the screens people use every day.",
   "Journeys, information architecture and the one question the design must answer.",
-  "Flows, systems and AI patterns — citations, confirmations, undo.",
-  "Real-code prototypes with Claude & Cursor, tested with users in days.",
-  "Specs, tokens and design QA, side by side with engineering.",
+  "Flows, systems and AI patterns — prototyped in real code with Claude & Cursor, tested with users in days.",
+  "Specs, tokens and design QA beside engineering, then back to users to see what to improve.",
 ];
 
 export const education = [

@@ -88,7 +88,7 @@ export function Hero() {
       const scrub = { trigger: sec, start: "top top", end: "bottom bottom", scrub: 0.4 };
       const tl = gsap.timeline({ scrollTrigger: scrub, defaults: { ease: "none" } });
       // timeline length = 1 so positions read as scroll progress
-      tl.to(q(".hero-a"), { opacity: 0.22, duration: 0.18 }, 0.12)
+      tl.to(q(".hero-a"), { opacity: 0.45, duration: 0.18 }, 0.12) // stays ≥3:1 for large text
         .to(q(".hero-text"), { yPercent: -4, duration: 0.6 }, 0.3)
         .to(q(".hero-bleed"), { opacity: 1, duration: 0.25 }, 0.72)
         .set({}, {}, 1);
@@ -107,7 +107,7 @@ export function Hero() {
     <section ref={root} id="top" className={cn("relative", still ? "h-svh" : "h-[260vh] md:h-[230vh]")}>
       <div className="sticky top-0 h-svh overflow-hidden">
         {/* space backdrop + end-of-section colour bleed */}
-        <div aria-hidden className="absolute inset-0 bg-[radial-gradient(120%_80%_at_70%_110%,var(--c-space-3)_0%,var(--c-space-2)_35%,transparent_70%)] opacity-60" />
+        <div aria-hidden className="absolute inset-0 bg-[radial-gradient(120%_80%_at_70%_110%,var(--c-space-3)_0%,var(--c-space-2)_35%,transparent_70%)] opacity-60 [:root:not([data-theme=dark])_&]:opacity-30" />
         <div aria-hidden className="hero-bleed absolute inset-0 bg-[radial-gradient(80%_60%_at_68%_50%,color-mix(in_srgb,var(--c-space-3)_55%,transparent),transparent_75%)] opacity-0" />
 
         <div className="hero-globe absolute inset-0">
@@ -165,9 +165,9 @@ export function Hero() {
           </h1>
 
           <div data-hide className="invisible mt-auto flex flex-col gap-6 md:flex-row md:items-end md:justify-between">
-            <div className="hero-fade max-w-[560px]">
+            <div className="hero-fade max-w-[660px]">
               <p className="[text-shadow:0_1px_14px_var(--c-paper)] text-[16px] leading-[1.45] tracking-[-0.01em] text-ink md:text-[clamp(17px,1.3vw,21px)]">{hero.sub}</p>
-              <dl className="mt-5 flex flex-wrap gap-x-6 gap-y-2">
+              <dl className="mt-5 flex flex-wrap gap-x-5 gap-y-2 md:flex-nowrap">
                 {hero.stats.map((st) => (
                   <div key={st.label} className="flex items-baseline gap-2">
                     <dt className="sr-only">{st.label}</dt>

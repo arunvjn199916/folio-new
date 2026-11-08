@@ -174,7 +174,7 @@ export function Contact() {
 
         {/* giant wordmark */}
         <div aria-hidden className="relative overflow-hidden px-4 md:px-8">
-          <div className="ct-word relative font-display leading-[1] font-extrabold text-on-night/[0.08]">
+          <div className="ct-word relative font-display leading-[1] font-extrabold text-on-night">
             <FitText className="-mb-[0.18em] tracking-[-0.06em] lowercase">{profile.name}</FitText>
             <span className="absolute top-[6%] right-[1.5%] size-[2.2vw] min-h-3 min-w-3 rounded-full bg-[#ffef93] shadow-[0_0_40px_10px_rgba(255,239,147,0.45)]" />
           </div>

@@ -1,4 +1,4 @@
-import { profile, hero, shift, principles, hire, about, greetings, contact } from "@/content/profile";
+import { profile, hero, hire, about, aboutPage, crawl, greetings, contact } from "@/content/profile";
 import { projects, projectFilters } from "@/content/projects";
 import { experienceIntro, roles } from "@/content/experience";
 import { skillPills, toolGroups, process, processNotes, education } from "@/content/skills";
@@ -10,9 +10,9 @@ import { testimonials, aiWorkflow } from "@/content/extras";
 export const en = {
   profile: { ...profile },
   hero,
-  shift,
-  principles,
   hire,
+  aboutPage,
+  crawl,
   about,
   greetings,
   contact,
@@ -39,7 +39,7 @@ export const en = {
     nav: { about: "About", work: "Work", journey: "Journey", contact: "Contact", aiWorkflow: "AI Workflow", resume: "Resume", menu: "Open menu", primary: "Primary", letsTalk: "Let's talk", closeMenu: "Close menu", menuEyebrow: "Menu", megaConceptsEyebrow: "Self-initiated", megaConcepts: "Case studies", megaClientEyebrow: "Shipped at work", megaClient: "Client work", megaAura: "Aura design system", megaAuraSub: "63 components · live docs", allWork: "All work" },
     theme: { label: "Theme", system: "System", light: "Light", dark: "Dark", toggle: "Switch theme" },
     language: { label: "Language", change: "Change language" },
-    hero: { builderStack: "My builder stack", wordmark: "PRODUCT DESIGNER", penHint: "↖ HOVER THE LETTERS · DRAG A POINT TO RESHAPE", reset: "RESET", portraitAlt: profile.name, talk: "Let's talk", viewWork: "View work", city: "Chennai", users: "Users", trusted: "Trusted", before: "AI · before design", after: "AI · after design", drag: "Drag to rotate", globeLabel: "A globe of users that light up as they come to trust the product" },
+    hero: { builderStack: "My builder stack", wordmark: "PRODUCT DESIGNER", penHint: "↖ HOVER THE LETTERS · DRAG A POINT TO RESHAPE", reset: "RESET", portraitAlt: profile.name, talk: "Let's talk", viewWork: "View work", city: "Chennai", users: "Ideas", trusted: "Shipped", before: "Status · sketching", after: "Status · shipped", drag: "Drag to rotate", globeLabel: "A globe of ideas that light up as they ship" },
     about: {
       tape: "ABOUT ME",
       workedWith: "Worked with",
@@ -59,6 +59,9 @@ export const en = {
       fixingBugs: "FIXING BUGS",
       folder: { name: "UI archive", items: "items · click to open", open: "Open the UI archive", close: "Close the UI archive", screen: "Screen" },
     },
+    caseStudies: { eyebrow: "Case studies", title: "Self-initiated, end to end.", sub: "Concept products where I owned everything — research, strategy, flows, UI and the test plan.", read: "Read case", viewAll: "View all case studies", allTitle: "All case studies.", allSub: "Four concept products and one design system — each written up from problem to prototype." },
+    archive: { eyebrow: "Archive", title: "Screens from the drawer.", sub: "Explorations, side quests and details that didn't make a case study. Open the folder." },
+    projects: { eyebrow: "Projects", title: "Shipped work.", sub: "Products I designed and shipped with teams at Congruent Solutions and Euroland IR, plus tools of my own." },
     experience: { location: "Location", beforeLabel: "Design & engineering · the foundation", afterLabel: "Product design · AI-first", marker: "AI", nextTitle: "What's next", nextSub: "Open to relocation · GCC & remote", nextWhen: "2026 →" },
     skills: { eyebrow: "Skills", title: "What I bring.", hint: "Grab a pill and throw it." },
     tools: {
@@ -66,7 +69,7 @@ export const en = {
       title: "Tools I ship with.",
       sub: "AI to think and prototype, Figma to design, real code to prove it works.",
     },
-    processCard: { title: "My process", heading: "From research to release.", line: "Research to release — AI in every phase to think faster, and real-code prototypes to prove it." },
+    processCard: { title: "How I work", heading: "From idea to shipped.", line: "Research to release — AI in every phase to think faster, and real-code prototypes to prove it." },
     educationCard: { title: "Education & training" },
     testimonialsUi: { eyebrow: "Recommendations", title: "what people say about me", sub: "A few words from people I've designed, shipped and solved problems with." },
     contactUi: { email: "Email", social: "Social", location: "Location", emailMe: "Email me", resume: "Download résumé", pages: "Pages", elsewhere: "Elsewhere", backTop: "Back to top", copyright: `© 2026 ${profile.name} · Designed & built with Claude + Cursor`, clipAlt: `${profile.name} on a bench in a mountain valley` },

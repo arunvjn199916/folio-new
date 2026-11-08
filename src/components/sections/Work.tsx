@@ -1,15 +1,13 @@
 import Link from "next/link";
 import { ArrowRight, ArrowUpRight } from "lucide-react";
-import { archive } from "@/content/projects";
 import { getDictionary, getLocale } from "@/i18n/server";
 import { localePath } from "@/i18n/config";
 import { Media } from "@/components/ui/Placeholder";
 import { img } from "@/content/images";
 import { SectionHead } from "@/components/ui/SectionHead";
 import { WorkGrid } from "./WorkGrid";
-import { PrismFolderMount } from "./PrismFolderMount";
 
-const FEATURED = "kairo-ai-personal-assistant";
+const FEATURED = "aura-design-system";
 
 /*
   v2 work section (reference: "PROJECTS."): a large featured-case card, then a project
@@ -21,9 +19,11 @@ export async function Work() {
   const { projects, projectFilters, ui } = await getDictionary();
   const locale = await getLocale();
   const t = ui.work;
+  const head = ui.projects;
   const link = (p: (typeof projects)[number]) => localePath(locale, p.href ?? `/work/${p.slug}`);
   const featured = projects.find((p) => p.slug === FEATURED) ?? projects[0];
-  const rest = projects.filter((p) => p.slug !== featured.slug);
+  // Projects = shipped / own work; concept studies live in the Case studies section.
+  const rest = projects.filter((p) => p.slug !== featured.slug && p.audience !== "Concept");
 
   const rows = rest.map((p, i) => ({
     slug: p.slug,
@@ -59,11 +59,9 @@ export async function Work() {
     ),
   }));
 
-  const windows = archive.map((a) => ({ ...a, src: img(a.src) }));
-
   return (
     <section id="work" className="relative px-4 py-24 md:px-12 md:py-32">
-      <SectionHead eyebrow={t.eyebrow} title={t.title} sub={t.sub} />
+      <SectionHead eyebrow={head.eyebrow} title={head.title} sub={head.sub} />
 
       {/* Featured case */}
       <Link
@@ -100,7 +98,6 @@ export async function Work() {
       </Link>
 
       <WorkGrid filters={Object.entries(projectFilters).map(([id, label]) => ({ id, label }))} rows={rows} ariaLabel={t.filterLabel} indexLabel={t.index} />
-      <PrismFolderMount windows={windows} labels={t.folder} />
     </section>
   );
 }

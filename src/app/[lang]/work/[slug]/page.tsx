@@ -117,6 +117,8 @@ export default async function CaseStudyPage({ params }: PageProps<"/[lang]/work/
           "--case-tint": study.brand.tint,
           "--case-band": study.brand.band,
           "--case-accent": study.brand.accent,
+          // text-safe variant: pulled toward the theme ink so it clears 4.5:1 in both themes
+          "--case-accent-text": `color-mix(in srgb, ${study.brand.accent} 62%, var(--c-ink))`,
         } as React.CSSProperties
       }
     >

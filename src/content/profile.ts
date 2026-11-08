@@ -39,13 +39,13 @@ export const profile: Profile = {
 
 export const hero = {
   // v2 hero: two uppercase statements over the globe (statement one dims on scroll).
-  eyebrow: "AI-first product designer · FinTech & enterprise SaaS · Chennai",
+  eyebrow: "AI-first product designer · Chennai, India",
   status: "Available for full-time roles — GCC & remote",
   statements: [
-    ["Arun Vijayan.", "Product designer."],
-    ["I design AI", "you can bank on."],
+    ["Hi, I'm", "Arun Vijayan."],
+    ["Engineer turned", "designer."],
   ],
-  sub: "I design AI search, voice and agentic workflows for US 401(k) platforms at Congruent Solutions — with citations, confirmations and fallbacks built in. Former engineer: I prototype in real code with Claude & Cursor.",
+  sub: "Product designer with 5+ years in enterprise SaaS and FinTech. I shape AI search, voice and agentic experiences for US retirement platforms at Congruent Solutions — and prototype them in real code with Claude & Cursor.",
   lead: "I'm Arun Vijayan, a product designer who",
   words: [
     { text: "designs agentic AI experiences.", color: "var(--c-violet)" },
@@ -61,8 +61,8 @@ export const hero = {
   stack: ["Figma", "Claude", "Claude Code", "Cursor", "Framer", "Miro", "Notion", "Adobe XD"],
   stats: [
     { value: 5, suffix: "+", label: "Years in design" },
-    { value: 35, suffix: "%", label: "Faster AI search queries" },
     { value: 500, suffix: "+", label: "Beta users in 6 weeks" },
+    { value: 4.2, suffix: "/5", label: "User satisfaction" },
   ],
   marquee: [
     "Agentic AI",
@@ -77,39 +77,6 @@ export const hero = {
     "WCAG 2.2",
   ],
   polaroidCaption: "Based in Chennai, TN",
-};
-
-// v2 "before / after" line section (right after the hero).
-export const shift = {
-  eyebrow: "Where AI loses people",
-  title: "AI fails quietly in two places.",
-  start: "Question",
-  marker: "Answer",
-  end: "Action",
-  before: {
-    label: "Before the answer",
-    title: "People can't find what the AI can do.",
-    chips: ["AI search", "Command bar", "Voice"],
-    cta: "AI search for investor relations",
-    href: "/work/ai-search-investor-relations",
-  },
-  after: {
-    label: "After the answer",
-    title: "People don't trust what it did.",
-    chips: ["Citations", "Confirmations", "Fallbacks"],
-    cta: "Agentic AI participant portal",
-    href: "/work/agentic-ai-participant-portal",
-  },
-};
-
-// v2 "stance" section: short principles revealed one at a time.
-export const principles = {
-  eyebrow: "How I design AI",
-  items: [
-    { lead: "Not every AI feature", rest: "needs a chat box." },
-    { lead: "Not every answer", rest: "should be trusted without a source." },
-    { lead: "Not every action", rest: "should happen without a way back." },
-  ],
 };
 
 // v2 "hire" rows above the footer.
@@ -145,6 +112,51 @@ export const about = {
     ],
   ]),
   workedWith: ["Congruent Solutions", "Euroland IR", "Embarckle", "Apexs Automation"],
+};
+
+// v2 About page (reference: eezyinn /agency/). Home uses `hero` + the first statement.
+export const aboutPage = {
+  eyebrow: "Arun Vijayan / About",
+  title: "I'm Arun Vijayan.",
+  line: "AI-first product designer from Chennai. I design products people understand — and I build the prototypes myself.",
+  more: "Know more",
+  seeWork: "See my work",
+  statement: {
+    title: "A designer who speaks engineer.",
+    body: [
+      "I started out writing code — client web apps, specs that QA could test and engineers could build. Then I retrained in design and technology, and never looked back.",
+      "That mix is my favourite tool. I can sit with users in the morning, map the system at noon and hand engineering a working prototype by evening.",
+    ],
+  },
+  companies: { eyebrow: "Who I've worked with", title: "Four teams. One thread." },
+  toolbox: { eyebrow: "Toolbox", title: "The tools on my desk." },
+  dna: {
+    eyebrow: "Design DNA",
+    title: "Logic and craft, in one head.",
+    body: "Graphic design gave me the eye, engineering gave me the logic, and enterprise SaaS taught me patience. Today I bring all three to AI products — clear flows, honest states and details that hold up in code.",
+  },
+  base: {
+    eyebrow: "Base",
+    title: "Chennai. For now.",
+    body: "Open to full-time roles in the UAE, Oman, Saudi Arabia & GCC — or remote. English (fluent), Tamil (native).",
+  },
+  enough: { title: "Enough about me.", body: "My work says the most." },
+};
+
+// v2 story crawl (reference: the agency page's "Episode IV" crawl).
+export const crawl = {
+  intro: "A long time ago, in a design studio in Chennai…",
+  episode: "Episode V",
+  title: "A new designer",
+  paragraphs: [
+    "It began with logos — brand systems for six B2B clients in Chennai.",
+    "Then came code: Python, client web apps, and specs that engineering and QA could trust.",
+    "Curiosity pulled the other way. A year of design and technology at Buff Creative College, and the engineer became a designer.",
+    "At Euroland he gave investor-relations teams AI search that answered in plain language.",
+    "Today, at Congruent Solutions, he designs AI for people's retirement savings — and prototypes it in real code, in days.",
+    "Somewhere between the logic and the craft, he found his favourite job.",
+  ],
+  outro: "The next chapter could be with your team…",
 };
 
 export const greetings = ["Hello", "வணக்கம்", "नमस्ते", "Hola", "Bonjour", "Ciao"];

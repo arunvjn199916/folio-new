@@ -47,7 +47,8 @@ export function BlurHeading({
 }
 
 // Generic scroll reveal: fade + rise + unblur, staggered over direct children marked [data-reveal].
-export function Reveal({ children, className, stagger = 0.08 }: { children: React.ReactNode; className?: string; stagger?: number }) {
+/** `label` makes the wrapper a named, keyboard-focusable region (for horizontally scrolling content). */
+export function Reveal({ children, className, stagger = 0.08, label }: { children: React.ReactNode; className?: string; stagger?: number; label?: string }) {
   const ref = useRef<HTMLDivElement>(null);
   useGSAP(
     () => {
@@ -67,7 +68,7 @@ export function Reveal({ children, className, stagger = 0.08 }: { children: Reac
     { scope: ref },
   );
   return (
-    <div ref={ref} className={className}>
+    <div ref={ref} className={className} {...(label ? { role: "region", "aria-label": label, tabIndex: 0 } : {})}>
       {children}
     </div>
   );

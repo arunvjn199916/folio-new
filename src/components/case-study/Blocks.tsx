@@ -123,7 +123,7 @@ export function BlockView({ block, brand, labels }: { block: Block; brand: Brand
           <div className="mx-auto mt-10 grid max-w-[1000px] gap-px overflow-hidden rounded-[18px] border border-line bg-line sm:grid-cols-2 lg:grid-cols-4">
             {block.items.map((it) => (
               <div data-reveal key={it.label} className="bg-paper p-6">
-                <p className="font-display text-[clamp(34px,3.4vw,44px)] leading-none font-semibold" style={{ color: "var(--case-accent)" }}>
+                <p className="font-display text-[clamp(34px,3.4vw,44px)] leading-none font-extrabold tracking-[-0.04em]" style={{ color: "var(--case-accent-text)" }}>
                   {it.value}
                 </p>
                 <p className="mt-3 text-[13.5px] leading-snug text-ink-2">
@@ -157,7 +157,7 @@ export function BlockView({ block, brand, labels }: { block: Block; brand: Brand
                     <p className="text-[13px] text-ink-3">{p.role}</p>
                   </div>
                 </div>
-                <p className="mt-5 font-script text-[24px] leading-tight" style={{ color: "var(--case-accent)" }}>
+                <p className="mt-5 font-sans text-[20px] leading-snug font-semibold tracking-[-0.01em]" style={{ color: "var(--case-accent-text)" }}>
                   “{p.quote}”
                 </p>
                 <ul className="mt-4 space-y-1.5 text-[14px] text-ink-2">
@@ -188,7 +188,7 @@ export function BlockView({ block, brand, labels }: { block: Block; brand: Brand
                 <span className="mx-auto grid size-24 place-items-center rounded-full font-display text-[34px] font-semibold" style={{ background: "var(--case-tint)", color: "var(--case-accent)" }}>
                   {String(i + 1).padStart(2, "0")}
                 </span>
-                <p className="mt-5 font-script text-[22px] leading-tight" style={{ color: "var(--case-accent)" }}>
+                <p className="mt-5 font-sans text-[19px] leading-snug font-semibold tracking-[-0.01em]" style={{ color: "var(--case-accent-text)" }}>
                   “{s.quote}”
                 </p>
                 <p className="mt-2 font-display text-[18px] font-semibold text-ink">{s.title}</p>
@@ -251,7 +251,7 @@ export function BlockView({ block, brand, labels }: { block: Block; brand: Brand
                   ))}
                 </p>
               )}
-              <div className="overflow-x-auto px-6 pt-8 pb-6 [scrollbar-width:thin]">
+              <div role="region" aria-label={block.caption} tabIndex={0} className="overflow-x-auto px-6 pt-8 pb-6 [scrollbar-width:thin]">
               {/* w-max + mx-auto centres the row when it fits and scrolls from the start when it doesn't */}
               <div className="mx-auto flex w-max snap-x items-center gap-4 sm:gap-6">
                 {block.items.map((it, i) =>
@@ -403,7 +403,7 @@ export function BlockView({ block, brand, labels }: { block: Block; brand: Brand
             <h2 data-reveal className={H2}>{block.title}</h2>
             {block.sub && <p data-reveal className="mt-3 text-[15px] text-ink-2">{block.sub}</p>}
           </Reveal>
-          <Reveal className="mt-10 overflow-x-auto pb-4 [scrollbar-width:thin]" stagger={0.07}>
+          <Reveal className="mt-10 overflow-x-auto pb-4 [scrollbar-width:thin]" stagger={0.07} label={block.title}>
             <div className="mx-auto flex w-max snap-x gap-5">
             {block.shots.map((s, i) => (
               <figure data-reveal key={s.src} className="w-[170px] shrink-0 snap-center">
@@ -473,7 +473,7 @@ export function BlockView({ block, brand, labels }: { block: Block; brand: Brand
           </Reveal>
 
           {/* task × participant grid */}
-          <Reveal className="mx-auto mt-6 max-w-[1000px] overflow-x-auto rounded-[16px] border border-line bg-surface/70">
+          <Reveal className="mx-auto mt-6 max-w-[1000px] overflow-x-auto rounded-[16px] border border-line bg-surface/70" label={block.title}>
             <table data-reveal className="w-full min-w-[560px] text-left text-[13px]">
               <thead>
                 <tr className="border-b border-line text-ink-3">
@@ -513,7 +513,7 @@ export function BlockView({ block, brand, labels }: { block: Block; brand: Brand
           <Reveal className="mx-auto mt-10 grid max-w-[1000px] gap-6 md:grid-cols-3" stagger={0.08}>
             {block.quotes.map((q) => (
               <figure data-reveal key={q.text}>
-                <blockquote className="font-script text-[22px] leading-tight" style={{ color: "var(--case-accent)" }}>
+                <blockquote className="font-sans text-[19px] leading-snug font-semibold tracking-[-0.01em]" style={{ color: "var(--case-accent-text)" }}>
                   “{q.text}”
                 </blockquote>
                 <figcaption className="mt-2 text-[12px] text-ink-3">— {q.by}</figcaption>
@@ -555,7 +555,7 @@ export function BlockView({ block, brand, labels }: { block: Block; brand: Brand
 function JourneyNode({ kicker, title, body }: { kicker: string; title: string; body: string }) {
   return (
     <div>
-      <p className="font-mono text-[11px]" style={{ color: "var(--case-accent)" }}>
+      <p className="font-mono text-[11px]" style={{ color: "var(--case-accent-text)" }}>
         {kicker}
       </p>
       <p className="mt-1 font-semibold text-ink">{title}</p>

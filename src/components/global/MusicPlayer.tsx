@@ -107,7 +107,7 @@ export function MusicPlayer() {
       animate={{ opacity: 1, y: 0, scale: 1, width: min ? W_MIN : Math.min(W, window.innerWidth - GAP * 2) }}
       transition={{ type: "spring", stiffness: 260, damping: 26 }}
       data-music-player
-      className="fixed z-40 overflow-hidden rounded-xl border border-white/10 bg-[#2a2a2a] shadow-2xl"
+      className="fixed z-40 overflow-hidden rounded-[20px] border border-[#f7f1e3]/15 bg-[#140203]/95 shadow-[0_20px_50px_-20px_rgba(0,0,0,0.7)] backdrop-blur-xl"
       style={free ? { left: free.x, top: free.y } : anchor(corner)}
     >
       <div
@@ -119,11 +119,11 @@ export function MusicPlayer() {
       >
         <div className="pointer-events-none flex items-center gap-2">
           <div aria-hidden className="flex h-3 w-3.5 items-end gap-[2px]">
-            <span className="w-[2px] rounded-[1px] bg-white" style={{ animation: "eq-1 .7s ease-in-out infinite" }} />
-            <span className="w-[2px] rounded-[1px] bg-white" style={{ animation: "eq-2 .55s ease-in-out -.2s infinite" }} />
-            <span className="w-[2px] rounded-[1px] bg-white" style={{ animation: "eq-3 .85s ease-in-out -.4s infinite" }} />
+            <span className="w-[2px] rounded-[1px] bg-[#ffef93]" style={{ animation: "eq-1 .7s ease-in-out infinite" }} />
+            <span className="w-[2px] rounded-[1px] bg-[#ffef93]" style={{ animation: "eq-2 .55s ease-in-out -.2s infinite" }} />
+            <span className="w-[2px] rounded-[1px] bg-[#ffef93]" style={{ animation: "eq-3 .85s ease-in-out -.4s infinite" }} />
           </div>
-          <span className="text-xs font-medium tracking-wide whitespace-nowrap text-white/90">{t.nowPlaying}</span>
+          <span className="font-mono text-[11px] tracking-[0.12em] whitespace-nowrap text-[#f7f1e3]/90 uppercase">{t.nowPlaying}</span>
         </div>
         <button
           onClick={toggle}
