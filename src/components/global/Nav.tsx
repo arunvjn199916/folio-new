@@ -30,6 +30,8 @@ export function Nav() {
   const t = ui.nav;
   const pathname = usePathname();
   const onHome = pathname === `/${locale}`;
+  // Pages whose first screen is a dark photo stage: the top bar uses dark-stage colours there.
+  const overDark = pathname === `/${locale}/about`;
   const sectionHref = (id: string) => (onHome ? `#${id}` : `${href("/")}#${id}`);
 
   const [compact, setCompact] = useState(false);
@@ -128,7 +130,7 @@ export function Nav() {
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -20, filter: "blur(6px)" }}
             transition={{ duration: 0.45, ease: EASE }}
-            className="pointer-events-auto absolute inset-x-0 top-0 flex h-[92px] items-center justify-between gap-6 px-8 xl:px-12"
+            className={cn("pointer-events-auto absolute inset-x-0 top-0 flex h-[92px] items-center justify-between gap-6 px-8 xl:px-12", overDark && "dark-stage text-on-night")}
           >
             <Wordmark href={sectionHref("top")} name={profile.name} role={profile.role} />
 

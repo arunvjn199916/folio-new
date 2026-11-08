@@ -79,7 +79,7 @@ export function Crawl() {
                 <div className="cr-text absolute inset-x-0 top-full text-center">
                   <p className="font-mono text-[clamp(13px,1.2vw,18px)] tracking-[0.3em] text-[#ffef93] uppercase">{crawl.episode}</p>
                   <h2 className="mt-3 font-display text-[clamp(40px,6vw,96px)] leading-[0.9] font-[650] tracking-[-0.04em] text-[#ffef93] uppercase">{crawl.title}</h2>
-                  <div className="mt-10 space-y-8 text-justify text-[clamp(22px,2.6vw,40px)] leading-[1.3] font-semibold tracking-[-0.02em] [hyphens:auto]">
+                  <div className="cr-body mt-10 space-y-8 text-justify text-[clamp(22px,2.6vw,40px)] leading-[1.3] font-semibold tracking-[-0.02em] [hyphens:auto]">
                     {crawl.paragraphs.map((p) => (
                       <p key={p}>{p}</p>
                     ))}

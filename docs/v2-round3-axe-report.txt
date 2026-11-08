@@ -1,33 +1,36 @@
 
-### dark /en: 1 rule(s) failing
-- color-contrast [serious] x1
-    Element has insufficient color contrast of 1.13 (foreground color: #1d1313, background color: #0a0001, font size: 193.2pt (257.635px), font weight: bo @ .-mb-\[0\.18em\]
+### dark /en: 0 rule(s) failing
 
-### dark /en/work/kairo-ai-personal-assistant: 2 rule(s) failing
-- color-contrast [serious] x9
-    Element has insufficient color contrast of 4.34 (foreground color: #6e56ff, background color: #100001, font size: 16.5pt (22px), font weight: normal). @ li:nth-child(1) > .text-\[22px\].font-script.leading-tight
-    Element has insufficient color contrast of 4.34 (foreground color: #6e56ff, background color: #100001, font size: 16.5pt (22px), font weight: normal). @ li:nth-child(2) > .text-\[22px\].font-script.leading-tight
-    Element has insufficient color contrast of 4.34 (foreground color: #6e56ff, background color: #100001, font size: 16.5pt (22px), font weight: normal). @ li:nth-child(3) > .text-\[22px\].font-script.leading-tight
-    Element has insufficient color contrast of 4.34 (foreground color: #6e56ff, background color: #100001, font size: 8.3pt (11px), font weight: normal).  @ .py-8 > div:nth-child(1) > .text-\[11px\].font-mono
-- scrollable-region-focusable [serious] x1
-    Element should have focusable content @ .pb-4
+### dark /en/about: 0 rule(s) failing
+
+### dark /en/case-studies: 0 rule(s) failing
+
+### dark /en/work/kairo-ai-personal-assistant: 0 rule(s) failing
+
+### dark /en/work/feedback-portal: 0 rule(s) failing
 
 ### dark /en/ai-workflow: 0 rule(s) failing
 
-### light /en: 1 rule(s) failing
-- color-contrast [serious] x31
-    Element has insufficient color contrast of 1.04 (foreground color: #f7f1e3, background color: #fbf6e9, font size: 12.0pt (16px), font weight: bold). E @ .w-max.pr-4.hover\:\[animation-play-state\:paused\]:nth-child(1) > .h-
-    Element has insufficient color contrast of 1.02 (foreground color: #f9f3e6, background color: #fbf6e9, font size: 9.0pt (12px), font weight: normal).  @ .w-max.pr-4.hover\:\[animation-play-state\:paused\]:nth-child(1) > .h-
-    Element has insufficient color contrast of 1.05 (foreground color: #fef1ad, background color: #fbf6e9, font size: 7.5pt (10px), font weight: normal).  @ .w-max.pr-4.hover\:\[animation-play-state\:paused\]:nth-child(1) > .h-
-    Element has insufficient color contrast of 1.04 (foreground color: #f7f1e3, background color: #fbf6e9, font size: 12.0pt (16px), font weight: bold). E @ .w-max.pr-4.hover\:\[animation-play-state\:paused\]:nth-child(1) > .h-
+### dark /ta: 0 rule(s) failing
 
-### light /en/work/kairo-ai-personal-assistant: 2 rule(s) failing
-- color-contrast [serious] x9
-    Element has insufficient color contrast of 4.38 (foreground color: #6e56ff, background color: #fbf6e9, font size: 16.5pt (22px), font weight: normal). @ li:nth-child(1) > .text-\[22px\].font-script.leading-tight
-    Element has insufficient color contrast of 4.38 (foreground color: #6e56ff, background color: #fbf6e9, font size: 16.5pt (22px), font weight: normal). @ li:nth-child(2) > .text-\[22px\].font-script.leading-tight
-    Element has insufficient color contrast of 4.38 (foreground color: #6e56ff, background color: #fbf6e9, font size: 16.5pt (22px), font weight: normal). @ li:nth-child(3) > .text-\[22px\].font-script.leading-tight
-    Element has insufficient color contrast of 4.38 (foreground color: #6e56ff, background color: #fbf6e9, font size: 8.3pt (11px), font weight: normal).  @ .py-8 > div:nth-child(1) > .text-\[11px\].font-mono
-- scrollable-region-focusable [serious] x1
-    Element should have focusable content @ .pb-4
+### dark /hi: 0 rule(s) failing
+
+### light /en: 0 rule(s) failing
+
+### light /en/about: 1 rule(s) failing
+- color-contrast [serious] x3
+    Element has insufficient color contrast of 2.98 (foreground color: #6e5450, background color: #100001, font size: 7.5pt (10px), font weight: normal).  @ .tracking-\[0\.18em\]
+    Element has insufficient color contrast of 2.98 (foreground color: #6e5450, background color: #100001, font size: 9.0pt (12px), font weight: bold). Ex @ button[lang="ta"]
+    Element has insufficient color contrast of 2.98 (foreground color: #6e5450, background color: #100001, font size: 9.0pt (12px), font weight: bold). Ex @ button[lang="hi"]
+
+### light /en/case-studies: 0 rule(s) failing
+
+### light /en/work/kairo-ai-personal-assistant: 0 rule(s) failing
+
+### light /en/work/feedback-portal: 0 rule(s) failing
 
 ### light /en/ai-workflow: 0 rule(s) failing
+
+### light /ta: 0 rule(s) failing
+
+### light /hi: 0 rule(s) failing

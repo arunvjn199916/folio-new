@@ -244,9 +244,36 @@ body::before {
     line-clamp: none;
   }
 }
-/* Long agglutinative words can be wider than a phone column — let them wrap. */
+/* Long agglutinative words can be wider than a phone column — wrap them only when a word
+   truly doesn't fit (never mid-word otherwise), and drop the ch-based width caps that were
+   tuned for short Latin words. */
 :where(:root:lang(ta), :root:lang(hi)) :is(h1, h2, h3) {
-  overflow-wrap: anywhere;
+  overflow-wrap: break-word;
+  text-wrap: balance;
+}
+:where(:root:lang(ta), :root:lang(hi)) :is(h1, h2, h3, .display-xl, .display-l, .display-m)[class*="max-w-["] {
+  max-width: none;
+}
+/* Display styles set a 0.9 line-height on the element itself; Brahmic scripts need room
+   above and below the letters, so override it there too. */
+:where(:root:lang(ta), :root:lang(hi)) :is(.display-xl, .display-l, .display-m) {
+  line-height: 1.22 !important;
+}
+@media (min-width: 768px) {
+  :where(:root:lang(ta), :root:lang(hi)) .hero-line {
+    font-size: clamp(34px, 4.3vw, 80px) !important;
+  }
+}
+@media (max-width: 767px) {
+  :where(:root:lang(ta), :root:lang(hi)) .hero-line {
+    font-size: clamp(22px, 5.9vw, 28px) !important;
+    line-height: 1.16 !important;
+  }
+}
+/* Justified crawl text leaves rivers between long Tamil/Hindi words — centre it instead. */
+:where(:root:lang(ta), :root:lang(hi)) .cr-body {
+  text-align: center;
+  hyphens: none;
 }
 
 /* ── Shared bits ── */

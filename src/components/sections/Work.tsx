@@ -48,7 +48,7 @@ export async function Work() {
         <span className="col-start-2 font-mono text-[11px] tracking-[0.12em] text-ink-3 uppercase md:col-start-auto">{p.filters.join(" · ")}</span>
         <span className="col-start-3 row-start-1 md:col-start-auto md:row-start-auto">
           {p.wip ? (
-            <span className="rounded-full border border-ink/20 px-3 py-1.5 font-mono text-[10px] tracking-[0.12em] text-ink-2 uppercase">{t.fixingBugs}</span>
+            <span className="inline-block max-w-[120px] rounded-full border border-ink/20 px-3 py-1.5 text-center font-mono text-[10px] leading-tight tracking-[0.1em] text-ink-2 uppercase md:max-w-none">{t.fixingBugs}</span>
           ) : (
             <span className="grid size-11 place-items-center rounded-full border border-ink/20 text-ink transition-colors duration-300 group-hover:border-accent group-hover:bg-accent group-hover:text-on-accent md:size-12">
               <ArrowUpRight size={18} className="transition-transform duration-300 group-hover:rotate-45" />

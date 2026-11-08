@@ -143,3 +143,20 @@ Removed: two-gaps line section, principles, physics pills, blotchy background, c
 7. Crawl copy — approve or edit?
 8. Archive folder — restyle as a row, or remove?
 9. Intro — keep the re-themed "Enter" intro, or switch to a reference-style loader?
+
+---
+
+## 14. Decisions & status (round 3 built)
+| # | Decision | Status |
+|---|---|---|
+| 1 | Header unchanged | — |
+| 2 | Hero about Arun: "HI, I'M ARUN VIJAYAN. / ENGINEER TURNED DESIGNER." | ✅ |
+| 3 | Both themes; light mode reworked (flat paper, AA palette, clean light globe) | ✅ |
+| 4 | Home About block + `/about` page via "Know more" | ✅ |
+| 5 | Two case studies on home + "View all" → `/case-studies` | ✅ |
+| 6 | Testimonials: 2 cards with thumbnails | ✅ built, hidden until real quotes + photos (`showTestimonials`) |
+| 7 | Story crawl copy approved | ✅ |
+| 8 | Archive as its own section below Projects | ✅ |
+| 9 | Intro unchanged | — |
+| + | Tamil / Hindi alignment: no mid-word breaks, no ch caps, Brahmic line-height on display text, smaller hero, centred crawl | ✅ |
+| + | axe-core WCAG 2.2 AA: 0 violations on 8 pages × 2 themes (see `v2-round3-axe-report.txt`) | ✅ |
