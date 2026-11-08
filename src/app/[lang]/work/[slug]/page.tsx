@@ -73,7 +73,7 @@ export default async function CaseStudyPage({ params }: PageProps<"/[lang]/work/
               {crumbs.map((c, k) => (
                 <li key={c.label} className="flex items-center gap-2">
                   {k > 0 && <span aria-hidden>/</span>}
-                  {c.href ? <Link href={c.href} className="inline-flex min-h-6 items-center hover:text-ink">{c.label}</Link> : <span aria-current="page" className="text-ink">{c.label}</span>}
+                  {c.href ? <Link href={c.href} className="inline-flex min-h-6 min-w-6 items-center justify-center hover:text-ink">{c.label}</Link> : <span aria-current="page" className="text-ink">{c.label}</span>}
                 </li>
               ))}
             </ol>
@@ -149,7 +149,7 @@ export default async function CaseStudyPage({ params }: PageProps<"/[lang]/work/
       <CaseHero study={study} title={p.title} summary={p.summary} conceptLabel={study.client ? t.client : t.concept} crumbs={crumbs} readLabel={t.chapters.read} next={{ label: t.nextCase.replace(/\.$/, ""), href: localePath(locale, next.href ?? `/work/${next.slug}`) }} />
 
       {previewShots.length > 1 && (
-        <section id="preview" aria-labelledby="preview-title" className="mt-28 scroll-mt-24 px-4 sm:mt-36 md:px-12">
+        <section id="preview" aria-labelledby="preview-title" className="mt-28 scroll-mt-24 overflow-x-clip px-4 sm:mt-36 md:px-12">
           <div className="flex items-end justify-between gap-6 border-t border-ink/10 pt-6">
             <div>
               <h2 id="preview-title" className="display-m text-ink">{t.live.title}</h2>

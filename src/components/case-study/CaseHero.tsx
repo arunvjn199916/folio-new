@@ -38,7 +38,7 @@ export function CaseHero({
               <li key={c.label} className="flex items-center gap-2">
                 {i > 0 && <span aria-hidden>/</span>}
                 {c.href ? (
-                  <Link href={c.href} className="inline-flex min-h-6 items-center transition-colors hover:text-ink">
+                  <Link href={c.href} className="inline-flex min-h-6 min-w-6 items-center justify-center transition-colors hover:text-ink">
                     {c.label}
                   </Link>
                 ) : (
