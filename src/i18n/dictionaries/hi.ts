@@ -216,7 +216,7 @@ export const hi: Dictionary = {
     notFound: { eyebrow: "404", title: "यह पेज कहीं भटक गया।", home: "होम पर लौटें" },
     player: { nowPlaying: "अभी चल रहा है", minimize: "प्लेयर छोटा करें", expand: "प्लेयर बड़ा करें", title: "Spotify प्लेयर" },
     loader: {
-      intro: "परिचय",
+      callMe: "लोग मुझे बुलाते हैं…", nicknames: ["अरुण", "अरुणु", "अरुणूऊ", "अरुणीय्य्य", "विजय", "अरुण विजयन"], iAm: "…और मैं हूँ", intro: "परिचय",
       welcome: "स्वागत है",
       enter: "प्रवेश",
       caption: "जारी रखने के लिए ENTER दबाएँ या क्लिक करें।",

@@ -9,6 +9,7 @@ import { useI18n } from "@/i18n/client";
 import { locales, localeMeta, type Locale } from "@/i18n/config";
 import { cn } from "@/lib/utils";
 import { theme } from "@/lib/theme";
+import { LogoMark, LogoWordmark } from "@/components/brand/Logo";
 import { ThemeToggle } from "./ThemeToggle";
 import { switchLocale } from "./LanguageSwitcher";
 import { A11yTrigger } from "@/components/a11y/A11yTrigger";
@@ -227,7 +228,7 @@ export function Nav() {
           >
             <div className="pointer-events-auto flex items-center gap-1.5 rounded-full border border-ink/10 bg-paper/70 p-1.5 shadow-[0_10px_40px_-14px_rgba(0,0,0,0.55)] backdrop-blur-xl">
               <a href={sectionHref("top")} aria-label={profile.name} className="grid size-10 place-items-center">
-                <LogoMark />
+                <LogoMark className="size-8 text-accent" />
               </a>
               <a href={sectionHref("contact")} onClick={() => setMenu(false)} className="btn-accent !min-h-10 !gap-2 !px-4 !text-[12px]">
                 {t.letsTalk} <ArrowRight size={14} strokeWidth={2.4} />
@@ -346,25 +347,10 @@ export function Nav() {
 }
 
 function Wordmark({ href, name, role }: { href: string; name: string; role: string }) {
-  const [first, ...rest] = name.toLowerCase().split(" ");
   return (
-    <a href={href} aria-label={name} className="group flex flex-col leading-none">
-      <span className="flex items-start font-display text-[26px] font-extrabold tracking-[-0.06em] text-ink">
-        {first}
-        <span className="ml-[0.18em] text-ink/80">{rest.join(" ")}</span>
-        <span className="mt-[3px] ml-0.5 size-[7px] rounded-full bg-accent shadow-[0_0_12px_rgb(var(--c-globe-lit)/0.9)] transition-transform duration-500 group-hover:scale-150" />
-      </span>
-      <span className="mt-1 text-[10px] font-semibold tracking-[0.18em] text-ink-3 uppercase">{role}</span>
+    <a href={href} aria-label={name} className="group text-[26px] text-ink">
+      <LogoWordmark sub={role} />
     </a>
-  );
-}
-
-function LogoMark() {
-  return (
-    <span className="relative font-display text-[26px] leading-none font-extrabold tracking-[-0.06em] text-accent">
-      a
-      <span className="absolute -top-0.5 -right-1.5 size-[7px] rounded-full bg-crimson" />
-    </span>
   );
 }
 

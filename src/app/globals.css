@@ -422,6 +422,40 @@ body::before {
   animation: cs-float 7s ease-in-out infinite;
 }
 
+/* logo draw-in: ring → A → crossbar, then "run" slides out of the A */
+.logo-draw path {
+  stroke-dasharray: 1;
+  stroke-dashoffset: 1;
+  animation: logo-stroke 0.9s cubic-bezier(0.65, 0, 0.35, 1) forwards;
+}
+.logo-draw .logo-a {
+  animation-delay: 0.55s;
+}
+.logo-draw .logo-bar {
+  animation-delay: 1.05s;
+  animation-duration: 0.5s;
+}
+.logo-run {
+  animation: logo-run 0.7s cubic-bezier(0.22, 1, 0.36, 1) 1.35s both;
+}
+@keyframes logo-stroke {
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+@keyframes logo-run {
+  from {
+    opacity: 0;
+    transform: translateX(-0.6em);
+    clip-path: inset(0 100% 0 0);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+    clip-path: inset(0 0 0 0);
+  }
+}
+
 .progress-tick.is-on {
   background: var(--c-accent);
 }

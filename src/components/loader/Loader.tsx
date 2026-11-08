@@ -2,7 +2,8 @@
 
 import { useCallback, useEffect, useRef, useState } from "react";
 import { gsap } from "@/lib/gsap";
-import { blip, intro } from "@/lib/intro";
+import { blip, intro, onlineChime, powerUp } from "@/lib/intro";
+import { LogoWordmark } from "@/components/brand/Logo";
 import { useI18n } from "@/i18n/client";
 import { img } from "@/content/images";
 import { isBool, safeStore } from "@/lib/utils";
@@ -47,7 +48,8 @@ function curve(t: number, mirrored: boolean): [number, number] {
 }
 
 export function Loader() {
-  const { greetings, ui } = useI18n().dict;
+  const { greetings, ui, profile } = useI18n().dict;
+  const profileName = profile.name;
   const t = ui.loader;
   const root = useRef<HTMLDivElement>(null);
   const [mounted, setMounted] = useState(true);
@@ -87,7 +89,7 @@ export function Loader() {
     }
     window.scrollTo(0, 0);
     intro.lenis?.stop();
-    const failsafe = setTimeout(done, 20000);
+    const failsafe = setTimeout(done, 32000);
     // Lenis may mount after us
     const t = setTimeout(() => intro.lenis?.stop(), 50);
     return () => {
@@ -113,6 +115,7 @@ export function Loader() {
   const start = useCallback(() => {
     if (phase !== "gate") return;
     blip(520, 0.08, 0.05);
+    powerUp(); // original "systems online" sweep while the intro boots
     setPhase("run");
   }, [phase]);
 
@@ -242,7 +245,11 @@ export function Loader() {
 
     // Cycle greetings; the grid re-fits each word
     let at = 2.55;
-    const list = [...greetings.slice(1), `${welcome}.`];
+    // greetings → "Welcome." → "People call me…" → nicknames → "…and I am" → NAME.
+    const nick = ui.loader;
+    const list = [...greetings.slice(1), `${welcome}.`, nick.callMe, ...nick.nicknames, nick.iAm, `${profileName.toUpperCase()}.`];
+    const hold = (g: string, i: number, last: boolean) =>
+      last ? 0.95 : g === `${welcome}.` ? 0.7 : g === nick.callMe || g === nick.iAm ? 0.62 : i >= greetings.length ? 0.42 : 0.5;
     list.forEach((g, i) => {
       const last = i === list.length - 1;
       t.to(q(".lg-word"), { opacity: 0, duration: 0.14, ease: "power1.in" }, at);
@@ -264,14 +271,30 @@ export function Loader() {
         t.to(q(".lg-cell"), { opacity: 1, duration: 0.15 }, at + 0.15);
         t.set(q(".lg-word"), { color: "#fff" }, at + 0.15);
       }
-      at += last ? 0.75 : 0.5;
+      at += hold(g, i, last);
     });
 
-    // "Welcome." softens, grid steps back, the streams run
+    // The name gives way to the logo: ring → A → crossbar draw in, "run" slides out, chime.
+    const logoAt = at + 0.1;
+    t.to(q(".lg-center"), { opacity: 0, duration: 0.35, ease: "power2.in" }, logoAt);
+    t.set(q(".lg-logo"), { opacity: 1 }, logoAt + 0.3);
+    t.call(
+      () => {
+        root.current?.querySelector(".lg-logo svg")?.classList.add("logo-draw");
+        root.current?.querySelector(".lg-logo .lg-run")?.classList.add("logo-run");
+      },
+      [],
+      logoAt + 0.3,
+    );
+    t.call(onlineChime, [], logoAt + 1.6);
+    t.to(q(".lg-logo"), { opacity: 0, scale: 0.92, duration: 0.4, ease: "power2.in" }, logoAt + 2.5);
+    at = logoAt + 2.6;
+
+    // the grid steps back, the streams run
     const runAt = at;
     t.to(q(".lg-cell"), { backgroundColor: getComputedStyle(document.documentElement).getPropertyValue("--c-crimson").trim(), duration: 0.5, ease: "power2.out" }, runAt - 0.2);
     t.to(q(".lg-lines, .lg-labels"), { opacity: 0, duration: 0.4 }, runAt);
-    t.to(q(".lg-center"), { opacity: 0.35, duration: 0.5 }, runAt);
+    t.set(q(".lg-center"), { opacity: 0 }, runAt);
     t.to(drive, { s: 1 + (half - 1) * RUN.gap, duration: RUN.duration, ease: "power2.inOut", onUpdate: place }, runAt);
 
     // Hand-off: background clears to the page, the portrait card falls onto the hero card
@@ -285,7 +308,7 @@ export function Loader() {
     return () => {
       t.kill();
     };
-  }, [phase, done, greetings, ui.loader.welcome]);
+  }, [phase, done, greetings, ui.loader, profileName]);
 
   if (!mounted) return null;
 
@@ -359,6 +382,11 @@ export function Loader() {
           className="lg-measure invisible absolute top-0 left-0 font-display text-[clamp(38px,5.2vw,76px)] leading-none font-[650] tracking-[-0.045em] whitespace-nowrap uppercase"
           aria-hidden
         />
+      </div>
+
+      {/* Logo beat — the mark draws itself and "run" slides out of the A */}
+      <div aria-hidden className="lg-logo pointer-events-none absolute inset-0 grid place-items-center opacity-0">
+        <LogoWordmark className="text-[clamp(56px,9vw,128px)] text-ink" runClassName="lg-run" />
       </div>
 
       {/* Act 3 — tile streams */}

@@ -216,7 +216,7 @@ export const ta: Dictionary = {
     notFound: { eyebrow: "404", title: "இந்தப் பக்கம் வழிதவறிவிட்டது.", home: "முகப்புக்குத் திரும்பு" },
     player: { nowPlaying: "இப்போது ஒலிக்கிறது", minimize: "ப்ளேயரைச் சிறிதாக்கு", expand: "ப்ளேயரை விரிவாக்கு", title: "Spotify ப்ளேயர்" },
     loader: {
-      intro: "அறிமுகம்",
+      callMe: "என்னை அழைப்பது…", nicknames: ["அருண்", "அருணு", "அருணூஊ", "அருணீய்ய்", "விஜய்", "அருண் விஜயன்"], iAm: "…நான்", intro: "அறிமுகம்",
       welcome: "நல்வரவு",
       enter: "நுழை",
       caption: "தொடர ENTER அழுத்தவும் அல்லது கிளிக் செய்யவும்.",

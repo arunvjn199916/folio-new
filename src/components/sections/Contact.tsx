@@ -7,6 +7,7 @@ import { useI18n } from "@/i18n/client";
 import { FitText } from "@/components/ui/FitText";
 import { gsap, useGSAP } from "@/lib/gsap";
 import { motionDisabled } from "@/lib/a11y/store";
+import { LogoMark } from "@/components/brand/Logo";
 
 /*
   v2 closing (reference: the CTA rows + footer).
@@ -166,7 +167,10 @@ export function Contact() {
         </div>
 
         <div className="relative mt-16 flex flex-wrap items-center justify-between gap-4 border-t border-on-night/10 px-4 py-5 text-[12px] text-on-night/50 md:px-12">
-          <span>{t.copyright}</span>
+          <span className="flex items-center gap-3">
+            <LogoMark className="size-7 shrink-0 text-[#ffef93]" />
+            {t.copyright}
+          </span>
           <a href={`${href("/")}#top`} className="inline-flex min-h-6 items-center gap-1.5 hover:text-on-night">
             {t.backTop} <ArrowUp size={13} />
           </a>
@@ -176,7 +180,7 @@ export function Contact() {
         <div aria-hidden className="relative overflow-hidden px-4 md:px-8">
           <div className="ct-word relative font-display leading-[1] font-extrabold text-on-night">
             <FitText className="-mb-[0.18em] tracking-[-0.06em] lowercase">{profile.name}</FitText>
-            <span className="absolute top-[6%] right-[1.5%] size-[2.2vw] min-h-3 min-w-3 rounded-full bg-[#ffef93] shadow-[0_0_40px_10px_rgba(255,239,147,0.45)]" />
+            
           </div>
         </div>
       </div>

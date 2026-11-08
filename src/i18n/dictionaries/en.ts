@@ -82,7 +82,7 @@ export const en = {
     notFound: { eyebrow: "404", title: "This page wandered off.", home: "Back home" },
     player: { nowPlaying: "Now Playing", minimize: "Minimize player", expand: "Expand player", title: "Spotify player" },
     loader: {
-      intro: "Intro",
+      callMe: "People call me…", nicknames: ["Arun", "Arunu", "Arunuuu", "Aruneeyyy", "Vijay", "Arun Vijayan"], iAm: "…and I am", intro: "Intro",
       welcome: "Welcome",
       enter: "Enter",
       caption: "ENTER OR CLICK TO CONTINUE.",
