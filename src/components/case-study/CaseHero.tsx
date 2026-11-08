@@ -2,7 +2,7 @@ import Link from "next/link";
 import { ArrowDown, ArrowRight } from "lucide-react";
 import type { CaseStudy } from "@/content/case-studies/types";
 import { Reveal } from "@/components/ui/Motion";
-import { Phone } from "./Devices";
+import { Browser, Phone } from "./Devices";
 
 /*
   v2 case-study hero (reference: eezyinn solution page). Breadcrumb, product · category,
@@ -92,6 +92,13 @@ export function CaseHero({
         className="relative mt-14 overflow-hidden rounded-[28px] border border-ink/10 bg-night pt-14 md:mt-20 md:rounded-[40px] md:pt-20"
         style={{ backgroundImage: "radial-gradient(70% 80% at 50% 100%, color-mix(in srgb, var(--case-accent) 45%, transparent), transparent 70%)" }}
       >
+        {hero.layout === "web" ? (
+          <div className="relative mx-auto h-[clamp(220px,38vw,560px)] max-w-[1100px] overflow-hidden px-4 sm:px-10">
+            {hero.shots[1] && <Browser src={hero.shots[1].src} alt={hero.shots[1].label} ratio={hero.shots[1].ratio} className="absolute top-[10%] left-[2%] hidden w-[46%] -rotate-3 opacity-80 md:block" sizes="500px" />}
+            {hero.shots[2] && <Browser src={hero.shots[2].src} alt={hero.shots[2].label} ratio={hero.shots[2].ratio} className="absolute top-[10%] right-[2%] hidden w-[46%] rotate-3 opacity-80 md:block" sizes="500px" />}
+            <Browser src={hero.shots[0].src} alt={hero.shots[0].label} ratio={hero.shots[0].ratio} className="relative z-10 mx-auto w-full md:w-[78%]" sizes="(max-width: 768px) 100vw, 860px" />
+          </div>
+        ) : (
         <div className="mx-auto flex h-[clamp(240px,32vw,460px)] max-w-[1040px] items-start justify-center gap-3 overflow-hidden px-4 sm:gap-5">
           {fan.map((s, i) => (
             <div
@@ -103,6 +110,7 @@ export function CaseHero({
             </div>
           ))}
         </div>
+        )}
       </div>
     </section>
   );

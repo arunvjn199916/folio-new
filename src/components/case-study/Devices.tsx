@@ -24,7 +24,7 @@ export function Phone({ src, alt, className, sizes = "280px", priority }: { src:
   );
 }
 
-export function Browser({ src, alt, className, sizes = "(max-width: 768px) 100vw, 1100px" }: { src: string; alt: string; className?: string; sizes?: string }) {
+export function Browser({ src, alt, className, sizes = "(max-width: 768px) 100vw, 1100px", ratio = "1440/900" }: { src: string; alt: string; className?: string; sizes?: string; ratio?: string }) {
   const url = img(src);
   return (
     <div className={cn("overflow-hidden rounded-[14px] border border-black/10 bg-white shadow-[0_30px_70px_-35px_rgba(20,16,40,0.45)]", className)}>
@@ -34,7 +34,7 @@ export function Browser({ src, alt, className, sizes = "(max-width: 768px) 100vw
         ))}
         <span className="mx-auto h-4 w-[40%] rounded-full bg-black/[0.06]" />
       </div>
-      <div className="relative aspect-[1440/900] bg-[#f4f3f1]">
+      <div className="relative bg-[#f4f3f1]" style={{ aspectRatio: ratio }}>
         {url ? <Image src={url} alt={alt} fill sizes={sizes} className="object-cover object-top" /> : <PlaceholderLabel label={alt} />}
       </div>
     </div>

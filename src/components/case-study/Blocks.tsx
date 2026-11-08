@@ -392,7 +392,7 @@ export function BlockView({ block, brand, labels, variant }: { block: Block; bra
             <div className="dark-stage space-y-8 rounded-[28px] bg-night p-4 text-on-night sm:p-10 md:rounded-[40px]" style={{ backgroundImage: "radial-gradient(70% 70% at 50% 100%, color-mix(in srgb, var(--case-accent) 35%, transparent), transparent 70%)" }}>
               {block.shots.map((s) => (
                 <figure data-reveal key={s.src}>
-                  <Browser src={s.src} alt={s.label} />
+                  <Browser src={s.src} alt={s.label} ratio={s.ratio} />
                   <figcaption className="mt-3 text-center text-[16px] font-semibold">{s.label}</figcaption>
                 </figure>
               ))}

@@ -140,7 +140,7 @@ export default async function CaseStudyPage({ params }: PageProps<"/[lang]/work/
         } as React.CSSProperties
       }
     >
-      <CaseHero study={study} title={p.title} summary={p.summary} conceptLabel={t.concept} crumbs={crumbs} readLabel={t.chapters.read} next={{ label: t.nextCase.replace(/\.$/, ""), href: localePath(locale, next.href ?? `/work/${next.slug}`) }} />
+      <CaseHero study={study} title={p.title} summary={p.summary} conceptLabel={study.client ? t.client : t.concept} crumbs={crumbs} readLabel={t.chapters.read} next={{ label: t.nextCase.replace(/\.$/, ""), href: localePath(locale, next.href ?? `/work/${next.slug}`) }} />
 
       {chapters.map((c, ci) =>
         c.id === "question" ? (
@@ -167,6 +167,7 @@ export default async function CaseStudyPage({ params }: PageProps<"/[lang]/work/
         ),
       )}
 
+      {study.sources.length > 0 && (
       <section id="sources" className="mx-auto mt-28 max-w-[640px] px-6">
         <h2 className="font-mono text-[11px] font-semibold tracking-[0.16em] text-ink-3 uppercase">{t.sources}</h2>
         <ol className="mt-4 space-y-2 text-[12.5px] text-ink-2">
@@ -180,6 +181,7 @@ export default async function CaseStudyPage({ params }: PageProps<"/[lang]/work/
           ))}
         </ol>
       </section>
+      )}
 
       {closing}
     </article>

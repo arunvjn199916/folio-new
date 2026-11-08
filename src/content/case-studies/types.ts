@@ -3,7 +3,8 @@
 // Every block is data; components/case-study/* renders one component per kind.
 
 /** A screen image under media/images (e.g. "cases/kairo/morning-brief.webp"). */
-export type Shot = { src: string; label: string; note?: string };
+/** `ratio` (e.g. "1920/1080") sizes browser frames to the screen so nothing is cropped. */
+export type Shot = { src: string; label: string; note?: string; ratio?: string };
 
 export type Tone = "up" | "down";
 
@@ -70,7 +71,10 @@ export type CaseStudy = {
   slug: string;
   /** Brand of the concept product — tints the hero and the bands. */
   brand: { name: string; tint: string; band: string; accent: string };
-  hero: { kicker: string; title: string; sub: string; shots: Shot[] };
+  /** `layout: "web"` shows desktop screens in browser frames instead of the phone fan. */
+  hero: { kicker: string; title: string; sub: string; shots: Shot[]; layout?: "phone" | "web" };
+  /** Shipped client work rather than a self-initiated concept. */
+  client?: boolean;
   meta: { label: string; value: string[] }[];
   blocks: Block[];
   sources: { label: string; url: string }[];

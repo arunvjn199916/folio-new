@@ -121,14 +121,14 @@ export const projects: Project[] = [
     tint: "linear-gradient(135deg,#ffe3a8,#ffb6d9)",
   },
   {
-    slug: "task-tracker-design-system",
+    slug: "orion-support-system",
     audience: "B2B",
-    descriptor: "Design system · Euroland IR",
-    title: "A design system for a task tracker app",
-    summary: "Reusable components, tokens and patterns that standardised the UI and sped up design-to-development handoff.",
+    descriptor: "Internal tool & design system · Euroland IR",
+    title: "Orion — from a task tracker to a command centre for client rollouts",
+    summary: "Redesigned an internal support system around each client's tools: five role-based boards, tool-by-tool progress and one Tool Center — on a shared design system.",
     filters: ["Enterprise", "Web"],
-    media: "projects/task-tracker-design-system.webp",
-    tint: "linear-gradient(135deg,#cdb8ff,#ffe3a8)",
+    media: "cases/covers/orion.webp",
+    tint: "linear-gradient(135deg,#dff3ef,#0f766e)",
   },
   {
     slug: "magnil-employee-management",
@@ -139,6 +139,16 @@ export const projects: Project[] = [
     filters: ["Mobile", "Enterprise"],
     media: "projects/magnil.webp",
     tint: "linear-gradient(135deg,#bff0e0,#a8d8ff)",
+  },
+  {
+    slug: "myir-investor-app",
+    audience: "B2C",
+    descriptor: "White-label mobile app · Investor relations",
+    title: "MyIR — a company's investor-relations site in a shareholder's pocket",
+    summary: "15+ desktop IR tools — share graph, announcements, dividends, reports, calendar — reworked into one brandable mobile app, price first.",
+    filters: ["Mobile"],
+    media: "cases/covers/myir.webp",
+    tint: "linear-gradient(135deg,#dde6fb,#1d4ed8)",
   },
 ];
 
