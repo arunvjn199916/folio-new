@@ -227,7 +227,7 @@ export function ChatWidget() {
                     );
                   })}
                 </div>
-                <p className="mt-6 bg-gradient-to-r from-[#7aa2ff] via-[#9d8cff] to-[#c48cff] bg-clip-text text-[19px] text-transparent">
+                <p className="mt-6 bg-gradient-to-r from-[#dc0208] via-[#ff6b60] to-[#c9a227] bg-clip-text text-[19px] text-transparent">
                   {greeting()}
                   {t.greetingSuffix === "!" ? "!" : `, ${t.greetingSuffix}`}
                 </p>
@@ -294,7 +294,7 @@ export function ChatWidget() {
                   type="submit"
                   disabled={!input.trim() || busy}
                   aria-label={t.send}
-                  className="grid size-8 place-items-center rounded-full bg-gradient-to-br from-[#7cc8ff] via-[#8b7bff] to-[#e07bff] text-white transition-opacity disabled:opacity-40"
+                  className="grid size-8 place-items-center rounded-full bg-[#c40007] text-white transition-opacity disabled:opacity-40"
                 >
                   <ArrowUp size={16} />
                 </button>

@@ -150,14 +150,14 @@ export function Hero() {
           <h1 data-hide className="invisible mt-4 text-ink md:mt-6">
             <span className="hero-a block">
               {a.map((line) => (
-                <span key={line} className="hero-line display-xl block max-md:!text-[clamp(30px,8.6vw,46px)]">
+                <span key={line} className="hero-line display-xl block">
                   {line}
                 </span>
               ))}
             </span>
             <span className="hero-b mt-[0.08em] block pl-[6vw] md:pl-[8vw]">
               {b.map((line) => (
-                <span key={line} className="hero-line display-xl block max-md:!text-[clamp(30px,8.6vw,46px)]">
+                <span key={line} className="hero-line display-xl block">
                   {line}
                 </span>
               ))}

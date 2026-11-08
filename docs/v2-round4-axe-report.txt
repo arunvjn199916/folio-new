@@ -1,0 +1,48 @@
+
+### dark /en: 0 rule(s) failing
+
+### dark /en/about: 0 rule(s) failing
+
+### dark /en/case-studies: 0 rule(s) failing
+
+### dark /en/work/kairo-ai-personal-assistant: 0 rule(s) failing
+
+### dark /en/work/kosh-personal-finance: 0 rule(s) failing
+
+### dark /en/work/tandem-group-trip-planner: 0 rule(s) failing
+
+### dark /en/work/secondly-trusted-marketplace: 0 rule(s) failing
+
+### dark /en/work/feedback-portal: 0 rule(s) failing
+
+### dark /en/ai-workflow: 0 rule(s) failing
+
+### dark /ta: 0 rule(s) failing
+
+### dark /hi: 0 rule(s) failing
+
+### dark /ta/work/kosh-personal-finance: 0 rule(s) failing
+
+### light /en: 0 rule(s) failing
+
+### light /en/about: 0 rule(s) failing
+
+### light /en/case-studies: 0 rule(s) failing
+
+### light /en/work/kairo-ai-personal-assistant: 0 rule(s) failing
+
+### light /en/work/kosh-personal-finance: 0 rule(s) failing
+
+### light /en/work/tandem-group-trip-planner: 0 rule(s) failing
+
+### light /en/work/secondly-trusted-marketplace: 0 rule(s) failing
+
+### light /en/work/feedback-portal: 0 rule(s) failing
+
+### light /en/ai-workflow: 0 rule(s) failing
+
+### light /ta: 0 rule(s) failing
+
+### light /hi: 0 rule(s) failing
+
+### light /ta/work/kosh-personal-finance: 0 rule(s) failing

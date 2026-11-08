@@ -153,7 +153,7 @@ export function BlockView({ block, brand, labels, variant }: { block: Block; bra
             {block.items.map((p) => (
               <div data-reveal key={p.name} className="rounded-[24px] border border-ink/10 bg-card p-6 md:p-8">
                 <div className="flex items-center gap-3">
-                  <span className="grid size-11 place-items-center rounded-full font-display text-[14px] font-semibold text-white" style={{ background: "var(--case-accent)" }}>
+                  <span className="grid size-11 place-items-center rounded-full font-display text-[14px] font-semibold text-white" style={{ background: "color-mix(in srgb, var(--case-accent) 78%, #000)" }}>
                     {p.name
                       .split(" ")
                       .map((w) => w[0])
@@ -305,7 +305,7 @@ export function BlockView({ block, brand, labels, variant }: { block: Block; bra
                 </figure>
               ))}
             </div>
-            {block.credit && <p className="mt-8 text-center font-mono text-[10.5px] tracking-wide text-white/40">{block.credit}</p>}
+            {block.credit && <p className="mt-8 text-center font-mono text-[10.5px] tracking-wide text-white/70">{block.credit}</p>}
           </Reveal>
         </section>
       );
@@ -458,7 +458,7 @@ export function BlockView({ block, brand, labels, variant }: { block: Block; bra
             {block.participants.map((p, i) => (
               <div data-reveal key={p.name} className="rounded-[20px] border border-ink/10 bg-card p-4">
                 <div className="flex items-center gap-2.5">
-                  <span className="grid size-9 shrink-0 place-items-center rounded-full font-mono text-[11px] font-semibold text-white" style={{ background: "var(--case-accent)" }}>
+                  <span className="grid size-9 shrink-0 place-items-center rounded-full font-mono text-[11px] font-semibold text-white" style={{ background: "color-mix(in srgb, var(--case-accent) 78%, #000)" }}>
                     P{i + 1}
                   </span>
                   <div className="min-w-0">

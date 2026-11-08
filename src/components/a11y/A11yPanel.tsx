@@ -174,11 +174,11 @@ export function A11yPanel() {
             exit={{ opacity: 0, x: 40 }}
             transition={{ type: "spring", stiffness: 340, damping: 32 }}
             data-lenis-prevent
-            className="fixed inset-2 z-[90] flex flex-col overflow-hidden rounded-[28px] bg-[#eef0f6] text-[#14121a] shadow-[0_40px_100px_-30px_rgba(0,0,0,0.5)] sm:inset-auto sm:top-4 sm:right-4 sm:bottom-4 sm:w-[460px]"
+            className="fixed inset-2 z-[90] flex flex-col overflow-hidden rounded-[28px] bg-[#f3ede2] text-[#100001] shadow-[0_40px_100px_-30px_rgba(0,0,0,0.5)] sm:inset-auto sm:top-4 sm:right-4 sm:bottom-4 sm:w-[460px]"
           >
             <div className="flex-1 overflow-y-auto overscroll-contain">
               {/* header */}
-              <div className="bg-gradient-to-b from-[#6b4cff] to-[#7b5cff] px-5 pt-4 pb-20 text-white">
+              <div className="bg-gradient-to-b from-[#100001] to-[#3a0207] px-5 pt-4 pb-20 text-white">
                 <div className="flex items-center justify-between">
                   <button data-autofocus onClick={close} aria-label={t.close} className="grid size-9 place-items-center rounded-full hover:bg-white/15">
                     <X size={22} />
@@ -209,9 +209,9 @@ export function A11yPanel() {
                     close();
                     window.dispatchEvent(new Event(OPEN_CHAT_EVENT));
                   }}
-                  className="flex w-full items-center gap-4 rounded-[20px] border border-black/10 bg-white p-4 text-left shadow-sm transition hover:border-[#7b5cff]"
+                  className="flex w-full items-center gap-4 rounded-[20px] border border-black/10 bg-white p-4 text-left shadow-sm transition hover:border-[#c40007]"
                 >
-                  <span className="grid size-14 shrink-0 place-items-center rounded-2xl bg-[#e8e3ff] text-[#5b3df5]">
+                  <span className="grid size-14 shrink-0 place-items-center rounded-2xl bg-[#fde8e6] text-[#a80006]">
                     <BotMessageSquare size={26} />
                   </span>
                   <span className="min-w-0 flex-1">
@@ -285,7 +285,7 @@ export function A11yPanel() {
                     <Tile icon={ImageOff} label={t.controls.hideImages} active={s.hideImages} onClick={() => flip("hideImages")} />
                     <Tile icon={BookOpen} label={t.controls.readMode} active={s.readMode} onClick={() => flip("readMode")} />
                     <Tile icon={Highlighter} label={t.controls.readingGuide} active={s.readingGuide} onClick={() => flip("readingGuide")} />
-                    <div className="col-span-2 flex flex-col items-center justify-center gap-2 rounded-2xl bg-[#f4f5f9] p-3">
+                    <div className="col-span-2 flex flex-col items-center justify-center gap-2 rounded-2xl bg-[#faf6ee] p-3">
                       <span className="flex items-center gap-2 text-[13px] font-medium">
                         <Link2 size={16} /> {t.controls.usefulLinks}
                       </span>
@@ -322,7 +322,7 @@ export function A11yPanel() {
 
             <button
               onClick={() => setStatement(true)}
-              className="flex items-center justify-center gap-1 bg-[#6b4cff] py-3 text-[14px] font-medium text-white hover:bg-[#5b3df5]"
+              className="flex items-center justify-center gap-1 bg-[#c40007] py-3 text-[14px] font-medium text-white hover:bg-[#a80006]"
             >
               {t.footer} <ChevronRight size={15} />
             </button>
@@ -371,7 +371,7 @@ export function A11yPanel() {
 
 function HeaderButton({ icon: I, label, onClick }: { icon: Icon; label: string; onClick: () => void }) {
   return (
-    <button onClick={onClick} className="flex items-center justify-center gap-1.5 rounded-full bg-white px-2 py-2.5 text-[12.5px] font-medium text-[#5b3df5] transition hover:bg-white/90">
+    <button onClick={onClick} className="flex items-center justify-center gap-1.5 rounded-full bg-white px-2 py-2.5 text-[12.5px] font-medium text-[#a80006] transition hover:bg-white/90">
       <I size={15} /> <span className="truncate">{label}</span>
     </button>
   );
@@ -393,12 +393,12 @@ function OnOff({ on, onChange, onLabel, offLabel, label }: { on: boolean; onChan
       aria-checked={on}
       aria-label={label}
       onClick={() => onChange(!on)}
-      className="relative grid h-9 w-[104px] shrink-0 grid-cols-2 items-center rounded-full bg-[#eef0f6] p-1 text-[11px] font-bold"
+      className="relative grid h-9 w-[104px] shrink-0 grid-cols-2 items-center rounded-full bg-[#f3ede2] p-1 text-[11px] font-bold"
     >
       <motion.span
         layout
         transition={{ type: "spring", stiffness: 500, damping: 35 }}
-        className={cn("absolute top-1 bottom-1 w-[48px] rounded-full shadow", on ? "right-1 bg-[#6b4cff]" : "left-1 bg-white")}
+        className={cn("absolute top-1 bottom-1 w-[48px] rounded-full shadow", on ? "right-1 bg-[#c40007]" : "left-1 bg-white")}
       />
       <span className={cn("relative z-10 text-center", on ? "text-black/45" : "text-black")}>{offLabel}</span>
       <span className={cn("relative z-10 text-center", on ? "text-white" : "text-black/45")}>{onLabel}</span>
@@ -413,7 +413,7 @@ function Tile({ icon: I, label, active, onClick }: { icon: Icon; label: string; 
       aria-pressed={active}
       className={cn(
         "flex min-h-[96px] flex-col items-center justify-center gap-2 rounded-2xl border-2 p-2 text-center text-[12.5px] leading-tight transition",
-        active ? "border-[#6b4cff] bg-[#efeaff] text-[#3d22c9]" : "border-transparent bg-[#f4f5f9] hover:border-black/10",
+        active ? "border-[#c40007] bg-[#fde8e6] text-[#8a0005]" : "border-transparent bg-[#faf6ee] hover:border-black/10",
       )}
     >
       <I size={19} />
@@ -442,18 +442,18 @@ function Stepper({
   wide?: boolean;
 }) {
   return (
-    <div className={cn("flex flex-col justify-center gap-2.5 rounded-2xl bg-[#f4f5f9] p-3", wide && "col-span-2")}>
+    <div className={cn("flex flex-col justify-center gap-2.5 rounded-2xl bg-[#faf6ee] p-3", wide && "col-span-2")}>
       <span className="flex items-center justify-center gap-2 text-[13px] font-medium">
         <I size={16} /> {label}
       </span>
       <div className="flex items-center justify-between">
-        <button onClick={onDec} aria-label={`${dec} ${label}`} className="grid size-8 place-items-center rounded-full bg-[#6b4cff] text-white hover:bg-[#5b3df5]">
+        <button onClick={onDec} aria-label={`${dec} ${label}`} className="grid size-8 place-items-center rounded-full bg-[#c40007] text-white hover:bg-[#a80006]">
           <Minus size={15} />
         </button>
-        <span className="text-[12.5px] font-medium text-[#5b3df5]" aria-live="polite">
+        <span className="text-[12.5px] font-medium text-[#a80006]" aria-live="polite">
           {value}
         </span>
-        <button onClick={onInc} aria-label={`${inc} ${label}`} className="grid size-8 place-items-center rounded-full bg-[#6b4cff] text-white hover:bg-[#5b3df5]">
+        <button onClick={onInc} aria-label={`${inc} ${label}`} className="grid size-8 place-items-center rounded-full bg-[#c40007] text-white hover:bg-[#a80006]">
           <Plus size={15} />
         </button>
       </div>
@@ -463,7 +463,7 @@ function Stepper({
 
 function Swatches({ label, value, onPick, cancel }: { label: string; value: string | null; onPick: (c: string | null) => void; cancel: string }) {
   return (
-    <div className="col-span-2 flex flex-col items-center justify-center gap-2 rounded-2xl bg-[#f4f5f9] p-3">
+    <div className="col-span-2 flex flex-col items-center justify-center gap-2 rounded-2xl bg-[#faf6ee] p-3">
       <span className="text-[13px] font-medium">{label}</span>
       <div className="flex flex-wrap justify-center gap-1.5" role="radiogroup" aria-label={label}>
         {SWATCHES.map((c) => (
@@ -473,7 +473,7 @@ function Swatches({ label, value, onPick, cancel }: { label: string; value: stri
             aria-checked={value === c}
             aria-label={c}
             onClick={() => onPick(c)}
-            className={cn("size-6 rounded-full border border-black/15 transition", value === c && "ring-2 ring-[#6b4cff] ring-offset-2")}
+            className={cn("size-6 rounded-full border border-black/15 transition", value === c && "ring-2 ring-[#c40007] ring-offset-2")}
             style={{ background: c }}
           />
         ))}
@@ -496,7 +496,7 @@ function ThemeRow({ labels }: { labels: { label: string; system: string; light: 
     { id: "dark", label: labels.dark, icon: Moon },
   ];
   return (
-    <div className="flex items-center gap-3 rounded-2xl bg-[#f4f5f9] p-2">
+    <div className="flex items-center gap-3 rounded-2xl bg-[#faf6ee] p-2">
       <span className="pl-2 text-[13px] font-medium">{labels.label}</span>
       <div role="radiogroup" aria-label={labels.label} className="ml-auto flex gap-1 rounded-full bg-white p-1">
         {options.map((o) => (
@@ -505,7 +505,7 @@ function ThemeRow({ labels }: { labels: { label: string; system: string; light: 
             role="radio"
             aria-checked={pref === o.id}
             onClick={() => theme.set(o.id)}
-            className={cn("flex items-center gap-1.5 rounded-full px-3 py-1.5 text-[12px] font-medium transition", pref === o.id ? "bg-[#6b4cff] text-white" : "text-black/60 hover:text-black")}
+            className={cn("flex items-center gap-1.5 rounded-full px-3 py-1.5 text-[12px] font-medium transition", pref === o.id ? "bg-[#c40007] text-white" : "text-black/60 hover:text-black")}
           >
             <o.icon size={13} /> {o.label}
           </button>

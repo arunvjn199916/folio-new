@@ -1,25 +1,71 @@
-/** Testimonials stay hidden until real recommendations replace the placeholders below. */
-export const showTestimonials = false;
+/*
+  Testimonials — DRAFTS written for each person to approve or edit (see docs/testimonial-drafts.md).
+  Only entries with approved: true are shown; the section appears once at least one is approved.
+  Never publish a quote its author hasn't confirmed, and don't name a client company without permission.
+*/
+export type Testimonial = {
+  quote: string;
+  name: string;
+  role: string;
+  kind: "colleague" | "client";
+  approved: boolean;
+  photo?: string; // media/images/testimonials/<file>.webp once provided
+  tint: string;
+};
 
-// Placeholder quotes — replace with real recommendations.
-// Two recommendations with a photo each (reference: client tiles → testimonial cards).
-// Placeholders until Arun sends real quotes — the section stays hidden while showTestimonials is false.
-export const testimonials = [
+export const testimonials: Testimonial[] = [
   {
-    quote: "Real recommendation goes here — waiting for the quote from Arun.",
-    name: "Recommender name",
-    role: "Role, Company",
-    photo: "testimonials/person-1.webp",
+    quote: "Arun made our four products finally feel like one family. His design system and the way he documented it saved both designers and developers hours every week.",
+    name: "Nithi",
+    role: "Product Designer, Euroland IR",
+    kind: "colleague",
+    approved: false,
     tint: "linear-gradient(135deg,#3a0207,#dc0208)",
   },
   {
-    quote: "Real recommendation goes here — waiting for the quote from Arun.",
-    name: "Recommender name",
-    role: "Role, Company",
-    photo: "testimonials/person-2.webp",
+    quote: "Working with Arun on AI search showed me how to turn complex financial queries into something an IR manager can use in seconds — and how to back every decision with research.",
+    name: "Surya",
+    role: "Product Designer, Euroland IR",
+    kind: "colleague",
+    approved: false,
     tint: "linear-gradient(135deg,#6b4a08,#ffef93)",
   },
+  {
+    quote: "Arun started on the engineering side with us, so his specs were always build-ready. He speaks both design and code, which made every handoff feel like a conversation.",
+    name: "Gowtham",
+    role: "Embarckle",
+    kind: "colleague",
+    approved: false,
+    tint: "linear-gradient(135deg,#100001,#6b0410)",
+  },
+  {
+    quote: "Arun brings calm structure to complex 401(k) workflows. His usability sessions and AI trust patterns gave the whole team a shared direction.",
+    name: "Vairoshini",
+    role: "Congruent Solutions",
+    kind: "colleague",
+    approved: false,
+    tint: "linear-gradient(135deg,#dc0208,#ffef93)",
+  },
+  {
+    quote: "The IR mobile app puts our investor information in people's hands — clear, fast and consistent with our brand.",
+    name: "Investor Relations team",
+    role: "Aramco · on the IR mobile app",
+    kind: "client",
+    approved: false,
+    tint: "linear-gradient(135deg,#0a0001,#3a0207)",
+  },
+  {
+    quote: "Investors find results, reports and share data in a few taps. The app feels like a natural extension of our IR website.",
+    name: "Investor Relations team",
+    role: "BAT · on the IR mobile app",
+    kind: "client",
+    approved: false,
+    tint: "linear-gradient(135deg,#3a0207,#ffef93)",
+  },
 ];
+
+/** The section appears once at least one testimonial is approved. */
+export const showTestimonials = testimonials.some((t) => t.approved);
 
 export const aiWorkflow = {
   title: "How I Design in the Age of AI",

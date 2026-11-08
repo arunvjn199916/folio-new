@@ -119,3 +119,18 @@ Pastel bands → dark panels; persona notes / script quotes → v2 cards; produc
 2. Skills & Tools: compact strip back on the home page, or only on /about?
 3. Testimonials: can you send 2 real quotes (text, name, role, company) + photos?
 4. Your previous message ended at "10." — anything for that point?
+
+---
+
+## 6. Decisions & status (round 4 built)
+| Item | Decision | Status |
+|---|---|---|
+| Hero statement 2 | Keep "ENGINEER TURNED DESIGNER." | ✅ sub shortened to role + domain |
+| Home About | No name / companies; "Engineer first. Designer by choice." + hook + 3 traits + Know more | ✅ |
+| Skills & Tools | Stay on /about | ✅ |
+| Home case studies | Numbered cards, chapter rows linking into each case, floating screen, View all | ✅ |
+| Case-study pages | Solution-page structure: statement hero, chapters with anchors, scroll-lit questions, dark panels | ✅ all 4 cases |
+| Testimonials | Drafts for Nithi, Surya, Gowtham, Vairoshini + Aramco/BAT IR-app feedback — shown only once approved | ⏳ awaiting approvals (`docs/testimonial-drafts.md`) |
+| v1 leftovers | Accessibility panel + chat panel re-coloured to the brand | ✅ |
+| Accessibility | axe WCAG 2.2 AA: 0 violations, 12 pages × 2 themes (`v2-round4-axe-report.txt`) | ✅ |
+| Known small issue | On 390 px phones in Tamil, the minimised music bar overlaps the second hero button | open |
