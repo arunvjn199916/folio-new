@@ -19,6 +19,7 @@ export function WorkGrid({ filters, rows, ariaLabel, indexLabel }: { filters: { 
   const list = useRef<HTMLDivElement>(null);
   const float = useRef<HTMLDivElement>(null);
   const flipState = useRef<Flip.FlipState | null>(null);
+  const [placed, setPlaced] = useState(false); // preview only shows once it has followed the pointer
 
   const select = (f: string) => {
     if (f === active) return;
@@ -60,10 +61,15 @@ export function WorkGrid({ filters, rows, ariaLabel, indexLabel }: { filters: { 
 
   const onMove = (e: React.PointerEvent) => {
     if (e.pointerType !== "mouse" || !float.current) return;
-    gsap.to(float.current, { x: e.clientX + 28, y: e.clientY - 120, duration: 0.6, ease: "expo.out" });
+    if (!placed) {
+      gsap.set(float.current, { x: e.clientX + 28, y: e.clientY - 120 });
+      setPlaced(true);
+    } else gsap.to(float.current, { x: e.clientX + 28, y: e.clientY - 120, duration: 0.6, ease: "expo.out" });
   };
 
-  const current = rows.find((r) => r.slug === hover)?.preview;
+  // only real screenshots float — projects without a cover image show no preview box
+  const found = rows.find((r) => r.slug === hover)?.preview;
+  const current = placed && found?.src ? found : undefined;
 
   return (
     <>
@@ -86,7 +92,10 @@ export function WorkGrid({ filters, rows, ariaLabel, indexLabel }: { filters: { 
           ))}
         </div>
       </div>
-      <div ref={list} onPointerMove={onMove} onPointerLeave={() => setHover(null)} className="mt-6 border-b border-ink/10">
+      <div ref={list} onPointerMove={onMove} onPointerLeave={() => {
+          setHover(null);
+          setPlaced(false);
+        }} className="mt-6 border-b border-ink/10">
         {rows.map((r) => (
           <div
             key={r.slug}

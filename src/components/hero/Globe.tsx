@@ -245,7 +245,7 @@ export function Globe({ progress, still = false, className, label }: Props) {
       const gCx = mobile ? W * 0.5 : W * 0.7;
       const gCy = mobile ? H * 0.6 : H * 0.47;
       const form = smooth(0.5, 0.82, p);
-      const R = mix(hR, gR, pull) * (1 - form * 0.08);
+      const R = mix(hR, gR, pull);
       const cx = mix(hCx, gCx, pull);
       const cy = mix(hCy, gCy, pull);
       const litF = smooth(0.28, 0.52, p);
@@ -264,7 +264,7 @@ export function Globe({ progress, still = false, className, label }: Props) {
       }
 
       // planet body: darker than space, lit towards the rim
-      const fade = 1 - form * 0.92;
+      const fade = 1 - form * 0.35; // the globe stays as the frame the portrait forms inside
       const body = ctx.createRadialGradient(
         cx - R * 0.25,
         cy - R * 0.3,
@@ -319,11 +319,11 @@ export function Globe({ progress, still = false, className, label }: Props) {
       const litList: number[] = [];
       const portraitList: number[] = [];
       // portrait frame: where the globe sits, a little larger than it
-      const pS = mobile
-        ? Math.min(W * 0.36, H * 0.22)
-        : Math.min(H * 0.34, W * 0.19);
-      const pcx = mobile ? W * 0.62 : W * 0.78;
-      const pcy = mobile ? H * 0.6 : H * 0.44;
+      // portrait frame: centred in the globe and sized so the whole bust stays inside the rim
+      // (the [-1,1] bust box has its corners at √2, so 0.68·R keeps every dot within the circle)
+      const pS = R * 0.68;
+      const pcx = cx;
+      const pcy = cy;
       for (let i = 0; i < N; i++) {
         const x0 = pts[i * 3];
         const y0 = pts[i * 3 + 1];
