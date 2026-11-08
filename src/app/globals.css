@@ -603,3 +603,10 @@ body::before {
     transition-duration: 0.001ms !important;
   }
 }
+
+/* live preview: screen swap */
+@keyframes lp-in {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: none; }
+}
+.lp-in { animation: lp-in 0.45s cubic-bezier(0.22, 1, 0.36, 1); }

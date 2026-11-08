@@ -7,6 +7,8 @@ import { caseStudies } from "@/content/case-studies";
 import { Media } from "@/components/ui/Placeholder";
 import { CaseHero } from "@/components/case-study/CaseHero";
 import { BlockView } from "@/components/case-study/Blocks";
+import { LivePreview } from "@/components/case-study/LivePreview";
+import type { Shot } from "@/content/case-studies/types";
 import { getDictionary, getLocale } from "@/i18n/server";
 import { localePath } from "@/i18n/config";
 
@@ -119,13 +121,17 @@ export default async function CaseStudyPage({ params }: PageProps<"/[lang]/work/
     else if (b.kind === "statement") current = "question";
     else if (current === "question") current = "design";
     if (b.kind === "test" && current === "design") current = "validation";
-    if ((b.kind === "edges" || b.kind === "web" || b.kind === "gallery") && current === "validation") current = "details";
+    if ((b.kind === "edges" || b.kind === "web" || b.kind === "gallery" || b.kind === "system") && current === "validation") current = "details";
     if (b.kind === "list" && current !== "learnings") current = "learnings";
     const last = chapters[chapters.length - 1];
     if (last?.id === current) last.blocks.push(b);
     else chapters.push({ id: current, blocks: [b] });
   }
   const firstProblem = study.blocks.find((b) => b.kind === "numbered");
+
+  // Live preview: only for studies that opt in with an explicit screen list.
+  const previewShots: Shot[] = study.preview?.shots ?? [];
+  const previewDevice = study.preview?.device ?? "phone";
 
   return (
     <article
@@ -141,6 +147,21 @@ export default async function CaseStudyPage({ params }: PageProps<"/[lang]/work/
       }
     >
       <CaseHero study={study} title={p.title} summary={p.summary} conceptLabel={study.client ? t.client : t.concept} crumbs={crumbs} readLabel={t.chapters.read} next={{ label: t.nextCase.replace(/\.$/, ""), href: localePath(locale, next.href ?? `/work/${next.slug}`) }} />
+
+      {previewShots.length > 1 && (
+        <section id="preview" aria-labelledby="preview-title" className="mt-28 scroll-mt-24 px-4 sm:mt-36 md:px-12">
+          <div className="flex items-end justify-between gap-6 border-t border-ink/10 pt-6">
+            <div>
+              <h2 id="preview-title" className="display-m text-ink">{t.live.title}</h2>
+              <p className="mt-3 max-w-[560px] text-[16px] leading-[1.6] text-ink-2">{t.live.sub}</p>
+            </div>
+            <span className="font-mono text-[12px] text-ink-3">00</span>
+          </div>
+          <div className="mt-14">
+            <LivePreview shots={previewShots} device={previewDevice} labels={t.live} accent={study.brand.accent} />
+          </div>
+        </section>
+      )}
 
       {chapters.map((c, ci) =>
         c.id === "question" ? (

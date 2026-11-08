@@ -423,6 +423,77 @@ export function BlockView({ block, brand, labels, variant }: { block: Block; bra
         </section>
       );
 
+    case "system": {
+      const [primary, secondary] = block.colors;
+      return (
+        <section className={WIDE}>
+          <Reveal className="mx-auto max-w-[640px]">
+            <h2 data-reveal className={H2}>{block.title}</h2>
+            {block.body && <p data-reveal className={cn(BODY, "mt-4")}>{block.body}</p>}
+          </Reveal>
+          <Reveal className="mx-auto mt-10 grid max-w-[1100px] grid-cols-1 gap-4 lg:grid-cols-[minmax(0,1.1fr)_minmax(0,0.9fr)]" stagger={0.08}>
+            <div data-reveal className="rounded-[24px] border border-ink/10 bg-card p-6 md:p-8">
+              <p className={EYEBROW}>Colour</p>
+              <ul className="mt-5 grid grid-cols-2 gap-3 sm:grid-cols-3">
+                {block.colors.map((c) => (
+                  <li key={c.hex + c.name}>
+                    <span className="block h-16 rounded-[14px] border border-ink/10" style={{ background: c.hex }} />
+                    <p className="mt-2 text-[13px] font-semibold text-ink">{c.name}</p>
+                    <p className="font-mono text-[11px] text-ink-3">{c.hex} · {c.role}</p>
+                  </li>
+                ))}
+              </ul>
+              <p className={cn(EYEBROW, "mt-8")}>Type · {block.type.family}</p>
+              <ul className="mt-4 space-y-3">
+                {block.type.scale.map((t) => (
+                  <li key={t.size + t.use} className="flex items-baseline justify-between gap-4 border-b border-ink/10 pb-3">
+                    <span className="truncate text-ink" style={{ fontSize: Math.min(t.size, 28), fontWeight: t.weight }}>{t.use}</span>
+                    <span className="shrink-0 font-mono text-[11px] text-ink-3">{t.size}px / {t.weight}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+            <div data-reveal className="rounded-[24px] border border-ink/10 bg-[#f6f6fa] p-6 text-[#17153a] md:p-8">
+              <p className="font-mono text-[11px] font-semibold tracking-[0.16em] text-[#55536f] uppercase">Components · live specimen</p>
+              <div className="mt-5 overflow-hidden rounded-[18px] bg-white shadow-[0_20px_40px_-28px_rgba(20,16,60,0.5)]">
+                <div className="flex items-center justify-between px-4 py-3 text-white" style={{ background: primary.hex }}>
+                  <span aria-hidden>‹</span>
+                  <span className="text-[15px] font-semibold">Top bar</span>
+                  <span aria-hidden>⋯</span>
+                </div>
+                <div className="space-y-4 p-4">
+                  <div className="rounded-[10px] border border-[#d9d8ea] px-3 py-2.5 text-[13px] text-[#5f5d7a]">Input field · Enter your employee ID</div>
+                  <div className="flex flex-wrap gap-2">
+                    {["Present", "Leave", "Permission"].map((x, i) => (
+                      <span key={x} className="rounded-full px-3 py-1.5 text-[12px] font-semibold" style={i === 0 ? { background: primary.hex, color: "#fff" } : { background: `color-mix(in srgb, ${secondary?.hex ?? primary.hex} 18%, white)`, color: primary.hex }}>{x}</span>
+                    ))}
+                  </div>
+                  <div className="flex items-center justify-between text-[13px]">
+                    <span>Attendance reminder</span>
+                    <span aria-hidden className="relative h-5 w-9 rounded-full" style={{ background: secondary?.hex ?? primary.hex }}><span className="absolute top-0.5 right-0.5 size-4 rounded-full bg-white" /></span>
+                  </div>
+                  <div className="grid grid-cols-2 gap-2">
+                    <span className="rounded-[10px] py-2.5 text-center text-[13px] font-bold text-white" style={{ background: primary.hex }}>Primary</span>
+                    <span className="rounded-[10px] border-[1.5px] py-2.5 text-center text-[13px] font-bold" style={{ borderColor: primary.hex, color: primary.hex }}>Secondary</span>
+                  </div>
+                </div>
+                <div className="flex justify-around border-t border-[#ecebf5] py-2.5">
+                  {[0, 1, 2, 3].map((k) => (
+                    <span key={k} aria-hidden className="size-5 rounded-[6px]" style={{ background: k === 0 ? primary.hex : "#e3e2f1" }} />
+                  ))}
+                </div>
+              </div>
+              <ul className="mt-6 flex flex-wrap gap-2">
+                {block.components.map((c) => (
+                  <li key={c} className="rounded-full border border-[#17153a]/15 px-3 py-1 text-[12px] font-semibold">{c}</li>
+                ))}
+              </ul>
+            </div>
+          </Reveal>
+        </section>
+      );
+    }
+
     case "list":
       return (
         <Reveal className={COL}>

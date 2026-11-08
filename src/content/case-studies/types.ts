@@ -64,6 +64,15 @@ export type Block =
   | { kind: "gallery"; title: string; sub?: string; shots: Shot[] }
   /** Numbered list with bold lead-ins — learnings, what could be better. */
   | { kind: "list"; title: string; intro?: string; items: { title: string; body: string }[] }
+  /** Design-system sheet: colour tokens, type scale and a live specimen of the core components in the product's theme. */
+  | {
+      kind: "system";
+      title: string;
+      body?: string;
+      colors: { name: string; hex: string; role: string }[];
+      type: { family: string; scale: { size: number; weight: number; use: string }[] };
+      components: string[];
+    }
   /** The 5-person test: what we'll ask and how we'll measure it. */
   | { kind: "test"; title: string; intro: string; tasks: string[]; measures: string[] };
 
@@ -75,6 +84,8 @@ export type CaseStudy = {
   hero: { kicker: string; title: string; sub: string; shots: Shot[]; layout?: "phone" | "web" };
   /** Shipped client work rather than a self-initiated concept. */
   client?: boolean;
+  /** Screens for the clickable live preview (shown only when set). */
+  preview?: { device?: "phone" | "web"; shots: Shot[] };
   meta: { label: string; value: string[] }[];
   blocks: Block[];
   sources: { label: string; url: string }[];

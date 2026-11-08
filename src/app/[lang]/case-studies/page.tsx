@@ -4,18 +4,19 @@ import { localePath } from "@/i18n/config";
 import { BlurHeading, Reveal } from "@/components/ui/Motion";
 import { CaseCard } from "@/components/sections/CaseStudies";
 import { Contact } from "@/components/sections/Contact";
+import { caseStudies } from "@/content/case-studies";
 
 export async function generateMetadata(): Promise<Metadata> {
   const { ui, profile } = await getDictionary();
   return { title: `${ui.caseStudies.allTitle} — ${profile.name}`, description: ui.caseStudies.allSub };
 }
 
-/** Every case study (concept products + the Aura design system) as solution-style cards. */
+/** Every written case study (client work and concepts) plus the Aura design system, as solution-style cards. */
 export default async function CaseStudiesPage() {
   const { projects, ui } = await getDictionary();
   const locale = await getLocale();
   const t = ui.caseStudies;
-  const list = projects.filter((p) => p.audience === "Concept" || p.slug === "aura-design-system");
+  const list = projects.filter((p) => caseStudies[p.slug] || p.slug === "aura-design-system");
   return (
     <>
       <section className="px-4 pt-32 pb-24 md:px-12 md:pt-40 md:pb-32">

@@ -111,6 +111,26 @@ export const myir: CaseStudy = {
       shots: [s("key-financials", "Key financials"), s("dividends", "Dividends & yield"), s("historical-price", "Historical price"), s("calculator", "Investment calculator"), s("documents", "Document library"), s("media", "Media & audiocasts"), s("settings", "Settings: language, currency, home modules")],
     },
     {
+      kind: "text",
+      eyebrow: "Concept · added for this portfolio",
+      title: "Asking instead of browsing",
+      body: [
+        "Fifteen modules are a lot to browse on a phone. These AI search and chat screens, designed in MyIR's style, let a shareholder simply ask — and answer only from what the company has published, with a link to every source. They extend the AI search I designed for IR managers to the shareholder's side; they are not part of the shipped app.",
+      ],
+      bullets: [
+        "Answers cite the announcement, report page or data module they come from.",
+        "Actions sit on the answer: add the dividend to the calendar, open the share graph.",
+        "No predictions or investment advice — the assistant says so and offers the IR team instead.",
+      ],
+    },
+    {
+      kind: "band",
+      title: "Concept: AI search & chat",
+      caption: "Ask, get a sourced answer, follow up — and a clear line where the AI stops",
+      crumbs: ["Ask", "Answer", "Chat", "Can't answer"],
+      items: [{ shot: s("ai-search", "AI search", "Suggested questions") }, { shot: s("ai-answer", "Sourced answer", "With add-to-calendar") }, { shot: s("ai-chat", "AI chat", "Chart + citations") }, { shot: s("ai-fallback", "Guardrails", "No advice → IR team") }],
+    },
+    {
       kind: "test",
       title: "The test script",
       intro: "Four tasks from the shareholder questions, used for the simulated walkthrough and the moderated test that should follow.",
