@@ -8,25 +8,32 @@ import { BlurHeading, Reveal } from "@/components/ui/Motion";
 
 /*
   v2 home About (reference: eezyinn /agency/ hero). A rounded dark panel with the portrait
-  behind a dark wash. Deliberately no name and no companies (the hero and Experience say
-  those): the "engineer first" hook, three traits and "Know more" → the full About page.
+  behind a dark wash. It says HOW Arun works, never repeating the hero (name, role), the
+  Experience section (companies) or the crawl (engineer → designer story).
 */
 export async function About() {
   const { aboutPage, profile, ui } = await getDictionary();
   const locale = await getLocale();
-  const portrait = img("about-portrait.webp");
+  // a different photo from the /about page hero, so "Know more" doesn't repeat the image
+  const portrait = img("reachout.webp");
 
   return (
     <section id="about" className="px-4 py-12 md:px-12 md:py-20">
-      <div className="dark-stage relative isolate flex min-h-[78svh] overflow-hidden rounded-[32px] bg-night text-on-night md:rounded-[48px]">
-        {portrait && (
-          <Image src={portrait} alt="" fill sizes="100vw" className="-z-20 object-cover object-[70%_30%] grayscale-[45%]" />
-        )}
-        {/* dark wash + brand glow so text always sits on a dark field */}
-        <span aria-hidden className="absolute inset-0 -z-10 bg-[linear-gradient(90deg,rgba(10,0,1,0.96)_0%,rgba(10,0,1,0.86)_38%,rgba(10,0,1,0.35)_75%,rgba(10,0,1,0.15)_100%)] max-md:bg-[linear-gradient(0deg,rgba(10,0,1,0.97)_0%,rgba(10,0,1,0.85)_55%,rgba(10,0,1,0.3)_100%)]" />
+      <div className="dark-stage relative isolate grid overflow-hidden rounded-[32px] bg-night text-on-night md:grid-cols-[minmax(0,1.25fr)_minmax(0,0.75fr)] md:rounded-[48px]">
         <span aria-hidden className="absolute -bottom-40 -left-20 -z-10 h-[480px] w-[640px] rounded-full bg-[radial-gradient(closest-side,rgba(220,2,8,0.35),transparent)] blur-2xl" />
 
-        <div className="relative mt-auto w-full max-w-[820px] p-6 md:p-14">
+        {/* photo card — the whole portrait, not a crop */}
+        {portrait && (
+          <div className="relative m-4 aspect-[4/5] overflow-hidden rounded-[24px] max-md:aspect-[4/3] md:order-2 md:m-6 md:rounded-[32px]">
+            <Image src={portrait} alt={profile.name} fill sizes="(max-width: 768px) 100vw, 36vw" className="object-cover object-[50%_30%]" />
+            <span aria-hidden className="absolute inset-0 bg-[linear-gradient(180deg,transparent_55%,rgba(10,0,1,0.55))]" />
+            <span className="absolute bottom-4 left-4 flex items-center gap-2 rounded-full border border-white/20 bg-black/45 px-3 py-1.5 font-mono text-[11px] tracking-[0.12em] text-white uppercase backdrop-blur">
+              <span className="size-1.5 rounded-full bg-[#ffef93]" /> {profile.location}
+            </span>
+          </div>
+        )}
+
+        <div className="relative flex flex-col justify-center p-6 pt-2 md:order-1 md:p-14">
           <p className="eyebrow flex items-center gap-2">
             <span className="size-1.5 rounded-full bg-[#ffef93] shadow-[0_0_8px_rgba(255,239,147,0.8)]" />
             {ui.about.tape}

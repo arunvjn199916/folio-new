@@ -120,12 +120,13 @@ export const aboutPage = {
   title: "I'm Arun Vijayan.",
   line: "AI-first product designer from Chennai. I design products people understand — and I build the prototypes myself.",
   more: "Know more",
-  // Home About (no name/companies — the hero and Experience already say those)
-  homeTitle: "Engineer first. Designer by choice.",
-  hook: "I write the prototype before I write the spec — so ideas get tested with real people in days.",
+  // Home About: how Arun works — no name, companies or engineer→designer story
+  // (the hero, Experience and the crawl already say those)
+  homeTitle: "Complex in. Simple out.",
+  hook: "Retirement savings, investor data, AI agents — I like the topics people find intimidating, and making them feel simple.",
   traits: [
     { title: "Thinks in systems", body: "Design systems, tokens and AI patterns that scale across products." },
-    { title: "Builds what he designs", body: "Real-code prototypes with Claude & Cursor, ready for engineering." },
+    { title: "Prototypes in real code", body: "Ideas tested with real people in days — Claude & Cursor, ready for engineering." },
     { title: "Designs for trust", body: "Clear states, sources and a way back — for regulated finance." },
   ],
   seeWork: "See my work",
