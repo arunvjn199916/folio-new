@@ -103,7 +103,7 @@ export function Contact() {
                     animate={{ clipPath: "inset(0 0% 0 0)" }}
                     exit={{ opacity: 0, y: -10 }}
                     transition={{ duration: 0.55, ease: [0.65, 0, 0.35, 1] }}
-                    className="inline-block text-[#ffef93]"
+                    className="ct-verb inline-block max-w-full text-[#ffef93]"
                   >
                     {contact.verbs[i]}
                   </motion.span>

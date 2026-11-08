@@ -610,3 +610,9 @@ body::before {
   to { opacity: 1; transform: none; }
 }
 .lp-in { animation: lp-in 0.45s cubic-bezier(0.22, 1, 0.36, 1); }
+
+/* long Tamil/Hindi verbs in the footer headline: fit the narrowest phones */
+@media (max-width: 380px) {
+  :lang(ta) .ct-verb,
+  :lang(hi) .ct-verb { font-size: 0.8em; }
+}

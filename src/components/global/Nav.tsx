@@ -117,7 +117,6 @@ export function Nav() {
   const links = [
     { id: "about", label: t.about, href: sectionHref("about") },
     { id: "experience", label: t.journey, href: sectionHref("experience") },
-    { id: "ai", label: t.aiWorkflow, href: href("/ai-workflow") },
   ];
 
   return (

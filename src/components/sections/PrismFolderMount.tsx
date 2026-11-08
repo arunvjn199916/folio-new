@@ -59,7 +59,7 @@ export function PrismFolderMount({ windows, labels }: { windows: Win[]; labels: 
   const front = (i: number) => setOrder((o) => [...o.filter((x) => x !== i), i]);
 
   return (
-    <div ref={area} data-decor className="relative mx-auto mt-24 grid h-[640px] max-w-[1100px] place-items-center">
+    <div ref={area} data-decor className={`relative mx-auto mt-8 grid max-w-[1100px] place-items-center transition-[height] duration-500 ease-out md:mt-10 ${open ? "h-[640px]" : "h-[230px]"}`}>
       {windows.map((w, i) => {
         const a = (i / windows.length) * Math.PI * 2 - Math.PI / 2 + 0.35;
         const tx = Math.cos(a) * radius.x;

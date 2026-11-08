@@ -9,7 +9,7 @@ export async function Archive() {
   const { ui } = await getDictionary();
   const windows = archive.map((a) => ({ ...a, src: img(a.src) }));
   return (
-    <section id="archive" className="relative px-4 pb-24 md:px-12 md:pb-32">
+    <section id="archive" className="relative px-4 pb-16 md:px-12 md:pb-20">
       <SectionHead eyebrow={ui.archive.eyebrow} title={ui.archive.title} sub={ui.archive.sub} size="m" />
       <PrismFolderMount windows={windows} labels={ui.work.folder} />
     </section>

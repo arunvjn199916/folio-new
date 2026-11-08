@@ -16,7 +16,7 @@ export default async function CaseStudiesPage() {
   const { projects, ui } = await getDictionary();
   const locale = await getLocale();
   const t = ui.caseStudies;
-  const list = projects.filter((p) => caseStudies[p.slug] || p.slug === "aura-design-system");
+  const list = projects.filter((p) => caseStudies[p.slug] || p.slug === "aura-design-system").sort((a, b) => Number(b.slug === "orion-support-system") - Number(a.slug === "orion-support-system"));
   return (
     <>
       <section className="px-4 pt-32 pb-24 md:px-12 md:pt-40 md:pb-32">
