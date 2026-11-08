@@ -23,8 +23,12 @@ const walk = (dir) =>
 
 rmSync(OUT, { recursive: true, force: true }); // drop every previous hashed copy
 const map = {};
-for (const file of walk(SRC).sort()) {
-  const rel = relative(SRC, file).split("\\").join("/");
+// Sort by the "/"-normalised path so the manifest is byte-identical on Windows and Linux
+// ("\\" and "/" sort differently, which used to leave this file modified after every Windows run).
+const files = walk(SRC)
+  .map((file) => ({ file, rel: relative(SRC, file).split("\\").join("/") }))
+  .sort((a, b) => (a.rel < b.rel ? -1 : a.rel > b.rel ? 1 : 0));
+for (const { file, rel } of files) {
   const hash = createHash("sha256").update(readFileSync(file)).digest("hex").slice(0, 10);
   const ext = extname(rel);
   const outRel = join(dirname(rel), `${basename(rel, ext)}.${hash}${ext}`).split("\\").join("/");

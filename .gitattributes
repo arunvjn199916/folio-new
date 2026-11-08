@@ -1,0 +1,4 @@
+# Generated manifest: always LF so Windows checkouts never show it as modified
+src/content/images.generated.ts text eol=lf
+# Windows launcher needs CRLF
+*.bat text eol=crlf

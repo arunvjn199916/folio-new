@@ -90,7 +90,7 @@ export function Hero() {
       // timeline length = 1 so positions read as scroll progress
       tl.to(q(".hero-a"), { opacity: 0.45, duration: 0.18 }, 0.12) // stays ≥3:1 for large text
         .to(q(".hero-text"), { yPercent: -4, duration: 0.6 }, 0.3)
-        .to(q(".hero-bleed"), { opacity: 1, duration: 0.25 }, 0.72)
+        .to(q(".hero-bleed"), { opacity: 1, duration: 0.1 }, 0.9) // after the portrait has formed
         .set({}, {}, 1);
       return () => {
         st.kill();

@@ -8,14 +8,15 @@ import { BlurHeading, Reveal } from "@/components/ui/Motion";
 
 /*
   v2 home About (reference: eezyinn /agency/ hero). A rounded dark panel with the portrait
-  behind a dark wash. It says HOW Arun works, never repeating the hero (name, role), the
-  Experience section (companies) or the crawl (engineer → designer story).
+  shown whole (4:5 frame = the photo's own ratio, so nothing is cropped). Personal facts that
+  appear nowhere else on the home page — never the hero's name/role, Experience's companies,
+  the crawl's career story or How I work's process.
 */
 export async function About() {
   const { aboutPage, profile, ui } = await getDictionary();
   const locale = await getLocale();
-  // a different photo from the /about page hero, so "Know more" doesn't repeat the image
-  const portrait = img("reachout.webp");
+  // portrait.webp is used only here: the hero traces reachout.webp and /about uses about-portrait.webp
+  const portrait = img("portrait.webp");
 
   return (
     <section id="about" className="px-4 py-12 md:px-12 md:py-20">
@@ -24,8 +25,8 @@ export async function About() {
 
         {/* photo card — the whole portrait, not a crop */}
         {portrait && (
-          <div className="relative m-4 aspect-[4/5] overflow-hidden rounded-[24px] max-md:aspect-[4/3] md:order-2 md:m-6 md:rounded-[32px]">
-            <Image src={portrait} alt={profile.name} fill sizes="(max-width: 768px) 100vw, 36vw" className="object-cover object-[50%_30%]" />
+          <div className="relative m-4 aspect-[4/5] overflow-hidden rounded-[24px] max-md:mx-auto max-md:w-[min(100%-2rem,420px)] md:order-2 md:m-6 md:self-center md:rounded-[32px]">
+            <Image src={portrait} alt={profile.name} fill sizes="(max-width: 768px) 100vw, 36vw" className="object-cover" />
             <span aria-hidden className="absolute inset-0 bg-[linear-gradient(180deg,transparent_55%,rgba(10,0,1,0.55))]" />
             <span className="absolute bottom-4 left-4 flex items-center gap-2 rounded-full border border-white/20 bg-black/45 px-3 py-1.5 font-mono text-[11px] tracking-[0.12em] text-white uppercase backdrop-blur">
               <span className="size-1.5 rounded-full bg-[#ffef93]" /> {profile.location}

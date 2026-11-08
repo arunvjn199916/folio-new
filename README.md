@@ -5,6 +5,13 @@ English / Tamil / Hindi · light & dark · first-party accessibility panel · Gr
 
 ## Run locally
 
+**Windows, one click:** double-click `start-portfolio.bat` in the project folder. It pulls the latest
+`v2-redesign` from GitHub, installs packages when needed, frees port 3005 and opens
+http://localhost:3005 in your browser. Keep the window open while you browse; close it to stop.
+Tip: right-click the file → *Send to → Desktop (create shortcut)* to start it from your desktop.
+
+**Any OS, manually:**
+
 ```bash
 npm ci
 cp .env.example .env.local   # then add your GROQ_API_KEY
