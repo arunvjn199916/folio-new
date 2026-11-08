@@ -25,7 +25,7 @@ export default async function DesignSystemOverview() {
   const base = localePath(await getLocale(), "/design-system");
   const counts = { components: docsIn("components").length, ai: docsIn("ai").length, patterns: docsIn("patterns").length };
   return (
-    <article className="grid gap-14">
+    <article className="grid grid-cols-1 gap-14">
       <header>
         <p className="text-xs font-medium tracking-wide text-ds-ai-accent uppercase">{t.navLabel}</p>
         <h1 className="mt-2 text-[clamp(32px,4vw,48px)] leading-tight font-semibold tracking-tight">{t.title}</h1>
@@ -52,7 +52,7 @@ export default async function DesignSystemOverview() {
         <h2 id="principles" className="text-xl font-semibold">
           {t.principles}
         </h2>
-        <ul className="mt-4 grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
+        <ul className="mt-4 grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-4">
           {PRINCIPLES.map(([title, body]) => (
             <li key={title} className="rounded-ds-lg border bg-ds-card p-4">
               <p className="font-semibold">{title}</p>
@@ -80,7 +80,7 @@ export default async function DesignSystemOverview() {
           <h2 id={`cat-${cat}`} className="text-xl font-semibold">
             {label}
           </h2>
-          <ul className="mt-4 grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
+          <ul className="mt-4 grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-3">
             {docs
               .filter((d) => d.category === cat)
               .map((d) => (

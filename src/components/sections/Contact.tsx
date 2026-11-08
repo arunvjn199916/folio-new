@@ -89,7 +89,7 @@ export function Contact() {
       {/* 2 — dark footer panel */}
       <div className="dark-stage relative overflow-hidden rounded-t-[32px] bg-night text-on-night md:rounded-t-[56px]">
         <div aria-hidden className="pointer-events-none absolute -top-40 right-[-10%] h-[520px] w-[720px] rounded-full bg-[radial-gradient(closest-side,rgba(220,2,8,0.35),transparent)] blur-2xl" />
-        <div className="relative grid gap-12 px-4 pt-20 md:grid-cols-[minmax(0,1.1fr)_minmax(0,0.9fr)] md:px-12 md:pt-28">
+        <div className="relative grid grid-cols-1 gap-12 px-4 pt-20 md:grid-cols-[minmax(0,1.1fr)_minmax(0,0.9fr)] md:px-12 md:pt-28">
           <div>
             <p className="eyebrow">{ui.nav.contact}</p>
             <h2 className="display-l mt-4">
@@ -151,7 +151,7 @@ export function Contact() {
             <ul className="mt-4 space-y-2 text-[15px]">
               {elsewhere.map((l) => (
                 <li key={l.label}>
-                  <a href={l.href} target="_blank" rel="noopener" className="inline-flex items-center gap-1 transition-colors hover:text-[#ffef93]">
+                  <a href={l.href} target="_blank" rel="noopener" className="inline-flex min-h-6 items-center gap-1 py-0.5 transition-colors hover:text-[#ffef93]">
                     {l.label} <ArrowUpRight size={13} />
                   </a>
                 </li>
@@ -167,7 +167,7 @@ export function Contact() {
 
         <div className="relative mt-16 flex flex-wrap items-center justify-between gap-4 border-t border-on-night/10 px-4 py-5 text-[12px] text-on-night/50 md:px-12">
           <span>{t.copyright}</span>
-          <a href={`${href("/")}#top`} className="inline-flex items-center gap-1.5 hover:text-on-night">
+          <a href={`${href("/")}#top`} className="inline-flex min-h-6 items-center gap-1.5 hover:text-on-night">
             {t.backTop} <ArrowUp size={13} />
           </a>
         </div>

@@ -53,7 +53,7 @@ export default async function ComponentDoc({ params }: PageProps<"/[lang]/design
   const next = order[i + 1];
   const H2 = "text-lg font-semibold";
   return (
-    <article className="grid gap-10">
+    <article className="grid grid-cols-1 gap-10">
       <header>
         <p className="text-xs font-medium tracking-wide text-ds-muted-foreground uppercase">
           {d.category === "ai" ? t.ai : d.category === "patterns" ? t.patterns : t.components}
@@ -122,7 +122,7 @@ export default async function ComponentDoc({ params }: PageProps<"/[lang]/design
         </ul>
       </section>
 
-      <section className="grid gap-3 sm:grid-cols-2">
+      <section className="grid grid-cols-1 gap-3 sm:grid-cols-2">
         <div className="rounded-ds-lg border border-ds-success/30 bg-ds-success/5 p-4">
           <h2 className="flex items-center gap-1.5 text-sm font-semibold text-ds-success">
             <Check className="size-4" /> {t.do}

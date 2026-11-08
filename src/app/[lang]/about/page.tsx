@@ -60,7 +60,7 @@ export default async function AboutPage() {
       {/* 2 — statement */}
       <section className="px-4 py-28 text-center md:px-12 md:py-40">
         <BlurHeading className="display-l mx-auto max-w-[16ch] text-ink">{t.statement.title}</BlurHeading>
-        <Reveal className="mx-auto mt-10 grid max-w-[980px] gap-6 text-left text-[17px] leading-[1.65] text-ink-2 md:grid-cols-2 md:gap-10 md:text-[19px]">
+        <Reveal className="mx-auto mt-10 grid grid-cols-1 max-w-[980px] gap-6 text-left text-[17px] leading-[1.65] text-ink-2 md:grid-cols-2 md:gap-10 md:text-[19px]">
           {t.statement.body.map((p) => (
             <p key={p} data-reveal>
               {p}
@@ -73,7 +73,7 @@ export default async function AboutPage() {
       <section className="px-4 pb-24 md:px-12 md:pb-32">
         <Eyebrow>{t.companies.eyebrow}</Eyebrow>
         <h2 className="display-m mt-4 text-ink">{t.companies.title}</h2>
-        <Reveal className="mt-10 grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
+        <Reveal className="mt-10 grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-4">
           {roles.map((r) => (
             <div key={r.company} data-reveal className="flex min-h-[180px] flex-col justify-between rounded-[24px] border border-ink/10 bg-card p-6">
               <p className="font-mono text-[11px] tracking-[0.12em] text-ink-3 uppercase">
@@ -109,7 +109,7 @@ export default async function AboutPage() {
       </section>
 
       {/* 5 — design DNA */}
-      <section className="grid gap-12 px-4 py-28 md:grid-cols-2 md:gap-16 md:px-12 md:py-36">
+      <section className="grid grid-cols-1 gap-12 px-4 py-28 md:grid-cols-2 md:gap-16 md:px-12 md:py-36">
         <div>
           <Eyebrow>{t.dna.eyebrow}</Eyebrow>
           <BlurHeading className="display-l mt-4 text-ink">{t.dna.title}</BlurHeading>
@@ -135,7 +135,7 @@ export default async function AboutPage() {
       />
 
       {/* 7 — base */}
-      <section className="grid gap-12 border-t border-ink/10 px-4 py-24 md:grid-cols-2 md:gap-16 md:px-12 md:py-32">
+      <section className="grid grid-cols-1 gap-12 border-t border-ink/10 px-4 py-24 md:grid-cols-2 md:gap-16 md:px-12 md:py-32">
         <div>
           <Eyebrow>{t.base.eyebrow}</Eyebrow>
           <h2 className="display-l mt-4 text-ink">{t.base.title}</h2>

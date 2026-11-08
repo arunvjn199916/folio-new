@@ -27,7 +27,7 @@ export default async function CaseStudiesPage() {
           {t.allTitle}
         </BlurHeading>
         <p className="mt-6 max-w-[620px] text-[17px] leading-[1.6] text-ink-2 md:text-[20px]">{t.allSub}</p>
-        <Reveal className="mt-14 grid gap-4 md:mt-20 md:grid-cols-2 md:gap-6">
+        <Reveal className="mt-14 grid grid-cols-1 gap-4 md:mt-20 md:grid-cols-2 md:gap-6">
           {list.map((p) => (
             <CaseCard key={p.slug} p={p} href={localePath(locale, p.href ?? `/work/${p.slug}`)} readLabel={t.read} />
           ))}

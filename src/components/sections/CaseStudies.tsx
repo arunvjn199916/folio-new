@@ -77,7 +77,7 @@ export async function CaseStudies() {
   return (
     <section id="case-studies" className="px-4 py-24 md:px-12 md:py-32">
       <SectionHead eyebrow={t.eyebrow} title={t.title} sub={t.sub} />
-      <Reveal className="mt-12 grid gap-4 md:mt-16 md:grid-cols-2 md:gap-6">
+      <Reveal className="mt-12 grid grid-cols-1 gap-4 md:mt-16 md:grid-cols-2 md:gap-6">
         {picks.map((p, i) => {
           const study = caseStudies[p.slug];
           const href = localePath(locale, `/work/${p.slug}`);
@@ -90,7 +90,7 @@ export async function CaseStudies() {
               style={{ backgroundImage: `radial-gradient(60% 50% at 100% 0%, color-mix(in srgb, ${study?.brand.accent ?? "#dc0208"} 30%, transparent), transparent 70%)` }}
             >
               {shot && (
-                <div aria-hidden className="cs-float pointer-events-none absolute -top-20 -right-6 -z-10 w-[110px] opacity-90 md:-top-28 md:right-2 md:w-[150px]">
+                <div aria-hidden className="cs-float pointer-events-none absolute -top-20 right-2 -z-10 w-[110px] opacity-90 md:-top-28 md:right-2 md:w-[150px]">
                   <Phone src={shot.src} alt="" sizes="200px" />
                 </div>
               )}

@@ -38,7 +38,7 @@ export function CaseHero({
               <li key={c.label} className="flex items-center gap-2">
                 {i > 0 && <span aria-hidden>/</span>}
                 {c.href ? (
-                  <Link href={c.href} className="transition-colors hover:text-ink">
+                  <Link href={c.href} className="inline-flex min-h-6 items-center transition-colors hover:text-ink">
                     {c.label}
                   </Link>
                 ) : (
@@ -58,7 +58,7 @@ export function CaseHero({
         <h1 data-reveal className="display-l mt-4 max-w-[18ch] text-ink">
           {hero.title || title}
         </h1>
-        <div className="mt-10 grid gap-10 md:grid-cols-[minmax(0,1.2fr)_minmax(0,0.8fr)] md:gap-16">
+        <div className="mt-10 grid grid-cols-1 gap-10 md:grid-cols-[minmax(0,1.2fr)_minmax(0,0.8fr)] md:gap-16">
           <div data-reveal>
             <p className="max-w-[600px] text-[17px] leading-[1.6] text-ink-2 md:text-[19px]">{hero.sub || summary}</p>
             <div className="mt-8 flex flex-wrap gap-3">

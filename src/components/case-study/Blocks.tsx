@@ -86,7 +86,7 @@ export function BlockView({ block, brand, labels, variant }: { block: Block; bra
         <Reveal className={COL}>
           <h2 data-reveal className={H2}>{block.title}</h2>
           {block.intro && <p data-reveal className={cn(BODY, "mt-4")}>{block.intro}</p>}
-          <div className={cn("mt-7 grid gap-3", block.items.length > 2 && "sm:grid-cols-2")}>
+          <div className={cn("mt-7 grid grid-cols-1 gap-3", block.items.length > 2 && "sm:grid-cols-2")}>
             {block.items.map((it, i) => (
               <div data-reveal key={i} className="rounded-[20px] border border-ink/10 bg-card p-6 text-ink-2">
                 <p className="font-mono text-[13px] tracking-[0.12em] text-accent">#{i + 1}</p>
@@ -127,7 +127,7 @@ export function BlockView({ block, brand, labels, variant }: { block: Block; bra
             <h2 data-reveal className={H2}>{block.title}</h2>
             {block.intro && <p data-reveal className={cn(BODY, "mt-4")}>{block.intro}</p>}
           </div>
-          <div className="mx-auto mt-10 grid max-w-[1000px] gap-px overflow-hidden rounded-[18px] border border-line bg-line sm:grid-cols-2 lg:grid-cols-4">
+          <div className="mx-auto mt-10 grid grid-cols-1 max-w-[1000px] gap-px overflow-hidden rounded-[18px] border border-line bg-line sm:grid-cols-2 lg:grid-cols-4">
             {block.items.map((it) => (
               <div data-reveal key={it.label} className="bg-paper p-6">
                 <p className="font-display text-[clamp(34px,3.4vw,44px)] leading-none font-extrabold tracking-[-0.04em]" style={{ color: "var(--case-accent-text)" }}>
@@ -149,7 +149,7 @@ export function BlockView({ block, brand, labels, variant }: { block: Block; bra
       return (
         <Reveal className={WIDE}>
           <h2 data-reveal className={cn(H2, "mx-auto max-w-[1000px]")}>{block.title}</h2>
-          <div className="mx-auto mt-8 grid max-w-[1000px] gap-4 md:grid-cols-2">
+          <div className="mx-auto mt-8 grid grid-cols-1 max-w-[1000px] gap-4 md:grid-cols-2">
             {block.items.map((p) => (
               <div data-reveal key={p.name} className="rounded-[24px] border border-ink/10 bg-card p-6 md:p-8">
                 <div className="flex items-center gap-3">
@@ -189,7 +189,7 @@ export function BlockView({ block, brand, labels, variant }: { block: Block; bra
             <h2 data-reveal className={cn(H2, "mt-3")}>{block.title}</h2>
             {block.sub && <p data-reveal className="mx-auto mt-3 max-w-[520px] text-[15px] text-ink-2">{block.sub}</p>}
           </div>
-          <ol className="mx-auto mt-12 grid max-w-[1200px] gap-4 md:grid-cols-3">
+          <ol className="mx-auto mt-12 grid grid-cols-1 max-w-[1200px] gap-4 md:grid-cols-3">
             {block.items.map((s, i) => (
               <li data-reveal key={s.title} className="dark-stage flex flex-col justify-between gap-10 rounded-[24px] border border-on-night/10 bg-night p-6 text-on-night md:min-h-[360px] md:p-8">
                 <div>
@@ -211,10 +211,10 @@ export function BlockView({ block, brand, labels, variant }: { block: Block; bra
             {block.eyebrow && <p data-reveal className={EYEBROW}>{block.eyebrow}</p>}
             <h2 data-reveal className={cn(H2, block.eyebrow && "mt-3")}>{block.title}</h2>
             {block.sub && <p data-reveal className={cn(BODY, "mt-3 max-w-[560px]")}>{block.sub}</p>}
-            <div data-reveal className="mt-10 grid gap-6 border-y border-line py-8 md:grid-cols-[150px_minmax(0,1fr)_150px] md:items-center">
+            <div data-reveal className="mt-10 grid grid-cols-1 gap-6 border-y border-line py-8 md:grid-cols-[150px_minmax(0,1fr)_150px] md:items-center">
               <JourneyNode {...block.start} />
               <div className="md:border-x md:border-line md:px-6">
-                <ol className="grid gap-5 sm:grid-cols-3">
+                <ol className="grid grid-cols-1 gap-5 sm:grid-cols-3">
                   {block.steps.map((s, i) => (
                     <li key={s.title}>
                       <p className="font-mono text-[11px] text-ink-3">{String(i + 1).padStart(2, "0")}</p>
@@ -366,7 +366,7 @@ export function BlockView({ block, brand, labels, variant }: { block: Block; bra
                   <Phone src={c.shot.src} alt={c.shot.label} className="w-[200px]" sizes="200px" />
                 </div>
                 {c.notes && (
-                  <div data-reveal className="mt-6 grid gap-5 sm:grid-cols-2">
+                  <div data-reveal className="mt-6 grid grid-cols-1 gap-5 sm:grid-cols-2">
                     {c.notes.map((n) => (
                       <div key={n.title} className="border-l-[3px] border-crimson pl-3">
                         <p className="text-[13.5px] font-semibold text-ink">{n.title}</p>
@@ -454,7 +454,7 @@ export function BlockView({ block, brand, labels, variant }: { block: Block; bra
           </Reveal>
 
           {/* the five characters */}
-          <Reveal className="mx-auto mt-10 grid max-w-[1000px] gap-3 sm:grid-cols-2 lg:grid-cols-5" stagger={0.06}>
+          <Reveal className="mx-auto mt-10 grid grid-cols-1 max-w-[1000px] gap-3 sm:grid-cols-2 lg:grid-cols-5" stagger={0.06}>
             {block.participants.map((p, i) => (
               <div data-reveal key={p.name} className="rounded-[20px] border border-ink/10 bg-card p-4">
                 <div className="flex items-center gap-2.5">
@@ -515,7 +515,7 @@ export function BlockView({ block, brand, labels, variant }: { block: Block; bra
           </Reveal>
 
           {/* in-character reactions */}
-          <Reveal className="mx-auto mt-10 grid max-w-[1000px] gap-6 md:grid-cols-3" stagger={0.08}>
+          <Reveal className="mx-auto mt-10 grid grid-cols-1 max-w-[1000px] gap-6 md:grid-cols-3" stagger={0.08}>
             {block.quotes.map((q) => (
               <figure data-reveal key={q.text}>
                 <blockquote className="font-sans text-[19px] leading-snug font-semibold tracking-[-0.01em]" style={{ color: "var(--case-accent-text)" }}>
@@ -534,7 +534,7 @@ export function BlockView({ block, brand, labels, variant }: { block: Block; bra
         <Reveal className={COL}>
           <h2 data-reveal className={H2}>{block.title}</h2>
           <p data-reveal className={cn(BODY, "mt-4")}>{block.intro}</p>
-          <div data-reveal className="mt-6 grid gap-3 sm:grid-cols-2">
+          <div data-reveal className="mt-6 grid grid-cols-1 gap-3 sm:grid-cols-2">
             <div className="rounded-[20px] border border-ink/10 bg-card p-6">
               <p className="text-[13px] font-semibold text-ink">{labels.tasks}</p>
               <ol className="mt-2 space-y-1.5 pl-5 text-[13.5px] leading-relaxed text-ink-2 [list-style:decimal]">

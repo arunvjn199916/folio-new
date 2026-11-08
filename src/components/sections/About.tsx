@@ -20,7 +20,7 @@ export async function About() {
 
   return (
     <section id="about" className="px-4 py-12 md:px-12 md:py-20">
-      <div className="dark-stage relative isolate grid overflow-hidden rounded-[32px] bg-night text-on-night md:grid-cols-[minmax(0,1.25fr)_minmax(0,0.75fr)] md:rounded-[48px]">
+      <div className="dark-stage relative isolate grid grid-cols-1 overflow-hidden rounded-[32px] bg-night text-on-night md:grid-cols-[minmax(0,1.25fr)_minmax(0,0.75fr)] md:rounded-[48px]">
         <span aria-hidden className="absolute -bottom-40 -left-20 -z-10 h-[480px] w-[640px] rounded-full bg-[radial-gradient(closest-side,rgba(220,2,8,0.35),transparent)] blur-2xl" />
 
         {/* photo card — the whole portrait, not a crop */}
@@ -44,7 +44,7 @@ export async function About() {
             <p data-reveal className="mt-5 max-w-[540px] text-[17px] leading-[1.55] text-on-night/80 md:text-[20px]">
               {aboutPage.hook}
             </p>
-            <ul data-reveal className="mt-8 grid gap-3 sm:grid-cols-3">
+            <ul data-reveal className="mt-8 grid grid-cols-1 gap-3 sm:grid-cols-3">
               {aboutPage.traits.map((tr, i) => (
                 <li key={tr.title} className="rounded-[20px] border border-on-night/15 bg-black/30 p-4 backdrop-blur-md">
                   <span className="font-mono text-[11px] text-[#ffef93]">{String(i + 1).padStart(2, "0")}</span>

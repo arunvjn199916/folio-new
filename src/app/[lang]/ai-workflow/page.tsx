@@ -32,7 +32,7 @@ export default async function AiWorkflowPage() {
         </BlurHeading>
       </header>
 
-      <section className="grid gap-8 border-t border-ink/10 px-4 py-14 md:grid-cols-[minmax(0,0.8fr)_minmax(0,1.2fr)] md:gap-16 md:px-12 md:py-20">
+      <section className="grid grid-cols-1 gap-8 border-t border-ink/10 px-4 py-14 md:grid-cols-[minmax(0,0.8fr)_minmax(0,1.2fr)] md:gap-16 md:px-12 md:py-20">
         <h2 className="display-m text-ink">{ui.aiPage.introTitle}</h2>
         <Reveal className="space-y-4 text-[17px] leading-[1.6] text-ink-2 md:text-[19px]">
           {aiWorkflow.intro.map((p) => (
@@ -46,7 +46,7 @@ export default async function AiWorkflowPage() {
       <ol className="border-b border-ink/10">
         {aiWorkflow.phases.map((ph, i) => (
           <li key={ph.title} className="border-t border-ink/10">
-            <Reveal className="grid gap-6 px-4 py-12 md:grid-cols-[80px_minmax(0,0.9fr)_minmax(0,1.1fr)] md:gap-12 md:px-12 md:py-16">
+            <Reveal className="grid grid-cols-1 gap-6 px-4 py-12 md:grid-cols-[80px_minmax(0,0.9fr)_minmax(0,1.1fr)] md:gap-12 md:px-12 md:py-16">
               <span data-reveal className="font-mono text-[13px] text-accent">
                 {String(i + 1).padStart(2, "0")}
               </span>

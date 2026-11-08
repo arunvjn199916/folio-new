@@ -14,7 +14,7 @@ export async function Testimonials() {
   return (
     <section id="testimonials" className="px-4 py-24 md:px-12 md:py-32">
       <SectionHead eyebrow={t.eyebrow} title={t.title} sub={t.sub} />
-      <Reveal className="mt-12 grid gap-4 md:mt-16 md:grid-cols-2 md:gap-6">
+      <Reveal className="mt-12 grid grid-cols-1 gap-4 md:mt-16 md:grid-cols-2 md:gap-6">
         {testimonials.filter((q) => q.approved).map((q, i) => (
           <figure key={i} data-reveal className="flex h-full flex-col justify-between gap-10 rounded-[28px] border border-ink/10 bg-card p-6 md:p-10">
             <blockquote className="text-[clamp(20px,1.9vw,28px)] leading-[1.35] font-medium tracking-[-0.02em] text-ink">“{q.quote}”</blockquote>

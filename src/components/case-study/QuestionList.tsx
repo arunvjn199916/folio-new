@@ -31,7 +31,7 @@ export function QuestionList({ title, intro, items }: { title: string; intro?: s
   );
 
   return (
-    <section ref={root} className="mx-auto grid w-full max-w-[1240px] gap-10 px-4 sm:px-6 md:grid-cols-[minmax(0,0.8fr)_minmax(0,1.2fr)] md:gap-16">
+    <section ref={root} className="mx-auto grid grid-cols-1 w-full max-w-[1240px] gap-10 px-4 sm:px-6 md:grid-cols-[minmax(0,0.8fr)_minmax(0,1.2fr)] md:gap-16">
       <div className="md:sticky md:top-28 md:self-start">
         <h2 className="font-display text-[clamp(30px,3.8vw,60px)] leading-[0.95] font-[650] tracking-[-0.04em] text-balance text-ink uppercase">{title}</h2>
         {intro && <p className="mt-5 max-w-[420px] text-[16px] leading-[1.6] text-ink-2">{intro}</p>}

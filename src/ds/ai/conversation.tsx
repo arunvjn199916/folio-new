@@ -199,7 +199,7 @@ export function ThinkingIndicator({ label = "Thinking" }: { label?: string }) {
 export function Reasoning({ steps, seconds, active = false, defaultOpen = false }: { steps: string[]; seconds?: number; active?: boolean; defaultOpen?: boolean }) {
   return (
     <Collapsible defaultOpen={defaultOpen} className="group/reasoning">
-      <CollapsibleTrigger className="inline-flex items-center gap-1.5 rounded-ds-sm text-[13px] text-ds-muted-foreground transition-colors outline-none hover:text-ds-foreground focus-visible:ring-3 focus-visible:ring-ds-ring/30">
+      <CollapsibleTrigger className="inline-flex min-h-6 items-center gap-1.5 rounded-ds-sm text-[13px] text-ds-muted-foreground transition-colors outline-none hover:text-ds-foreground focus-visible:ring-3 focus-visible:ring-ds-ring/30">
         <Brain className={cn("size-3.5 text-ds-ai-accent", active && "animate-pulse")} />
         {active ? "Reasoning…" : `Reasoned${seconds ? ` for ${seconds}s` : ""}`}
         <ChevronDown className="size-3.5 transition-transform group-data-[state=open]/reasoning:rotate-180" />

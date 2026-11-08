@@ -55,7 +55,7 @@ export default async function CaseStudyPage({ params }: PageProps<"/[lang]/work/
           </span>
         </span>
       </Link>
-      <Link href={`${home}#work`} className="group mt-8 inline-flex items-center gap-3 text-[13px] font-bold tracking-[0.08em] text-ink uppercase">
+      <Link href={`${home}#work`} className="group mt-8 inline-flex min-h-11 items-center gap-3 text-[13px] font-bold tracking-[0.08em] text-ink uppercase">
         <ArrowLeft size={16} className="transition-transform group-hover:-translate-x-1" /> {t.backHome}
       </Link>
     </section>
@@ -71,7 +71,7 @@ export default async function CaseStudyPage({ params }: PageProps<"/[lang]/work/
               {crumbs.map((c, k) => (
                 <li key={c.label} className="flex items-center gap-2">
                   {k > 0 && <span aria-hidden>/</span>}
-                  {c.href ? <Link href={c.href} className="hover:text-ink">{c.label}</Link> : <span aria-current="page" className="text-ink">{c.label}</span>}
+                  {c.href ? <Link href={c.href} className="inline-flex min-h-6 items-center hover:text-ink">{c.label}</Link> : <span aria-current="page" className="text-ink">{c.label}</span>}
                 </li>
               ))}
             </ol>
@@ -80,7 +80,7 @@ export default async function CaseStudyPage({ params }: PageProps<"/[lang]/work/
             <span className="size-1.5 rounded-full bg-accent" /> {p.audience} · {p.descriptor}
           </p>
           <h1 className="display-l mt-4 max-w-[18ch] text-ink">{p.title}</h1>
-          <div className="mt-10 grid gap-10 md:grid-cols-[minmax(0,1.2fr)_minmax(0,0.8fr)] md:gap-16">
+          <div className="mt-10 grid grid-cols-1 gap-10 md:grid-cols-[minmax(0,1.2fr)_minmax(0,0.8fr)] md:gap-16">
             <p className="max-w-[600px] text-[17px] leading-[1.6] text-ink-2 md:text-[19px]">{p.summary}</p>
             <div className="self-end border-t border-ink/10 pt-6">
               <p className="font-mono text-[11px] tracking-[0.14em] text-ink-3 uppercase">{t.scope}</p>
@@ -92,7 +92,7 @@ export default async function CaseStudyPage({ params }: PageProps<"/[lang]/work/
             </div>
           </div>
           <Media src={p.media} alt={p.title} label={t.cover} tint={p.tint} className="mt-14 aspect-video w-full rounded-[28px] md:rounded-[40px]" sizes="100vw" priority />
-          <div className="mt-14 grid gap-8 rounded-[28px] border border-ink/10 bg-card p-6 md:grid-cols-[minmax(0,1fr)_auto] md:items-center md:p-10">
+          <div className="mt-14 grid grid-cols-1 gap-8 rounded-[28px] border border-ink/10 bg-card p-6 md:grid-cols-[minmax(0,1fr)_auto] md:items-center md:p-10">
             <div>
               <p className="eyebrow flex items-center gap-2">
                 <span className="size-1.5 animate-pulse rounded-full bg-accent" /> {t.inProgress}
@@ -173,7 +173,7 @@ export default async function CaseStudyPage({ params }: PageProps<"/[lang]/work/
           {study.sources.map((s, n) => (
             <li key={s.url} id={`source-${n + 1}`} className="flex gap-2">
               <span className="font-mono text-ink-3">[{n + 1}]</span>
-              <a href={s.url} target="_blank" rel="noopener noreferrer" className="underline-offset-4 hover:text-ink hover:underline">
+              <a href={s.url} target="_blank" rel="noopener noreferrer" className="inline-block py-1 underline-offset-4 hover:text-ink hover:underline">
                 {s.label}
               </a>
             </li>

@@ -66,7 +66,7 @@ export async function Work() {
       {/* Featured case */}
       <Link
         href={link(featured)}
-        className="group mt-12 grid overflow-hidden rounded-[28px] border border-ink/10 bg-card shadow-[var(--card-shadow)] transition-colors duration-300 hover:border-accent/50 md:mt-16 md:grid-cols-[minmax(0,0.9fr)_minmax(0,1.1fr)]"
+        className="group mt-12 grid grid-cols-1 overflow-hidden rounded-[28px] border border-ink/10 bg-card shadow-[var(--card-shadow)] transition-colors duration-300 hover:border-accent/50 md:mt-16 md:grid-cols-[minmax(0,0.9fr)_minmax(0,1.1fr)]"
       >
         <div className="flex flex-col justify-between gap-10 p-6 md:p-10">
           <div>
