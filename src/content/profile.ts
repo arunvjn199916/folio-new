@@ -29,7 +29,7 @@ export const profile: Profile = {
   email: "arunvjn1999@gmail.com",
   currently: { title: "Executive UI/UX Designer", company: "Congruent Solutions" },
   links: {
-    linkedin: "https://www.linkedin.com/in/arunvijayan-6",
+    linkedin: "https://www.linkedin.com/in/arun-vijayan-7a103316b/",
     behance: "https://www.behance.net/arunvijayan6",
     resume: "/resume/Arun-Vijayan-Product-Designer-Resume-2026-10.pdf",
   },

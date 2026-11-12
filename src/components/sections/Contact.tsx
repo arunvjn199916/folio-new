@@ -117,7 +117,7 @@ export function Contact() {
           <div className="md:pt-10">
             {[
               { label: t.email, value: profile.email, href: `mailto:${profile.email}` },
-              { label: "LinkedIn", value: profile.links.linkedin.replace("https://www.", ""), href: profile.links.linkedin },
+              { label: "LinkedIn", value: profile.links.linkedin.replace("https://www.", "").replace(/\/$/, ""), href: profile.links.linkedin },
             ].map((row) => (
               <a key={row.label} href={row.href} target={row.href.startsWith("mailto") ? undefined : "_blank"} rel="noopener" className="group flex items-center justify-between gap-6 border-b border-on-night/15 py-5">
                 <span className="min-w-0">
