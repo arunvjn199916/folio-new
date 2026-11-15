@@ -34,7 +34,7 @@ export const roles: Role[] = [
     bullets: [
       [{ text: "Lead " }, { text: "AI-first product design", bold: true }, { text: " for US retirement (401(k)) platforms — AI search, voice and agentic workflows." }],
       [{ text: "Defined " }, { text: "AI trust patterns", bold: true }, { text: " for regulated finance: citations, confirmations before transactions, fallbacks." }],
-      [{ text: "Ran " }, { text: "9 usability sessions", bold: true }, { text: " and a UX audit that surfaced 11 issues across the CORE portals." }],
+      [{ text: "Ran " }, { text: "usability sessions", bold: true }, { text: " and a UX audit of the participant portals, turning findings into prioritised fixes." }],
       [{ text: "Designed an " }, { text: "AI search & command experience", bold: true }, { text: " for discovery, navigation and task execution across every module." }],
     ],
     shots: ["#cdb8ff", "#a8d8ff", "#ffb6d9"],
@@ -49,9 +49,9 @@ export const roles: Role[] = [
     initials: "EU",
     tint: "#a8d8ff",
     bullets: [
-      [{ text: "Owned CRM dashboards, task tools and apps for IR managers — " }, { text: "engagement up 25%", bold: true }, { text: "." }],
-      [{ text: "Designed natural-language " }, { text: "AI search", bold: true }, { text: " over documents and financial data — query efficiency up 35%." }],
-      [{ text: "Built a " }, { text: "design system adopted across 4 products", bold: true }, { text: "; research lifted satisfaction 30%." }],
+      [{ text: "Owned CRM dashboards, task tools and apps for IR managers — " }, { text: "simpler everyday workflows", bold: true }, { text: "." }],
+      [{ text: "Designed natural-language " }, { text: "AI search", bold: true }, { text: " over documents and financial data, so information is found faster." }],
+      [{ text: "Built a " }, { text: "design system adopted across multiple products", bold: true }, { text: "; research shaped product strategy." }],
     ],
     shots: ["#a8d8ff", "#bff0e0", "#ffe3a8"],
   },
@@ -78,8 +78,8 @@ export const roles: Role[] = [
     initials: "AA",
     tint: "#ffb6d9",
     bullets: [
-      [{ text: "Brand identities, logo systems and guidelines for " }, { text: "6+ B2B clients", bold: true }, { text: "." }],
-      [{ text: "Marketing and social campaigns that " }, { text: "increased client engagement by 15%", bold: true }, { text: "." }],
+      [{ text: "Brand identities, logo systems and guidelines for " }, { text: "B2B clients", bold: true }, { text: "." }],
+      [{ text: "Marketing and social campaigns for " }, { text: "B2B brands", bold: true }, { text: "." }],
     ],
     shots: ["#ffb6d9", "#ffe3a8", "#ffc2a8"],
   },

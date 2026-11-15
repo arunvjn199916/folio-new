@@ -36,7 +36,7 @@ export async function Work() {
       >
         <span className="pt-1 font-mono text-[12px] text-ink-3 md:pt-0">{String(i + 1).padStart(2, "0")}</span>
         <span className="min-w-0">
-          <span className="block max-w-[26ch] font-display text-[clamp(22px,2.4vw,38px)] leading-[0.98] font-[650] tracking-[-0.035em] text-ink uppercase transition-colors duration-300 group-hover:text-accent">
+          <span className="block max-w-[26ch] font-display text-[clamp(22px,2.4vw,38px)] leading-[0.98] [overflow-wrap:anywhere] hyphens-auto font-[650] tracking-[-0.035em] text-ink uppercase transition-colors duration-300 group-hover:text-accent">
             {p.title}
           </span>
           <span className="mt-3 flex flex-wrap items-center gap-x-3 gap-y-1 text-[13px] text-ink-3">

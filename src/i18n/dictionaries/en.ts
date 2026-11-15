@@ -31,7 +31,7 @@ export const en = {
     meta: {
       title: `${profile.name} — AI-First Product Designer · FinTech & Enterprise SaaS`,
       description:
-        "AI-first product designer designing AI search, voice and agentic experiences for US retirement (401(k)) platforms. 5+ years, former engineer. Chennai · open to GCC & remote.",
+        "AI-first product designer designing AI search, voice and agentic experiences for US retirement (401(k)) platforms. 5+ years, former engineer. Chennai · open to international relocation & remote.",
       aiTitle: `How I Design in the Age of AI — ${profile.name}`,
       aiDescription: `How ${profile.name} uses Claude, Cursor, Figma and AI research tools across the product design workflow.`,
     },
@@ -62,7 +62,7 @@ export const en = {
     caseStudies: { eyebrow: "Case studies", title: "Two products, end to end.", sub: "Client work and concept products, written up end to end — research, flows, UI and how it was tested.", read: "Read case", viewAll: "View all case studies", allTitle: "All case studies.", allSub: "Client work, concept products and a design system — each written up from problem to prototype." },
     archive: { eyebrow: "Archive", title: "Screens from the drawer.", sub: "Explorations, side quests and details that didn't make a case study. Open the folder." },
     projects: { eyebrow: "Projects", title: "Shipped work.", sub: "Products I designed and shipped with teams at Congruent Solutions and Euroland IR, plus tools of my own." },
-    experience: { location: "Location", beforeLabel: "Design & engineering · the foundation", afterLabel: "Product design · AI-first", marker: "AI", nextTitle: "What's next", nextSub: "Open to relocation · GCC & remote", nextWhen: "2026 →" },
+    experience: { location: "Location", beforeLabel: "Design & engineering · the foundation", afterLabel: "Product design · AI-first", marker: "AI", nextTitle: "What's next", nextSub: "Open to international relocation & remote", nextWhen: "2026 →" },
     skills: { eyebrow: "Skills", title: "What I bring.", hint: "Grab a pill and throw it." },
     tools: {
       eyebrow: "Toolkit",
@@ -103,7 +103,7 @@ export const en = {
       placeholder: "Ask me anything about Arun…",
       inputLabel: "Your question",
       disclaimer: "Answers only about Arun · AI can make mistakes",
-      send: "Send",
+      send: "Send", mic: "Ask by voice", micStop: "Stop listening", listening: "Listening… speak your question", micBlocked: "Microphone access is blocked. Allow it in your browser to ask by voice.", noSpeech: "I didn't catch that. Tap the mic and try again.", readAloud: "Read replies aloud", readAloudOff: "Stop reading replies aloud", play: "Play this reply", stopPlay: "Stop reading",
       thinking: "Thinking",
       error: "Something went wrong. Please try again.",
       lost: "Connection lost. Please try again.",

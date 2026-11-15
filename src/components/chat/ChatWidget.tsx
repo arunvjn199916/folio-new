@@ -2,8 +2,9 @@
 
 import { useEffect, useRef, useState } from "react";
 import { AnimatePresence, motion } from "motion/react";
-import { ArrowUp, Briefcase, Mail, Sparkles, User, X } from "lucide-react";
+import { ArrowUp, Briefcase, Mail, Mic, Sparkles, Square, User, Volume2, VolumeX, X } from "lucide-react";
 import { Orb } from "./Orb";
+import { useVoice } from "./useVoice";
 import { useI18n } from "@/i18n/client";
 import { cn } from "@/lib/utils";
 
@@ -44,17 +45,36 @@ export function ChatWidget() {
   const list = useRef<HTMLDivElement>(null);
   const field = useRef<HTMLTextAreaElement>(null);
   const abort = useRef<AbortController | null>(null);
+  const voice = useVoice(locale);
+  const { stopListening, stopSpeaking } = voice;
+  const [readAloud, setReadAloud] = useState(false);
+  const readAloudRef = useRef(false);
+  const setReading = (on: boolean) => {
+    readAloudRef.current = on;
+    setReadAloud(on);
+    if (!on) voice.stopSpeaking();
+  };
+  const close = () => {
+    voice.stopListening();
+    voice.stopSpeaking();
+    setOpen(false);
+  };
 
   useEffect(() => {
     if (!open) return;
     const t = setTimeout(() => field.current?.focus(), 250);
-    const onKey = (e: KeyboardEvent) => e.key === "Escape" && setOpen(false);
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key !== "Escape") return;
+      stopListening();
+      stopSpeaking();
+      setOpen(false);
+    };
     window.addEventListener("keydown", onKey);
     return () => {
       clearTimeout(t);
       window.removeEventListener("keydown", onKey);
     };
-  }, [open]);
+  }, [open, stopListening, stopSpeaking]);
 
   useEffect(() => {
     list.current?.scrollTo({
@@ -71,9 +91,12 @@ export function ChatWidget() {
     return () => window.removeEventListener(OPEN_CHAT_EVENT, openChat);
   }, []);
 
-  const send = async (text: string) => {
+  // `viaVoice`: a question asked by voice gets a spoken answer (and turns read-aloud on).
+  const send = async (text: string, viaVoice = false) => {
     const q = text.trim().slice(0, 800);
     if (!q || busy) return;
+    voice.stopSpeaking();
+    if (viaVoice && !readAloudRef.current) setReading(true);
     const history: Msg[] = [
       ...messages,
       { role: "user" as const, content: q },
@@ -114,6 +137,8 @@ export function ChatWidget() {
           ...m.slice(0, -1),
           { role: "assistant", content: t.empty },
         ]);
+      } else if (readAloudRef.current) {
+        voice.speak(acc, history.length);
       }
     } catch (e) {
       if ((e as Error).name !== "AbortError") {
@@ -183,19 +208,36 @@ export function ChatWidget() {
                   {started ? t.fab : ""}
                 </span>
               </div>
+              <div className="flex items-center gap-1">
+              {voice.canSpeak && (
+                <button
+                  type="button"
+                  onClick={() => setReading(!readAloud)}
+                  aria-pressed={readAloud}
+                  aria-label={readAloud ? t.readAloudOff : t.readAloud}
+                  title={readAloud ? t.readAloudOff : t.readAloud}
+                  className={cn(
+                    "grid size-8 place-items-center rounded-full transition-colors",
+                    readAloud ? "bg-[#c40007] text-white" : "text-ink-3 hover:bg-ink/5 hover:text-ink",
+                  )}
+                >
+                  {readAloud ? <Volume2 size={16} /> : <VolumeX size={16} />}
+                </button>
+              )}
               <button
-                onClick={() => setOpen(false)}
+                onClick={close}
                 aria-label={t.close}
                 className="grid size-8 place-items-center rounded-full text-ink-3 hover:bg-ink/5 hover:text-ink"
               >
                 <X size={16} />
               </button>
+              </div>
             </header>
 
             {!started ? (
               <div className="relative flex flex-1 flex-col items-center justify-center px-6">
                 <div className="relative grid h-[230px] w-full place-items-center">
-                  <Orb size={170} energy={busy ? 1 : 0} />
+                  <Orb size={170} energy={busy || voice.listening ? 1 : 0} />
                   {t.suggestions.map((s, i) => {
                     const chip = CHIP_LAYOUT[i % CHIP_LAYOUT.length];
                     return (
@@ -257,6 +299,17 @@ export function ChatWidget() {
                       )}
                     >
                       {m.content || <TypingDots label={t.thinking} />}
+                      {m.role === "assistant" && m.content && voice.canSpeak && !(busy && i === messages.length - 1) && (
+                        <button
+                          type="button"
+                          onClick={() => (voice.speakingId === i ? voice.stopSpeaking() : voice.speak(m.content, i))}
+                          aria-label={voice.speakingId === i ? t.stopPlay : t.play}
+                          className="mt-1.5 -ml-1 flex min-h-6 items-center gap-1 rounded-full px-1.5 text-[11px] font-medium text-ink-3 transition-colors hover:bg-ink/5 hover:text-ink"
+                        >
+                          {voice.speakingId === i ? <Square size={11} /> : <Volume2 size={12} />}
+                          {voice.speakingId === i ? t.stopPlay : t.play}
+                        </button>
+                      )}
                     </div>
                   </div>
                 ))}
@@ -282,14 +335,39 @@ export function ChatWidget() {
                 }}
                 rows={1}
                 maxLength={800}
-                placeholder={t.placeholder}
+                placeholder={voice.listening ? t.listening : t.placeholder}
                 aria-label={t.inputLabel}
                 className="max-h-24 w-full resize-none bg-transparent text-[14px] text-ink outline-none placeholder:text-ink-3"
               />
               <div className="mt-2 flex items-center justify-between">
-                <span className="font-mono text-[10px] tracking-wide text-ink-3">
-                  {t.disclaimer}
+                <span aria-live="polite" className={cn("font-mono text-[10px] tracking-wide", voice.error ? "text-crimson-text" : "text-ink-3")}>
+                  {voice.listening ? t.listening : voice.error === "blocked" ? t.micBlocked : voice.error === "nospeech" ? t.noSpeech : t.disclaimer}
                 </span>
+                <div className="flex shrink-0 items-center gap-1.5">
+                {voice.canListen && (
+                  <button
+                    type="button"
+                    onClick={() =>
+                      voice.listening
+                        ? voice.stopListening()
+                        : voice.listen(
+                            (txt) => setInput(txt),
+                            (txt) => send(txt, true),
+                          )
+                    }
+                    disabled={busy}
+                    aria-pressed={voice.listening}
+                    aria-label={voice.listening ? t.micStop : t.mic}
+                    title={voice.listening ? t.micStop : t.mic}
+                    className={cn(
+                      "relative grid size-8 place-items-center rounded-full transition-colors disabled:opacity-40",
+                      voice.listening ? "bg-[#c40007] text-white" : "border border-ink/15 text-ink-2 hover:border-ink/40 hover:text-ink",
+                    )}
+                  >
+                    {voice.listening && <span aria-hidden className="absolute inset-0 animate-ping rounded-full bg-[#c40007]/40" />}
+                    {voice.listening ? <Square size={13} className="relative" /> : <Mic size={15} />}
+                  </button>
+                )}
                 <button
                   type="submit"
                   disabled={!input.trim() || busy}
@@ -298,6 +376,7 @@ export function ChatWidget() {
                 >
                   <ArrowUp size={16} />
                 </button>
+                </div>
               </div>
             </form>
           </motion.div>

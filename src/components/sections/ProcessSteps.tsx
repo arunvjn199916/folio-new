@@ -50,7 +50,7 @@ export function ProcessSteps({
   );
 
   return (
-    <section ref={root} id="process" className="relative px-4 py-24 md:px-12 md:py-36">
+    <section ref={root} id="process" className="relative overflow-x-clip px-4 py-24 md:px-12 md:py-36">
       <div className="grid grid-cols-1 gap-14 md:grid-cols-[minmax(0,0.9fr)_minmax(0,1.1fr)] md:gap-16">
         <div className="md:sticky md:top-28 md:self-start">
           <p className="eyebrow flex items-center gap-2">

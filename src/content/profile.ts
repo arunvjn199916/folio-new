@@ -25,7 +25,7 @@ export const profile: Profile = {
   role: "AI-First Product Designer",
   tagline: "Enterprise SaaS · FinTech · Agentic & Conversational UX",
   location: "Chennai, India",
-  availability: "Open to relocation (UAE, Oman, Saudi Arabia & GCC) · Remote-ready",
+  availability: "Open to international relocation · Remote-ready",
   email: "arunvjn1999@gmail.com",
   currently: { title: "Executive UI/UX Designer", company: "Congruent Solutions" },
   links: {
@@ -40,7 +40,7 @@ export const profile: Profile = {
 export const hero = {
   // v2 hero: two uppercase statements over the globe (statement one dims on scroll).
   eyebrow: "AI-first product designer · Chennai, India",
-  status: "Available for full-time roles — GCC & remote",
+  status: "Available for full-time roles — worldwide & remote",
   statements: [
     ["Hi, I'm", "Arun Vijayan."],
     ["Engineer turned", "designer."],
@@ -61,8 +61,8 @@ export const hero = {
   stack: ["Figma", "Claude", "Claude Code", "Cursor", "Framer", "Miro", "Notion", "Adobe XD"],
   stats: [
     { value: 5, suffix: "+", label: "Years in design" },
-    { value: 500, suffix: "+", label: "Beta users in 6 weeks" },
-    { value: 4.2, suffix: "/5", label: "User satisfaction" },
+    { value: 3, suffix: "+", label: "Years in enterprise SaaS & FinTech" },
+    { value: 4, suffix: "", label: "Product teams shipped with" },
   ],
   marquee: [
     "Agentic AI",
@@ -104,11 +104,11 @@ export const about = {
       { text: ": I know what engineering needs, and I prototype in real code with Claude and Cursor to test ideas with users in days, not weeks." },
     ],
     [
-      { text: "Before that I was a graphic designer, building brand systems for 6+ B2B clients — which is where my eye for detail comes from." },
+      { text: "Before that I was a graphic designer, building brand systems for B2B clients — which is where my eye for detail comes from." },
     ],
     [
-      { text: "Open to full-time roles in the UAE, Oman, Saudi Arabia & GCC", highlight: true },
-      { text: ", or remote. English (fluent), Tamil (native)." },
+      { text: "Open to full-time roles worldwide", highlight: true },
+      { text: " — on-site, hybrid or remote, wherever the hardest product problems are." },
     ],
   ]),
   workedWith: ["Congruent Solutions", "Euroland IR", "Embarckle", "Apexs Automation"],
@@ -126,7 +126,7 @@ export const aboutPage = {
   hook: "Give me the brief everyone finds intimidating — money, data, AI — and I'll make it feel simple.",
   traits: [
     { title: "Trained in both worlds", body: "B.Tech in Information Technology, then an advanced programme in design & technology." },
-    { title: "Speaks English & Tamil", body: "…and enough TypeScript to prototype what I design." },
+    { title: "Prototypes in real code", body: "Claude, Cursor and enough TypeScript to put working prototypes in front of users." },
     { title: "Knows the domain", body: "401(k) recordkeeping, investor relations, CRM and enterprise SaaS." },
   ],
   seeWork: "See my work",
@@ -147,7 +147,7 @@ export const aboutPage = {
   base: {
     eyebrow: "Base",
     title: "Chennai. For now.",
-    body: "Open to full-time roles in the UAE, Oman, Saudi Arabia & GCC — or remote. English (fluent), Tamil (native).",
+    body: "Open to full-time roles anywhere in the world — on-site, hybrid or remote.",
   },
   enough: { title: "Enough about me.", body: "My work says the most." },
 };

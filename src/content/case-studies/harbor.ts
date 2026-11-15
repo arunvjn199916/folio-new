@@ -232,7 +232,7 @@ export const harborApp: CaseStudy = {
   hero: {
     kicker: "iOS & Android MVP · US retirement",
     title: "A retirement plan you can enroll in on the bus",
-    sub: "The mobile companion to the participant portal: a guided enrollment wizard, AI recommendations in plain language and a dashboard built around readiness — taken from wireframes to production in six weeks.",
+    sub: "The mobile companion to the participant portal: a guided enrollment wizard, AI recommendations in plain language and a dashboard built around readiness — taken from wireframes to production and into a beta with real participants.",
     shots: [m("walkthrough", "Welcome"), m("wizard-1", "When would you retire?"), m("dashboard", "Home"), m("choose-plan", "Choose your plan"), m("readiness", "Readiness")],
   },
   client: true,
@@ -247,18 +247,19 @@ export const harborApp: CaseStudy = {
   meta: [
     { label: "My role", value: ["Product designer", "AI UX", "Prototype"] },
     { label: "Platform", value: ["iOS / Android"] },
-    { label: "Timeline", value: ["6 weeks to MVP"] },
-    { label: "Outcome", value: ["500+ beta users", "4.2/5 satisfaction"] },
+    { label: "Scope", value: ["Wireframes → production"] },
+    { label: "Outcome", value: ["Validated in a beta"] },
   ],
   blocks: [
     {
       kind: "metrics",
-      title: "What happened",
-      intro: "Measured in the beta.",
+      title: "What success looks like",
+      intro: "Targets the MVP was designed to move — goals, not measured results.",
+      targets: true,
       items: [
-        { tone: "up", label: "Beta users", value: "500+" },
-        { tone: "up", label: "Satisfaction (out of 5)", value: "4.2" },
-        { tone: "down", label: "Weeks from wireframes to production", value: "6" },
+        { tone: "down", label: "Time to finish enrollment on a phone", value: "<5 min" },
+        { tone: "up", label: "Participants who reach the full employer match", value: "+15 pts" },
+        { tone: "down", label: "Drop-off inside the enrollment wizard", value: "−25%" },
         { tone: "down", label: "Steps in the enrollment wizard", value: "7" },
       ],
     },
@@ -267,7 +268,7 @@ export const harborApp: CaseStudy = {
       eyebrow: "Background",
       body: [
         "Most participants never open the retirement website; they do open their phone. The recordkeeper wanted a mobile app that could take someone from “I've been auto-enrolled” to a confident, personal plan in one sitting — with the same plan rules and ERISA guardrails as the web portal [1].",
-        "The constraint was time: six weeks from wireframes to production for an MVP that real participants would use in a beta.",
+        "The constraint was time: a short path from wireframes to production for an MVP that real participants would use in a beta.",
       ],
     },
     {
@@ -345,7 +346,7 @@ export const harborApp: CaseStudy = {
       items: [
         { title: "Ask about the person first", body: "Four human questions before any financial term made the rest of the wizard feel personal, not bureaucratic." },
         { title: "Explain recommendations in one line", body: "“Based on your age (36) and tax bracket…” did more than any help article." },
-        { title: "Six weeks forces good defaults", body: "Reusing the web portal's rules and components let the MVP ship fast without inventing new patterns." },
+        { title: "A tight timeline forces good defaults", body: "Reusing the web portal's rules and components let the MVP ship fast without inventing new patterns." },
       ],
     },
     {
