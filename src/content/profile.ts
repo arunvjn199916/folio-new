@@ -31,7 +31,7 @@ export const profile: Profile = {
   links: {
     linkedin: "https://www.linkedin.com/in/arun-vijayan-7a103316b/",
     behance: "https://www.behance.net/arunvijayan6",
-    resume: "/resume/Arun-Vijayan-Product-Designer-Resume-2026-10.pdf",
+    resume: "/api/resume",
   },
   // Spotify album chosen for the Now Playing window.
   spotifyEmbed: "https://open.spotify.com/embed/album/4AGLzJHGevDOnuHsQ0gxO5?utm_source=generator&theme=0",
